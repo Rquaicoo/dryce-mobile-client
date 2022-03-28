@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
+import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import Login from './Login';
 
@@ -10,6 +10,7 @@ export default function Register({navigation}) {
 
     const [password, setPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
+    const [equalpass, setEqualPass] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -54,9 +55,9 @@ export default function Register({navigation}) {
             <View style={{flexDirection:'row'}}>
             <TextInput style={styles.forminput1} placeholder='Verify Password'
             secureTextEntry={secure} />
-            { !secure ? 
-            (<Feather name="eye" size={20} color="#403D39" style={{paddingTop:hp('2.7%')}} onPress={() => changeSecureState(!secure)}/>) :
-            (<Feather name="eye-off" size={20} color="#403D39" style={{paddingTop:hp('2.7%')}}   onPress={() => changeSecureState(!secure)}/>)
+            { !equalpass ? 
+            (<Feather name="check" size={22} color="green" style={{paddingTop:hp('2.7%')}} onPress={() => setEqualPass(!equalpass)}/>) :
+            (<Entypo name="cross" size={22} color="red" style={{paddingTop:hp('2.7%')}}   onPress={() => setEqualPass(!equalpass)}/>)
             }
             </View>
         </TouchableHighlight>
