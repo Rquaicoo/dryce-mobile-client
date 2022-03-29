@@ -5,6 +5,14 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import Register from './Register';
 
+const sendPayload = (username, password) => {
+  fetch('localhost:8000/auth/login', {
+    method: "POST",
+    body: JSON.stringify({'username': username, 'password': password})
+  })
+  .then((response) => console.log(response.json))
+}
+
 export default function Login({navigation}) {
 
     const [password, setPassword] = useState('');
@@ -40,7 +48,7 @@ export default function Login({navigation}) {
         <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Forgot Password?</Text>
 
         {/* login button */}
-        <TouchableOpacity style={styles.loginbutton}>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
             <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>
 
