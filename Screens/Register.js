@@ -17,7 +17,7 @@ const sendPayload = (username, email, password, confirmedPassword) => {
     alert('Passwords do not match')
   }
   else {
-    fetch('localhost:8000/auth/login', {
+    fetch('https://dryce.herokuapp.com/api/auth/register/', {
       method: "POST",
       body: JSON.stringify({'username': username, 'email': email, 'password': password})
     })
