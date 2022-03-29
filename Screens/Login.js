@@ -5,8 +5,23 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import Register from './Register';
 
+const sendPayload = (username, password) => {
+  if (username == '' || password == '') {
+    alert('Please fill in all fields')
+  }
+  else {
+
+    fetch('localhost:8000/auth/login', {
+      method: "POST",
+      body: JSON.stringify({'username': username, 'password': password})
+    })
+    .then((response) => console.log(response.json))
+  }
+}
+
 export default function Login({navigation}) {
 
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
 
@@ -24,13 +39,16 @@ export default function Login({navigation}) {
       {/* Login form */}
       <View>
         <TouchableHighlight style={styles.loginform}>
-            <TextInput style={styles.forminput} placeholder='Username'/>
+            <TextInput style={styles.forminput} 
+            placeholder='Username'
+            onChangeText={(username) => {setUsername(username)}} />
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
             <View style={{flexDirection:'row'}}>
             <TextInput style={styles.forminput1} placeholder='Password'
-            secureTextEntry={secure} />
+            secureTextEntry={secure}
+            onChangeText={(password) => {setPassword(password)}} />
             { !secure ? 
             (<Feather name="eye" size={20} color="#403D39" style={{paddingTop:hp('2.7%')}} onPress={() => changeSecureState(!secure)}/>) :
             (<Feather name="eye-off" size={20} color="#403D39" style={{paddingTop:hp('2.7%')}}   onPress={() => changeSecureState(!secure)}/>)
@@ -40,7 +58,7 @@ export default function Login({navigation}) {
         <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Forgot Password?</Text>
 
         {/* login button */}
-        <TouchableOpacity style={styles.loginbutton}>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
             <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>
 
