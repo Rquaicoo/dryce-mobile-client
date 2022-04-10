@@ -11,8 +11,11 @@ const sendPayload = (username, password) => {
   }
   else {
 
-    fetch('https://dryce.herokuapp.com/api/auth/login/', {
+    fetch('http://192.168.10.253/api/auth/login/', {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+    },
       body: JSON.stringify({'username': username, 'password': password})
     })
     .then((response) => console.log(response.json))

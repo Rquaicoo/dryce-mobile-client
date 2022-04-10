@@ -30,7 +30,6 @@ export default function Register({navigation}) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [telephone, setTelephone] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
     const [equalpass, setEqualPass] = useState(false);
@@ -62,15 +61,6 @@ export default function Register({navigation}) {
              placeholder='Email'
              onChangeText={(email) => setEmail(email)}
              defaultValue={email} />
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.loginform1}>
-            <View style={{flexDirection:'row'}}>
-            <TextInput style={styles.forminput1}
-             placeholder='Telephone' 
-             onChangeText={(telephone) => setTelephone(telephone)}
-             defaultValue={telephone} />
-            </View>
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
