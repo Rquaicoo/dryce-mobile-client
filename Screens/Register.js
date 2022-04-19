@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import Login from './Login';
+import OTP from './OTP';
 
 
 
@@ -101,7 +102,7 @@ export default function Register({navigation}) {
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword)}}>
-            <Text style={styles.loginbuttontext}>Register</Text>
+            <Text style={styles.loginbuttontext} onPress={() => navigation.navigate(OTP)} >Register</Text>
         </TouchableOpacity>
 
         {/* signup button */}
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
       loginbutton:{
         width: wp('85%'),
         height:hp('8.5%'),
-        backgroundColor: '#0F94BD',
+        backgroundColor: '#14a8ee',
         alignSelf:'center',
         marginTop:hp('5%'),
         borderRadius:20,
