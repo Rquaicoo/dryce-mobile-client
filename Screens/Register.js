@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
       loginbutton:{
         width: wp('85%'),
         height:hp('8.5%'),
-        backgroundColor: '#0F94BD',
+        backgroundColor: '#14a8ee',
         alignSelf:'center',
         marginTop:hp('5%'),
         borderRadius:20,

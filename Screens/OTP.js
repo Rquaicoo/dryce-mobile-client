@@ -20,8 +20,9 @@ export default function OTP({navigation}) {
     <ScrollView style={styles.container}>
        <StatusBar style="auto" />
        <SafeAreaView>
-       
-       <Text  style={styles.headertext}>Dryce Laundry App </Text>
+       <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
+       <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
+       </TouchableHighlight>
        {/* <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text> */}
        
        {/* OTP number verification */}
@@ -52,16 +53,16 @@ export default function OTP({navigation}) {
 
                 <View style={{flexDirection:'row' , marginLeft:hp('2%'), marginTop:hp('2%')}}>
                 <TouchableHighlight style={styles.otpnum}>
-                <Text  style={styles.otp}> 0 </Text>
+                <TextInput  style={styles.otp} placeholder="0" />
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <Text style={styles.otp}> 0 </Text>
+                <TextInput style={styles.otp} placeholder="0"  />
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <Text style={styles.otp}> 0 </Text>
+                <TextInput style={styles.otp} placeholder="0"  /> 
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <Text style={styles.otp}> 0 </Text>
+                <TextInput style={styles.otp} placeholder="0"  /> 
             </TouchableHighlight>
                 
                 </View>
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   signup:{
    height:hp('7%'),
     width:wp('50%'),
-    backgroundColor:'#0F94BD',
+    backgroundColor:'#14a8ee',
     alignSelf:'center',
     marginTop:hp('10%'),
     borderRadius:20,
@@ -126,13 +127,13 @@ const styles = StyleSheet.create({
     otp:{
         ...Platform.select({
             ios: {
-                marginLeft:hp('1%'),
+                marginLeft:hp('2%'),
                 marginTop:hp('2.5%'), 
                 fontSize:wp('9%'),
                 fontWeight:'bold',
             },
             android: {
-                marginLeft:hp('1.5%'),
+                marginLeft:hp('2.5%'),
                 marginTop:hp('2.5%'), 
                 fontSize:wp('10%'),
                 fontWeight:'bold', 
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
         height:hp('40%'),
         width:wp('80%'),
         backgroundColor:'white',
-        marginTop:hp('20%'),
+        marginTop:hp('10%'),
         alignSelf:'center',
         borderRadius:20,
     },
