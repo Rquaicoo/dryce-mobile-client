@@ -5,6 +5,9 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import Register from './Register';
 
+import Tabs from '../navigations/Tabs';
+import HomeScreen from './HomeScreen';
+
 const sendPayload = (username, password) => {
   if (username == '' || password == '') {
     alert('Please fill in all fields')
@@ -69,10 +72,10 @@ export default function Login({navigation}) {
 
         {/* social media buttons */}
         <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
-        <TouchableOpacity style={styles.socialmedia}>
+        <TouchableOpacity style={styles.socialmedia} >
             <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialmedia}>
+        <TouchableOpacity  style={styles.socialmedia}>
             <Text style={styles.socialmediaicon}> <AntDesign name="apple1" size={24} color="black" /></Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialmedia}>
@@ -82,10 +85,7 @@ export default function Login({navigation}) {
         </View>
 
 
-        <Text onPress={() => navigation.navigate(Register)} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
-
-
-        
+        <Text onPress={ ()=> navigation.navigate("HomeScreen")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
       </View>
 
