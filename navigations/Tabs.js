@@ -1,6 +1,6 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { HomeStack } from './MainSTack';
-import { ProfileStack } from './MainSTack';
+import { HomeStack } from './MainStack';
+import { ProfileStack } from './MainStack';
 
 
 const Tab = createMaterialBottomTabNavigator();

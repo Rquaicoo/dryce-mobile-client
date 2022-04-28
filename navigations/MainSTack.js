@@ -5,6 +5,7 @@ import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import HomeScreen from '../Screens/HomeScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
+import OTP from '../Screens/OTP';
 import Tabs from './Tabs';
 
 const Stack = createNativeStackNavigator();
@@ -39,7 +40,8 @@ export default function MainStack() {
     <Stack.Navigator screenOptions={{headershown: false}} >
         <Stack.Screen  name="Startup" component={Startup} options={{ headerShown: false }}/>
         <Stack.Screen  name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} />  
+        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} /> 
+        <Stack.Screen  name="OTP" component={OTP} options={{ headerShown: false }} /> 
         <Stack.Screen  name="TabNav" component={Tabs} />
     </Stack.Navigator>
   );

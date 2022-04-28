@@ -3,29 +3,31 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
-import Register from './Register';
+import axios from 'axios';
+import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
-import Tabs from '../navigations/Tabs';
-import HomeScreen from './HomeScreen';
 
-const sendPayload = (username, password) => {
-  if (username == '' || password == '') {
-    alert('Please fill in all fields')
-  }
-  else {
-
-    fetch('http://192.168.10.253/api/auth/login/', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-    },
-      body: JSON.stringify({'username': username, 'password': password})
-    })
-    .then((response) => console.log(response.json))
-  }
-}
 
 export default function Login({navigation}) {
+  
+  const sendPayload = (username, password) => {
+    const payload = {
+      username: username,
+      password: password,
+    }
+    if (username == '' || password == '') {
+      alert('Please fill in all fields')
+    }
+    else {
+      axios 
+      .post('http://127.0.0.1:8000/api/auth/login/', payload)
+      .then(response => {
+        const {token} = response.data;
+        console.log(response.data)
+        //AsyncStorage.setItem('token', token)
+      })
+  }
+}
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -85,7 +87,7 @@ export default function Login({navigation}) {
         </View>
 
 
-        <Text onPress={ ()=> navigation.navigate("HomeScreen")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
+        <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
       </View>
 
