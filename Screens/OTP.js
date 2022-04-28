@@ -1,29 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
-import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import Login from './Login';
 
 
 
-export default function OTP({navigation}) {
+export default function OTP({route, navigation}) {
 
   
     const [Otp, changeOtpState] = useState(false);
- 
-
+    const email = route.params.email;
 
 
   return (
     <ScrollView style={styles.container}>
        <StatusBar style="auto" />
        <SafeAreaView>
-       <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
-       <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
-       </TouchableHighlight>
-       {/* <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text> */}
+        <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
+                <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
+        </TouchableHighlight>
        
        {/* OTP number verification */}
        
@@ -32,12 +29,10 @@ export default function OTP({navigation}) {
              (<View>
             <TouchableHighlight style={styles.otpbox}>
                 <View>
-                <Text style={styles.otpmaintext}> Verify your number! </Text>
-                <Text style={styles.otptext}> Phone Number </Text>
-                <TouchableHighlight style={styles.numinput}>
-                <TextInput style={styles.otpinput} placeholder="  +233 (23) 456-7890" placeholderTextColor="#8A8A8A" />
-                </TouchableHighlight>
-                <Text style={styles.otptext2}>A 6 digit OTP will be sent to via SMS your mobile number </Text>
+                <Text style={styles.otpmaintext}> Verify your email! </Text>
+                <Text style={styles.otptext}> OTP Verification </Text>
+                
+                <Text style={styles.otptext2}>A 4 digit OTP will be sent to {email} </Text>
                 <Text style={{marginLeft:hp('3.5%'), marginTop:hp('4.5%'), fontSize:wp('3.5%'), fontWeight:'bold',  }} 
                 onPress={() => changeOtpState(!Otp)} >NEXT</Text>
                 </View>
@@ -48,12 +43,12 @@ export default function OTP({navigation}) {
             <TouchableHighlight style={styles.otpbox}>
                 <View>
                 <Text style={styles.otpmaintext}> OTP Verification </Text>
-                <Text style={styles.otptext2}>Enter the OTP you received to</Text>
-                <Text style={styles.otpvernum}>020 XXXX XXXX </Text>
+                <Text style={styles.otptext2}>Enter the OTP you received to {email}</Text>
+                <Text style={styles.otpvernum}> </Text>
 
                 <View style={{flexDirection:'row' , marginLeft:hp('2%'), marginTop:hp('2%')}}>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput  style={styles.otp} placeholder="0" />
+                <TextInput  style={styles.otp} placeholder="0" maxLength={1} />
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
                 <TextInput style={styles.otp} placeholder="0"  />
@@ -76,10 +71,6 @@ export default function OTP({navigation}) {
             <TouchableOpacity style={styles.signup}>
             <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>
             </TouchableOpacity>
-
-
-
-
 
 
        </SafeAreaView>
@@ -144,7 +135,7 @@ const styles = StyleSheet.create({
     },
 
     otpbox:{
-        height:hp('40%'),
+        height:hp('47%'),
         width:wp('80%'),
         backgroundColor:'white',
         marginTop:hp('10%'),
