@@ -3,34 +3,45 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
-import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import axios from 'axios';
 import Login from './Login';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
 
-const sendPayload = (username, email, password, confirmedPassword) => {
-  if (username == '' || email == '' || password == '' || confirmedPassword == '') {
-    alert('Please fill in all fields')
-  }
-  else if (password != confirmedPassword) {
-    alert('Passwords do not match')
-  }
-  else {
-    fetch('https://dryce.herokuapp.com/api/auth/register/', {
-      method: "POST",
-      body: JSON.stringify({'username': username, 'email': email, 'password': password})
-    })
-    .then((response) => console.log(response.json))
-  }
-}
+
 
 export default function Register({navigation}) {
+  const sendPayload = (username, email, password, confirmedPassword) => {
+    const payload = {
+      username: username,
+      email: email,
+      password: password,
+    }
+    if (username == '' || email == '' || password == '' || confirmedPassword == '') {
+      alert('Please fill in all fields')
+    }
+    else if (password != confirmedPassword) {
+      alert('Passwords do not match')
+    }
+    else {
+      axios 
+      .post('http://127.0.0.1:8000/api/auth/register/', payload)
+      .then(response => {
+        const {token} = response.data;
 
+        axios.defaults.headers.common.Authorization = `Token ${token}`;
+
+        AsyncStorage.setItem('token', token)
+
+        navigation.navigate('OTP', {email: email})
+      })
+    }
+  }
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [telephone, setTelephone] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
     const [equalpass, setEqualPass] = useState(false);
@@ -62,15 +73,6 @@ export default function Register({navigation}) {
              placeholder='Email'
              onChangeText={(email) => setEmail(email)}
              defaultValue={email} />
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.loginform1}>
-            <View style={{flexDirection:'row'}}>
-            <TextInput style={styles.forminput1}
-             placeholder='Telephone' 
-             onChangeText={(telephone) => setTelephone(telephone)}
-             defaultValue={telephone} />
-            </View>
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
@@ -111,25 +113,14 @@ export default function Register({navigation}) {
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword)}}>
-            <Text style={styles.loginbuttontext}>Register</Text>
+            <Text style={styles.loginbuttontext} >Register</Text>
         </TouchableOpacity>
 
         {/* signup button */}
-        <Text onPress={() => navigation.navigate(Login)} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}}  > Login</Text> </Text>
-
-
-        
+        <Text onPress={() => navigation.navigate("Login")} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}}  > Login</Text> </Text>
 
       </View>
-
-      
-
-
-
-
        </SafeAreaView>
-      
-     
     </ScrollView>
   );
 }
@@ -177,7 +168,7 @@ const styles = StyleSheet.create({
       loginbutton:{
         width: wp('85%'),
         height:hp('8.5%'),
-        backgroundColor: '#0F94BD',
+        backgroundColor: '#14a8ee',
         alignSelf:'center',
         marginTop:hp('5%'),
         borderRadius:20,

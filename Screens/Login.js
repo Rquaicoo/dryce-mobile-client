@@ -3,23 +3,31 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
-import Register from './Register';
+import axios from 'axios';
+import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
-const sendPayload = (username, password) => {
-  if (username == '' || password == '') {
-    alert('Please fill in all fields')
-  }
-  else {
 
-    fetch('https://dryce.herokuapp.com/api/auth/login/', {
-      method: "POST",
-      body: JSON.stringify({'username': username, 'password': password})
-    })
-    .then((response) => console.log(response.json))
-  }
-}
 
 export default function Login({navigation}) {
+  
+  const sendPayload = (username, password) => {
+    const payload = {
+      username: username,
+      password: password,
+    }
+    if (username == '' || password == '') {
+      alert('Please fill in all fields')
+    }
+    else {
+      axios 
+      .post('http://127.0.0.1:8000/api/auth/login/', payload)
+      .then(response => {
+        const {token} = response.data;
+        console.log(response.data)
+        //AsyncStorage.setItem('token', token)
+      })
+  }
+}
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -66,10 +74,10 @@ export default function Login({navigation}) {
 
         {/* social media buttons */}
         <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
-        <TouchableOpacity style={styles.socialmedia}>
+        <TouchableOpacity style={styles.socialmedia} >
             <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialmedia}>
+        <TouchableOpacity  style={styles.socialmedia}>
             <Text style={styles.socialmediaicon}> <AntDesign name="apple1" size={24} color="black" /></Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialmedia}>
@@ -79,10 +87,7 @@ export default function Login({navigation}) {
         </View>
 
 
-        <Text onPress={() => navigation.navigate(Register)} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
-
-
-        
+        <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
       </View>
 
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
       loginbutton:{
         width: wp('85%'),
         height:hp('8.5%'),
-        backgroundColor: '#0F94BD',
+        backgroundColor: '#14a8ee',
         alignSelf:'center',
         marginTop:hp('2%'),
         borderRadius:20,
