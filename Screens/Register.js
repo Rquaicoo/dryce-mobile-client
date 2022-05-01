@@ -13,38 +13,40 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default function Register({navigation}) {
-  const sendPayload = (username, email, password, confirmedPassword) => {
-    const payload = {
-      username: username,
-      email: email,
-      password: password,
-    }
-    if (username == '' || email == '' || password == '' || confirmedPassword == '') {
-      alert('Please fill in all fields')
-    }
-    else if (password != confirmedPassword) {
-      alert('Passwords do not match')
-    }
-    else {
-      axios 
-      .post('http://127.0.0.1:8000/api/auth/register/', payload)
-      .then(response => {
-        const {token} = response.data;
-
-        axios.defaults.headers.common.Authorization = `Token ${token}`;
-
-        AsyncStorage.setItem('token', token)
-
-        navigation.navigate('OTP', {email: email})
-      })
-    }
-  }
+  
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
     const [equalpass, setEqualPass] = useState(false);
+
+    const sendPayload = (username, email, password, confirmedPassword) => {
+      const payload = {
+        username: username,
+        email: email,
+        password: password,
+      }
+      if (username == '' || email == '' || password == '' || confirmedPassword == '') {
+        alert('Please fill in all fields')
+      }
+      else if (password != confirmedPassword) {
+        alert('Passwords do not match')
+      }
+      else {
+        axios 
+        .post('http://127.0.0.1:8000/api/auth/register/', payload)
+        .then(response => {
+          const {token} = response.data;
+  
+          axios.defaults.headers.common.Authorization = `Token ${token}`;
+  
+          AsyncStorage.setItem('token', token)
+  
+          navigation.navigate('OTP', {email: email})
+        })
+      }
+    }
 
     const checkEqualPass = (password, confirmedPassword) => {
       if(password === confirmedPassword){
@@ -112,7 +114,7 @@ export default function Register({navigation}) {
         </TouchableHighlight>
 
         {/* login button */}
-        <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword)}}>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword);}}>
             <Text style={styles.loginbuttontext} >Register</Text>
         </TouchableOpacity>
 
