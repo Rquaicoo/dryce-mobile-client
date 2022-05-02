@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import { Feather, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 
 
 export default function Home({navigation}) {
@@ -55,12 +55,13 @@ export default function Home({navigation}) {
        
        <View style={{marginLeft:wp('4%')   }}>
             <View style={{flexDirection:'row',}}>
+            <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
             <TouchableOpacity style={styles.profile}>
               <Image source={require('../assets/logo.png')} style={styles.logo}/>
             </TouchableOpacity>
             </View>
     {/* Headers */}
-            <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text>
+            {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
             <Text style={styles.header1}> What service</Text>
             <Text style={styles.header1}> do you need today?</Text>
 
@@ -73,45 +74,126 @@ export default function Home({navigation}) {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection:'row', marginTop:hp('5%')}}>
             <TouchableOpacity style={styles.categories}>
-            <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
+            <Ionicons name="shirt" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             <TouchableOpacity style={styles.categories}>
-            <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
+            <FontAwesome name="shopping-bag" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             <TouchableOpacity style={styles.categories}>
-            <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
+            <MaterialCommunityIcons name="shoe-print" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             <TouchableOpacity style={styles.categories}>
-            <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
+            <Ionicons name="shirt" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             <TouchableOpacity style={styles.categories}>
-            <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
+            <Ionicons name="shirt" size={4350} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             </View>
         </ScrollView>
 
+            {/* Popular laundry */}
         <Text style={styles.shops}> Popular Laundry </Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
         <View style={{flexDirection:'row'}}>
         <TouchableHighlight style={styles.shopsinfo}>
             <View>
+            {/* Image Content */}
             <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 25}} />
-            </TouchableOpacity>
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
 
+            </ImageBackground>
+            </TouchableOpacity>
+             
+            {/* Text Content */}
+            <Text style={styles.shopname}>Russel's Dry Wash</Text>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
+            </View>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+            </View>
             <Text style={styles.shopname}>Russell Dry Wash</Text>
+
             </View>
 
         </TouchableHighlight>
         <TouchableHighlight style={styles.shopsinfo}>
-            <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage}  imageStyle={{ borderRadius: 25}} />
+        <View>
+           {/* Image Content */}
+           <TouchableOpacity style={styles.shopsimage}>
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
+
+            </ImageBackground>
             </TouchableOpacity>
+             
+            {/* Text Content */}
+            <Text style={styles.shopname}>Marie's Dry Wash</Text>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
+            </View>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+            </View>
+
+            </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.shopsinfo}>
+        <View>
+            {/* Image Content */}
             <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 25}} />
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
+
+            </ImageBackground>
             </TouchableOpacity>
+             
+            {/* Text Content */}
+            <Text style={styles.shopname}>Marie's Dry Wash</Text>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
+            </View>
+
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+            </View>
+
+            </View>
         </TouchableHighlight>
         </View>
         </ScrollView>
@@ -137,14 +219,14 @@ const styles = StyleSheet.create({
                 height:hp('5%'),
                 width:wp('10.5%'),
                 borderRadius:100,
-                marginLeft:wp('80%'),
+                marginLeft:wp('40%'),
                 backgroundColor:'#fff',
             },
             android: {
               height:hp('5%'),
               width:wp('10.5%'),
               borderRadius:100,
-              marginLeft:wp('80%'),
+              marginLeft:wp('50%'),
               backgroundColor:'#fff',
               marginTop:hp('5%'),
             },
@@ -160,10 +242,12 @@ const styles = StyleSheet.create({
     header:{
         ...Platform.select({
             ios: {
-                fontSize:wp('4%'),
+                fontSize:wp('5%'),
+                marginTop:hp('1%'),
             },
             android: {
                 fontSize:wp('5%'),
+                marginTop:hp('5.7%'),
             },
 
         })
@@ -184,7 +268,7 @@ const styles = StyleSheet.create({
     headercolor:{
         ...Platform.select({
             ios: {
-                fontSize:wp('4%'),
+                fontSize:wp('5%'),
                 fontWeight:'bold',
             },
             android: {
@@ -225,17 +309,17 @@ const styles = StyleSheet.create({
 shopsinfo:{
     ...Platform.select({
         ios: {
-            height:hp('40%'),
-            width:wp('62%'),
-            borderRadius:25,
+            height:hp('35%'),
+            width:wp('60%'),
+            borderRadius:15,
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
         },
         android: {
             height:hp('40%'),
-            width:wp('60%'),
-            borderRadius:25,
+            width:wp('58%'),
+            borderRadius:15,
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
@@ -247,15 +331,15 @@ shopsinfo:{
 shopsimage:{
     ...Platform.select({
         ios: {
-            height:hp('27%'),
-            width:wp('62%'),
-            borderRadius:25,
+            height:hp('22%'),
+            width:wp('60%'),
+            borderRadius:15,
             backgroundColor:'#cccccc',          
         },
         android: {
             height:hp('27%'),
-             width:wp('60%'),
-            borderRadius:25,
+             width:wp('58%'),
+            borderRadius:15,
             backgroundColor:'#cccccc',
         },
     }) 
@@ -263,21 +347,90 @@ shopsimage:{
 shopname:{
     ...Platform.select({
         ios: {
-            fontSize:wp('5.5%'),
+            fontSize:wp('4.5%'),
             fontWeight:'bold',
-            marginLeft:wp('5%'),
+            marginLeft:wp('4%'),
             marginTop:hp('1.5%'),
         },
         android: {
-            fontSize:wp('6.5%'),
+            fontSize:wp('5%'),
             fontWeight:'bold',
-            marginLeft:wp('5%'),
+            marginLeft:wp('4%'),
             marginTop:hp('1.5%'),
         },
 
     })
 },
-  
+shopname1:{
+    ...Platform.select({
+        ios: {
+            fontSize:wp('3.5%'),
+            color:'#707070',
+            marginLeft:wp('1%'),
+            marginTop:hp('1%'),
+        },
+        android: {
+            fontSize:wp('4%'),
+            color:'#707070',
+            marginLeft:wp('1%'),
+            marginTop:hp('1%'),
+        },
+
+    })
+},
+shopname2:{
+    ...Platform.select({
+        ios: {
+            fontSize:wp('3.5%'),
+            color:'#707070',
+            marginLeft:wp('1.5%'),
+            marginTop:hp('1%'),
+        },
+        android: {
+            fontSize:wp('4%'),
+            color:'#707070',
+            marginLeft:wp('1.5%'),
+            marginTop:hp('1%'),
+        },
+
+    })
+},
+  ratings:{
+    ...Platform.select({
+        ios: {
+            height:hp('3%'),
+            width:wp('15%'),
+            backgroundColor:'#657d81',
+            marginTop:hp('1%'),
+            marginLeft:hp('1%'), 
+            borderRadius:8 , 
+        },
+        android: {
+            height:hp('3%'),
+            width:wp('13%'),
+            backgroundColor:'#657d81',
+            marginTop:hp('1%'),
+            marginLeft:hp('1%'), 
+            borderRadius:8 , 
+        },
+
+    })
+},
+ratingno:{
+    ...Platform.select({
+        ios: {
+            color:'white', 
+            fontWeight:'bold', 
+            marginTop:wp('0.5%'),
+        },
+        android: {
+            fontSize:wp('3.9%'),
+            color:'white',
+            fontWeight:'bold',
+            marginTop:wp('0.5%'),
+        },
+    })
+},
   
   
   

@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Home from './Home';
 import Login from './Login';
+import Register from './Register';
 
 
 export default function Startup({navigation}) {
@@ -12,9 +14,9 @@ export default function Startup({navigation}) {
        <Image source={require('../assets/loginimg.jpg')} style={styles.loginimage}/>
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>We offer laudry services to people</Text>
+       <Text style={styles.headertext4}>across the country.Explore our </Text>
+       <Text style={styles.headertext4}>services and get started today!</Text>
 
       {/* Sign in buttons */}
       <View style={{alignSelf:'center'}}>

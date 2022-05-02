@@ -36,7 +36,7 @@ const ProfileStack = () => {
     );
 }
 
-export default function MainStack() {
+export default function Mainstack() {
   return (
     <Stack.Navigator screenOptions={{headershown: false}} >
         <Stack.Screen  name="Startup" component={Startup} options={{ headerShown: false }}/>
