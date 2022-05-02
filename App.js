@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import MainStack from './navigations/MainStack';
+import Mainstack from './navigations/MainStack';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from './Screens/Startup';
@@ -18,11 +18,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <MainStack />
+      <Mainstack />
     </NavigationContainer>
 
-    </Stack.Navigator>
-    </NavigationContainer>
+    // </Stack.Navigator>
+    // </NavigationContainer>
 
   );
 }
