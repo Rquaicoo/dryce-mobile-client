@@ -3,6 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import Login from './Login';
+import Home from './Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
