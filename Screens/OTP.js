@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import Login from './Login';
+import Home from './Home';
 
 
 
@@ -73,7 +74,7 @@ export default function OTP({navigation}) {
             </View> )}
             </View>
         
-            <TouchableOpacity style={styles.signup}>
+            <TouchableOpacity style={styles.signup} onPress={() => navigation.navigate(Home)}>
             <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>
             </TouchableOpacity>
 
