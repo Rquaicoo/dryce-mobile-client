@@ -23,8 +23,9 @@ export default function Login({navigation}) {
       .post('https://dryce-staging.herokuapp.com/api/auth/login/', payload)
       .then(response => {
         const {token} = response.data;
-        console.log(response.data)
-        //AsyncStorage.setItem('token', token)
+        
+        AsyncStorage.setItem('token', token);
+        navigation.navigate('Home');
       })
   }
 }
