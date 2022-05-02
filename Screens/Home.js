@@ -70,7 +70,7 @@ export default function Home({navigation}) {
         /> */}
 
         {/* Categories */}
-        <ScrollView horizontal='true' >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection:'row', marginTop:hp('5%')}}>
             <TouchableOpacity style={styles.categories}>
             <Image source={require('../assets/img.jpg')} style={styles.imagecat} />
@@ -91,7 +91,7 @@ export default function Home({navigation}) {
         </ScrollView>
 
         <Text style={styles.shops}> Popular Laundry </Text>
-        <ScrollView horizontal='true' >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
         <View style={{flexDirection:'row'}}>
         <TouchableHighlight style={styles.shopsinfo}>
             <View>
@@ -99,7 +99,7 @@ export default function Home({navigation}) {
             <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 25}} />
             </TouchableOpacity>
 
-            <Text style={styles.shopname}>Russel Dry Wash</Text>
+            <Text style={styles.shopname}>Russell Dry Wash</Text>
             </View>
 
         </TouchableHighlight>
