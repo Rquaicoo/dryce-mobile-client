@@ -23,10 +23,10 @@ export default function Startup({navigation}) {
       
       <TouchableHighlight style={styles.loginbuttons}>
       <View style={{flexDirection:'row'}}>
-      <TouchableOpacity style={styles.loginbutton} onPress={() => navigation.navigate(Register)}>
+      <TouchableOpacity style={styles.loginbutton} onPress={() => navigation.navigate("Register")}>
       <Text style={styles.register}> Register</Text>
       </TouchableOpacity >
-      <Text style={styles.login} onPress={() => navigation.navigate(Home)} > Login</Text>
+      <Text style={styles.login} onPress={() => navigation.navigate("Login")} > Login</Text>
       </View>
       
       </TouchableHighlight>

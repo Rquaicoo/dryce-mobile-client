@@ -71,7 +71,7 @@ export default function Home({navigation}) {
         /> */}
 
         {/* Categories */}
-        <ScrollView horizontal='true' >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection:'row', marginTop:hp('5%')}}>
             <TouchableOpacity style={styles.categories}>
             <Ionicons name="shirt" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
@@ -98,7 +98,7 @@ export default function Home({navigation}) {
 
             {/* Popular laundry */}
         <Text style={styles.shops}> Popular Laundry </Text>
-        <ScrollView horizontal='true' >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
         <View style={{flexDirection:'row'}}>
         <TouchableHighlight style={styles.shopsinfo}>
             <View>
@@ -128,6 +128,7 @@ export default function Home({navigation}) {
             <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
             <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
             </View>
+            <Text style={styles.shopname}>Russell Dry Wash</Text>
 
             </View>
 
