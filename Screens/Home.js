@@ -162,7 +162,9 @@ export default function Home({navigation}) {
             </View>
 
             </View>
+
         </TouchableHighlight>
+
         <TouchableHighlight style={styles.shopsinfo}>
         <View>
             {/* Image Content */}
@@ -209,7 +211,7 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#F5F5F4',
+      backgroundColor: 'white',
       
     },
     profile:{
@@ -283,6 +285,15 @@ const styles = StyleSheet.create({
         borderRadius:20,
         backgroundColor:'white',
         marginRight:wp('4%'),
+        marginBottom:wp('5%'),
+        shadowColor: "#b1c8d3",
+            shadowOffset: {
+                width: 0,
+                height: 4,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 14,
+            elevation: 6,
     },
   imagecat:{
     height:hp('8%'),
@@ -314,6 +325,15 @@ shopsinfo:{
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
+            marginBottom:hp('5%'),
+            shadowColor: "#b1c8d3",
+            shadowOffset: {
+                width: 0,
+                height: 4,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 14,
+            elevation: 6,
         },
         android: {
             height:hp('40%'),
