@@ -1,7 +1,8 @@
-
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+
+import MainStack from './navigations/MainStack';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from './Screens/Startup';
 import Login from './Screens/Login';
@@ -13,6 +14,7 @@ import Home from './Screens/Home';
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -23,7 +25,9 @@ export default function App() {
         <Stack.Screen name="OTP" component={OTP}  options={{headerShown: false} }/>
         <Stack.Screen name="Home" component={Home}  options={{headerShown: false} }/>
 
-      </Stack.Navigator>
+    <NavigationContainer>
+      <MainStack />
     </NavigationContainer>
+
   );
 }

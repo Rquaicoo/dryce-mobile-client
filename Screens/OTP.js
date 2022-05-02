@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -6,14 +6,46 @@ import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@
 import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import Login from './Login';
 import Home from './Home';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-export default function OTP({navigation}) {
+export default function OTP({route, navigation}) {
+
+    const sendOTP = (number1, number2, number3, number4, token) => {
+        const otp = number1 + number2 + number3 + number4;
+
+        fetch('http://127.0.0.1:8000/api/auth/verify_user/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+                },
+                body: JSON.stringify({
+                    otp: otp
+                    })
+    })
+    .then(response =>
+        console.log(response.json))
+}
 
   
-    const [Otp, changeOtpState] = useState(false);
- 
+    const [otp, changeOTPState] = useState(false);
+    const [token, setToken] = useState('');
+    const email = route.params.email;
+
+    const[number1, setNumber1] = useState('');
+    const[number2, setNumber2] = useState('');
+    const[number3, setNumber3] = useState('');
+    const[number4, setNumber4] = useState('');
+
+
+    useState(() => {
+        AsyncStorage.getItem('token').then((token) => {
+            setToken(token);
+        })
+    }, [])
+
 
 
 
@@ -21,26 +53,23 @@ export default function OTP({navigation}) {
     <ScrollView style={styles.container}>
        <StatusBar style="auto" />
        <SafeAreaView>
-       <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
-       <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
-       </TouchableHighlight>
-       {/* <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text> */}
+        <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
+                <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
+        </TouchableHighlight>
        
        {/* OTP number verification */}
        
          <View style={styles.otpform}>
-             {!Otp ?
+             {!otp ?
              (<View>
             <TouchableHighlight style={styles.otpbox}>
                 <View>
-                <Text style={styles.otpmaintext}> Verify your number! </Text>
-                <Text style={styles.otptext}> Phone Number </Text>
-                <TouchableHighlight style={styles.numinput}>
-                <TextInput style={styles.otpinput} placeholder="  +233 (23) 456-7890" placeholderTextColor="#8A8A8A" />
-                </TouchableHighlight>
-                <Text style={styles.otptext2}>A 6 digit OTP will be sent to via SMS your mobile number </Text>
+                <Text style={styles.otpmaintext}> Verify your email! </Text>
+                <Text style={styles.otptext}> OTP Verification </Text>
+                
+                <Text style={styles.otptext2}>A 4 digit OTP will be sent to {email} </Text>
                 <Text style={{marginLeft:hp('3.5%'), marginTop:hp('4.5%'), fontSize:wp('3.5%'), fontWeight:'bold',  }} 
-                onPress={() => changeOtpState(!Otp)} >NEXT</Text>
+                onPress={() => changeOTPState(!otp)} >NEXT</Text>
                 </View>
             </TouchableHighlight>
              </View>)
@@ -49,21 +78,25 @@ export default function OTP({navigation}) {
             <TouchableHighlight style={styles.otpbox}>
                 <View>
                 <Text style={styles.otpmaintext}> OTP Verification </Text>
-                <Text style={styles.otptext2}>Enter the OTP you received to</Text>
-                <Text style={styles.otpvernum}>020 XXXX XXXX </Text>
+                <Text style={styles.otptext2}>Enter the OTP you received to {email}</Text>
+                <Text style={styles.otpvernum}> </Text>
 
                 <View style={{flexDirection:'row' , marginLeft:hp('2%'), marginTop:hp('2%')}}>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput  style={styles.otp} placeholder="0" />
+                <TextInput  style={styles.otp} placeholder="0" maxLength={1} 
+                onChangeText={number1 => setNumber1(number1)} />
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput style={styles.otp} placeholder="0"  />
+                <TextInput style={styles.otp} placeholder="0"  
+                onChangeText={number2 => setNumber2(number2)} />
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput style={styles.otp} placeholder="0"  /> 
+                <TextInput style={styles.otp} placeholder="0" 
+                onChangeText={number3 => setNumber3(number3)}  /> 
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput style={styles.otp} placeholder="0"  /> 
+                <TextInput style={styles.otp} placeholder="0" 
+                onChangeText={number4 => setNumber4(number4)} /> 
             </TouchableHighlight>
                 
                 </View>
@@ -74,13 +107,9 @@ export default function OTP({navigation}) {
             </View> )}
             </View>
         
-            <TouchableOpacity style={styles.signup} onPress={() => navigation.navigate(Home)}>
+            <TouchableOpacity style={styles.signup} onPress={() => {sendOTP(number1, number2, number3, number4, token)}}>
             <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>
             </TouchableOpacity>
-
-
-
-
 
 
        </SafeAreaView>
@@ -145,7 +174,7 @@ const styles = StyleSheet.create({
     },
 
     otpbox:{
-        height:hp('40%'),
+        height:hp('47%'),
         width:wp('80%'),
         backgroundColor:'white',
         marginTop:hp('10%'),
