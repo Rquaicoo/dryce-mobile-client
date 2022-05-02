@@ -20,7 +20,7 @@ export default function Login({navigation}) {
     }
     else {
       axios 
-      .post('http://127.0.0.1:8000/api/auth/login/', payload)
+      .post('https://dryce-staging.herokuapp.com/api/auth/login/', payload)
       .then(response => {
         const {token} = response.data;
         console.log(response.data)
