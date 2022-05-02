@@ -29,5 +29,8 @@ export default function App() {
       <MainStack />
     </NavigationContainer>
 
+    </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
