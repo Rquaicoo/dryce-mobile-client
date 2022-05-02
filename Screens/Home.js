@@ -102,11 +102,22 @@ export default function Home({navigation}) {
         <View style={{flexDirection:'row'}}>
         <TouchableHighlight style={styles.shopsinfo}>
             <View>
+            {/* Image Content */}
             <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} />
-            </TouchableOpacity>
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
 
-            <Text style={styles.shopname}>Russel Dry Wash</Text>
+            </ImageBackground>
+            </TouchableOpacity>
+             
+            {/* Text Content */}
+            <Text style={styles.shopname}>Russel's Dry Wash</Text>
 
             <View style={{flexDirection:'row'}}>
             <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
@@ -123,10 +134,21 @@ export default function Home({navigation}) {
         </TouchableHighlight>
         <TouchableHighlight style={styles.shopsinfo}>
         <View>
-            <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} />
-            </TouchableOpacity>
+           {/* Image Content */}
+           <TouchableOpacity style={styles.shopsimage}>
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
 
+            </ImageBackground>
+            </TouchableOpacity>
+             
+            {/* Text Content */}
             <Text style={styles.shopname}>Marie's Dry Wash</Text>
 
             <View style={{flexDirection:'row'}}>
@@ -143,10 +165,21 @@ export default function Home({navigation}) {
         </TouchableHighlight>
         <TouchableHighlight style={styles.shopsinfo}>
         <View>
+            {/* Image Content */}
             <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} />
-            </TouchableOpacity>
+            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+            
+            <TouchableHighlight style={styles.ratings}>
+            <View style={{flexDirection:'row'}}>
+            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+            <Text style={styles.ratingno}> 4.0</Text>
+            </View>
+            </TouchableHighlight>
 
+            </ImageBackground>
+            </TouchableOpacity>
+             
+            {/* Text Content */}
             <Text style={styles.shopname}>Marie's Dry Wash</Text>
 
             <View style={{flexDirection:'row'}}>
@@ -361,7 +394,42 @@ shopname2:{
 
     })
 },
-  
+  ratings:{
+    ...Platform.select({
+        ios: {
+            height:hp('3%'),
+            width:wp('15%'),
+            backgroundColor:'#657d81',
+            marginTop:hp('1%'),
+            marginLeft:hp('1%'), 
+            borderRadius:8 , 
+        },
+        android: {
+            height:hp('3%'),
+            width:wp('13%'),
+            backgroundColor:'#657d81',
+            marginTop:hp('1%'),
+            marginLeft:hp('1%'), 
+            borderRadius:8 , 
+        },
+
+    })
+},
+ratingno:{
+    ...Platform.select({
+        ios: {
+            color:'white', 
+            fontWeight:'bold', 
+            marginTop:wp('0.5%'),
+        },
+        android: {
+            fontSize:wp('3.9%'),
+            color:'white',
+            fontWeight:'bold',
+            marginTop:wp('0.5%'),
+        },
+    })
+},
   
   
   
