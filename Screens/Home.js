@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
               height:hp('5%'),
               width:wp('10.5%'),
               borderRadius:100,
-              marginLeft:wp('50%'),
+              marginLeft:wp('40%'),
               backgroundColor:'#fff',
               marginTop:hp('5%'),
             },

@@ -27,6 +27,9 @@ export default function Login({navigation}) {
         AsyncStorage.setItem('token', token);
         navigation.navigate('Home');
       })
+      .catch(error => {
+        console.log(error);
+      })
   }
 }
 
@@ -64,7 +67,7 @@ export default function Login({navigation}) {
             }
             </View>
         </TouchableHighlight>
-        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Forgot Password?</Text>
+        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {AsyncStorage.removeItem("token")}}> Forgot Password?</Text>
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>

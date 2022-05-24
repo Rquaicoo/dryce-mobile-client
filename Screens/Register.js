@@ -35,7 +35,7 @@ export default function Register({navigation}) {
       }
       else {
         axios 
-        .post('https://dryce-staging.herokuapp.com/api/auth/register/', payload)
+        .post('https://dryce-staging.herokuapp.com/register/', payload)
         .then(response => {
           const {token} = response.data;
   
