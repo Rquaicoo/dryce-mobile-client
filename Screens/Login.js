@@ -75,7 +75,7 @@ export default function Login({navigation}) {
 
         {/* social media buttons */}
         <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
-        <TouchableOpacity style={styles.socialmedia} >
+        <TouchableOpacity style={styles.socialmedia}  onPress={ ()=> navigation.navigate("Home")} >
             <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
         </TouchableOpacity>
         <TouchableOpacity  style={styles.socialmedia}>
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       marginTop:hp('5%'),
       borderRadius:20,
+      
     },
     forminput:{
         width: wp('75%'),

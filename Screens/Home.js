@@ -1,52 +1,13 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Home({navigation}) {
 
-// const categories = [
-//     {
-//         id: 1,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     },
-//     {
-//         id: 2,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     },
-//     {
-//         id: 3,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     },
-//     {
-//         id: 4,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     },
-//     {
-//         id: 5,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     },
-//     {
-//         id: 6,
-//         name: 'Laundry',
-//         image: require('../assets/img.jpg'),
-//     }
-// ];
 
-// const maincategories = ( {item} ) => (
-// <View style={{flexDirection:'row'}}>
-// <TouchableOpacity style={styles.categories}>
-// <Image source={item.image} style={styles.imagecat} />
-// </TouchableOpacity>
-// </View>
-// )
   return (
 
     <ScrollView style={styles.container}>
@@ -62,39 +23,55 @@ export default function Home({navigation}) {
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
-            <Text style={styles.header1}> What service</Text>
-            <Text style={styles.header1}> do you need today?</Text>
+            <Text style={styles.header1}> What service{'\n'} do you need today?</Text>
 
-        {/* <Flatlist  
-        data={categories}
-        renderItem = {maincategories}
-        /> */}
+     
 
         {/* Categories */}
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={{flexDirection:'row', marginTop:hp('5%')}}>
+            <View style={{flexDirection:'row', marginTop:hp('5%'),}}>
             <TouchableOpacity style={styles.categories}>
-            <Ionicons name="shirt" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            <Text style={styles.headbanner}> Subscribe to <Text style={{color:'#0090ff'}}>Laundry+</Text> to get {'\n'} monthly worth of laundry</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
-            <TouchableOpacity style={styles.categories}>
-            <FontAwesome name="shopping-bag" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+           
+            </View>
+        </ScrollView>
+
+
+         {/* Main */}
+         
+            <View style={{flexDirection:'row', marginTop:hp('5%'), alignSelf:'center', }}>
+            <TouchableOpacity style={styles.maincategories}>
+            <Ionicons name="shirt" size={40} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('5.5%')}}/>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Wash & Iron</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
-            <TouchableOpacity style={styles.categories}>
-            <MaterialCommunityIcons name="shoe-print" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.categories}>
-            <Ionicons name="shirt" size={35} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.categories}>
-            <Ionicons name="shirt" size={4350} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('2.5%')}}/>
+            <TouchableOpacity style={styles.maincategories}>
+            <FontAwesome name="shopping-bag" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('5.5%')}}/>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Dry Wash</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             </View>
-        </ScrollView>
+
+            <View style={{flexDirection:'row', marginTop:hp('2%'), marginBottom:hp('5%') ,alignSelf:'center', marginRight:wp('5%') }} >
+            <TouchableOpacity style={styles.maincategories}>
+            <MaterialCommunityIcons name="shoe-print" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('5.5%')}}/>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Ironing</Text>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
+            </TouchableOpacity>
+            
+            <LinearGradient colors={['#43D4FF', '#38ABFD', '#0090ff']} style={styles.gradient}>
+            <TouchableOpacity style={styles.maincategoriess}>
+            <Entypo name="plus" size={50} color="white"  style={{textAlign:'center', marginTop:hp('4%')}}/>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%'),color:'white'   }}> Laundry+</Text>
+            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
+            </TouchableOpacity>
+            </LinearGradient>
+            </View>
+       
+
+
 
             {/* Popular laundry */}
         <Text style={styles.shops}> Popular Laundry </Text>
@@ -128,7 +105,7 @@ export default function Home({navigation}) {
             <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
             <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
             </View>
-            <Text style={styles.shopname}>Russell Dry Wash</Text>
+           
 
             </View>
 
@@ -211,10 +188,55 @@ export default function Home({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: 'white',
-      
+        ...Platform.select({
+            ios: {
+                flex: 1,
+                 backgroundColor: '#F5F5F4',
+            },
+            android: {
+                flex: 1,
+                backgroundColor: '#F5F5F4',
+            },
+
+        })
     },
+
+     headbanner:{
+        ...Platform.select({
+        ios: {
+         fontWeight:'bold', 
+         fontSize:wp('4.5%'),
+         marginLeft:wp('5%'),
+         paddingTop:hp('2.5%'), 
+        },
+        android: {
+         fontWeight:'bold', 
+         fontSize:wp('5%'),
+         marginLeft:wp('5%'),
+         paddingTop:hp('2.5%'), 
+         
+        },
+     
+    })
+    },
+
+    gradient: {
+        ...Platform.select({
+            ios: {
+                 height:hp('17%'),
+                 width:wp('35%'),
+                 borderRadius: 20
+            },
+            android: {
+                 height:hp('17%'),
+                 width:wp('33%'),
+                 borderRadius: 15
+            },
+
+        })
+        
+      },
+
     profile:{
         ...Platform.select({
             ios: {
@@ -281,21 +303,94 @@ const styles = StyleSheet.create({
         })
     },
     categories:{
-        height:hp('10%'),
-        width:wp('20%'),
-        borderRadius:20,
-        backgroundColor:'white',
-        marginRight:wp('4%'),
-        marginBottom:wp('5%'),
-        shadowColor: "#b1c8d3",
-            shadowOffset: {
-                width: 0,
-                height: 4,
+        ...Platform.select({
+            ios: {
+                height:hp('10%'),
+                width:wp('80%'),
+                borderRadius:20,
+                backgroundColor:'white',
+                marginBottom:wp('5%'),
+                marginLeft:wp('5%'),
+                // shadowColor: "#b1c8d3",
+                //     shadowOffset: {
+                //         width: 0,
+                //         height: 4,
+                //     },
+                //     shadowOpacity: 0.2,
+                //     shadowRadius: 14,
+                //     elevation: 6,
             },
-            shadowOpacity: 0.27,
-            shadowRadius: 14,
-            elevation: 6,
+            android: {
+                height:hp('10%'),
+                width:wp('80%'),
+                borderRadius:20,
+                backgroundColor:'white',
+                marginLeft:wp('5%'),
+                marginBottom:wp('5%'),
+                // shadowColor: "#b1c8d3",
+                // shadowOffset: {
+                //     width: 3,
+                //     height: 4,
+                // },
+                // shadowOpacity: 0.7,
+                // shadowRadius: 19,
+                // elevation: 6,
+            },
+    
+        })
+       
     },
+
+    maincategories:{
+        ...Platform.select({
+            ios: {
+                height:hp('17%'),
+                width:wp('35%'),
+                borderRadius:20,
+                backgroundColor:'white',
+                marginRight:wp('5%'),
+                marginBottom:wp('5%'),
+               
+            },
+            android: {
+                height:hp('17%'),
+                width:wp('33%'),
+                borderRadius:15,
+                backgroundColor:'white',
+                marginRight:wp('5%'),
+                marginBottom:wp('5%'),
+               
+            },
+    
+        })
+       
+    },
+
+    maincategoriess:{
+        ...Platform.select({
+            ios: {
+                height:hp('17%'),
+                width:wp('35%'),
+                borderRadius:20,
+                backgroundColor:transparent,
+                marginRight:wp('5%'),
+                marginBottom:wp('5%'),
+               
+            },
+            android: {
+                height:hp('17%'),
+                width:wp('33%'),
+                borderRadius:15,
+                backgroundColor:transparent,
+                marginRight:wp('5%'),
+                marginBottom:wp('5%'),
+               
+            },
+    
+        })
+       
+    },
+
   imagecat:{
     height:hp('8%'),
     width:wp('16%'),
@@ -327,14 +422,14 @@ shopsinfo:{
             marginRight:wp('4%'),
             marginTop:hp('2%'),
             marginBottom:hp('5%'),
-            shadowColor: "#b1c8d3",
-            shadowOffset: {
-                width: 0,
-                height: 4,
-            },
-            shadowOpacity: 0.27,
-            shadowRadius: 14,
-            elevation: 6,
+            // shadowColor: "#b1c8d3",
+            // shadowOffset: {
+            //     width: 0,
+            //     height: 4,
+            // },
+            // shadowOpacity: 0.4,
+            // shadowRadius: 14,
+            // elevation: 6,
         },
         android: {
             height:hp('40%'),
@@ -343,6 +438,15 @@ shopsinfo:{
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
+            marginBottom:hp('5%'),
+            // shadowColor: "#b1c8d3",
+            // shadowOffset: {
+            //     width: 3,
+            //     height: 4,
+            // },
+            // shadowOpacity: 0.7,
+            // shadowRadius: 19,
+            // elevation: 6,
         },
 
     })
