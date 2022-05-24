@@ -8,6 +8,7 @@ import ProfileScreen from '../Screens/ProfileScreen';
 import OTP from '../Screens/OTP';
 import Tabs from './Tabs';
 import Home from '../Screens/Home';
+import Checkout from '../Screens/Checkout';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ export default function Mainstack() {
         <Stack.Screen  name="OTP" component={OTP} options={{ headerShown: false }} /> 
         <Stack.Screen  name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen  name="TabNav" component={Tabs} />
+        <Stack.Screen  name="Checkout" component={Checkout} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

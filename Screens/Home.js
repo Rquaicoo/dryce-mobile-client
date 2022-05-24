@@ -55,7 +55,7 @@ export default function Home({navigation}) {
             </View>
 
             <View style={{flexDirection:'row', marginTop:hp('2%'), marginBottom:hp('5%') ,alignSelf:'center', marginRight:wp('5%') }} >
-            <TouchableOpacity style={styles.maincategories}>
+            <TouchableOpacity style={styles.maincategories} onPress={() => navigation.navigate("Checkout")}    >
             <MaterialCommunityIcons name="shoe-print" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('5.5%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Ironing</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
