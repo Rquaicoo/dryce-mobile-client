@@ -43,10 +43,11 @@ export default function Mainstack() {
   return (
 
     <Stack.Navigator screenOptions={{headershown: false}} >
+        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} /> 
         <Stack.Screen  name="Cart" component={Cart} options={{ headerShown: false }} />
         <Stack.Screen  name="Startup" component={Startup} options={{ headerShown: false }}/>
         <Stack.Screen  name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} /> 
+        
         <Stack.Screen  name="OTP" component={OTP} options={{ headerShown: false }} /> 
         
         <Stack.Screen name="Details" component={Details} options={{ headerShown: false }}/>
