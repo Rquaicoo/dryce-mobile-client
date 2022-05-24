@@ -14,9 +14,7 @@ export default function Startup({navigation}) {
        <Image source={require('../assets/loginimg.jpg')} style={styles.loginimage}/>
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>We offer laudry services to people</Text>
-       <Text style={styles.headertext4}>across the country.Explore our </Text>
-       <Text style={styles.headertext4}>services and get started today!</Text>
+       <Text style={styles.headertext3}>We offer laudry services to  across Ghana</Text>
 
       {/* Sign in buttons */}
       <View style={{alignSelf:'center'}}>
