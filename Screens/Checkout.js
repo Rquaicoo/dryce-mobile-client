@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: hp('10%'),
-        backgroundColor: '#0090ff',
+        backgroundColor: '#14a8ee',
     },
     headerContent: {
        marginTop: hp('5%'),
@@ -170,7 +170,7 @@ loginbuttontext:{
   loginbutton:{
     width: wp('85%'),
     height:hp('8.5%'),
-    backgroundColor: '#0090ff',
+    backgroundColor: '#14a8ee',
     alignSelf:'center',
     marginTop:hp('3%'),
     borderRadius:20,
