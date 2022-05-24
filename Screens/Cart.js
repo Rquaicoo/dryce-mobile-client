@@ -2,16 +2,28 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { Swipeable } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import  Swipeable  from 'react-native-gesture-handler/Swipeable';
 
 import axios from 'axios';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 
+const RightActions = () => {
 
+    return (
+        <TouchableOpacity style={{justifyContent: "center", alignSelf: "center"}}>
+            <View style={{backgroundColor: '#ff0000', width: 50, height: 50, borderRadius: 40, justifyContent: 'center', alignItems: 'center', marginRight: 25}}>
+                <Feather name="trash" size={30} color="white" />
+            </View>
+        </TouchableOpacity>
+    );
+}
 
 export default function Cart({navigation}) {
+
+    
 
   return (
     <View>
@@ -27,6 +39,8 @@ export default function Cart({navigation}) {
       </View>
 
     <ScrollView style={{marginLeft:33, marginTop: 60, height: "60%"}}>
+        <GestureHandlerRootView>
+            <Swipeable renderRightActions={RightActions} >
         <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10,}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:6}}>
                 <Image
@@ -47,9 +61,38 @@ export default function Cart({navigation}) {
                     <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
                 </View>
         </View>
+        </Swipeable>
+        </GestureHandlerRootView>
+
+        <GestureHandlerRootView style={{marginTop:20}}>
+            <Swipeable renderRightActions={RightActions} >
+        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10,}}>
+            <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:6}}>
+                <Image
+                        style={{width: "30%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
+                        source={require("../assets/shirt.png")}
+                    />
+                    <View style={{alignSelf: "center"}}>
+                        <Text style={{fontWeight: "bold", fontSize: 16}}>Shirts</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                    </View>
+                </View>
+
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%",
+                 flex:2, backgroundColor: "#0c74eb",  borderRadius: 10, 
+                 height: 25, paddingRight: -60, justifyContent: "space-between", alignSelf: "center", marginLeft: -50}}>
+                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
+                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                </View>
+        </View>
+        </Swipeable>
+        </GestureHandlerRootView>
 
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10, marginTop: 20}}>
+        <GestureHandlerRootView style={{marginTop:20}}>
+            <Swipeable renderRightActions={RightActions} >
+        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10,}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:6}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -69,9 +112,12 @@ export default function Cart({navigation}) {
                     <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
                 </View>
         </View>
+        </Swipeable>
+        </GestureHandlerRootView>
 
-
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10, marginTop: 20}}>
+        <GestureHandlerRootView style={{marginTop:20}}>
+            <Swipeable renderRightActions={RightActions} >
+        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10,}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:6}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -91,27 +137,8 @@ export default function Cart({navigation}) {
                     <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
                 </View>
         </View>
-
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8, padding: 10, marginTop: 20}}>
-            <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:6}}>
-                <Image
-                        style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
-                        source={require("../assets/shirt.png")}
-                    />
-                    <View style={{alignSelf: "center"}}>
-                        <Text style={{fontWeight: "bold", fontSize: 16}}>Shirts</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
-                    </View>
-                </View>
-
-                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%",
-                 flex:2, backgroundColor: "#0c74eb",  borderRadius: 10, 
-                 height: 25, paddingRight: -60, justifyContent: "space-between", alignSelf: "center", marginLeft: -50}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
-                </View>
-        </View>
+        </Swipeable>
+        </GestureHandlerRootView>
     </ScrollView>
 
       <View style={{backgroundColor: "white", height: "45%", borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
