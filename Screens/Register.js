@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import { Feather, Entypo} from '@expo/vector-icons';
 import axios from 'axios';
 import Login from './Login';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -24,16 +24,22 @@ export default function Register({navigation}) {
     const [validEmail, setValidEmail] = useState(false);
     const [validUsername, setValidUsername] = useState(false);
 
+    const [credentialsCorrect, setCredentialsCorrect] = useState(true);
+    const [loading, setLoading] = useState(false);
+
     const sendPayload = (username, email, password, confirmedPassword) => {
+      setLoading(true);
       const payload = {
         username: username,
         email: email,
         password: password,
       }
       if (username == '' || email == '' || password == '' || confirmedPassword == '') {
+        setLoading(false);
         alert('Please fill in all fields')
       }
       else if (password != confirmedPassword) {
+        setLoading(false);
         alert('Passwords do not match')
       }
       else {
@@ -47,6 +53,14 @@ export default function Register({navigation}) {
           AsyncStorage.setItem('token', token)
   
           navigation.navigate('OTP', {email: email})
+        })
+        .catch(error => {
+          console.log(error);
+          setCredentialsCorrect(false);
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
         })
       }
     }
@@ -105,6 +119,15 @@ export default function Register({navigation}) {
         setEqualPass(false);
       }
     }
+
+    useEffect(() => {
+      setTimeout(() => {
+        checkEmail(email);
+        checkUsername(username);
+        checkEqualPass(password, confirmedPassword);
+      }, 500);
+    }, [email, username, password, confirmedPassword]);
+
       
 
   return (
@@ -115,6 +138,11 @@ export default function Register({navigation}) {
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
        <Text style={styles.headertext3}>Sign up for dryce today.</Text>
+
+      {!credentialsCorrect ?
+     (  <View style={{backgroundColor: "#14a8ee", width: "80%", alignSelf: "center", margin: "5%", padding:2, borderRadius: 10}}>
+          <Text style={styles.headertext4}>Your email or username already exists</Text>
+       </View>) : null}
        
 
       {/* Login form */}
@@ -175,13 +203,22 @@ export default function Register({navigation}) {
             </View>
         </TouchableHighlight>
 
+        {loading ?
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+          <ActivityIndicator size="large" color="#14a8ee" />
+        </View>
+        :
+        null
+        }
+
+
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword);}}>
             <Text style={styles.loginbuttontext} >Register</Text>
         </TouchableOpacity>
 
         {/* signup button */}
-        <Text onPress={() => navigation.navigate("Login")} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}}  > Login</Text> </Text>
+        <Text onPress={() => navigation.navigate("Login")} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}} > Login</Text> </Text>
 
       </View>
        </SafeAreaView>
@@ -287,6 +324,7 @@ const styles = StyleSheet.create({
       fontSize:wp('4%'),
       alignSelf:'center',
       marginTop:hp('0.1%'),
+      color: '#ffffff',
     },
     register:{
       alignSelf:'center',
