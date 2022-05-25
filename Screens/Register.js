@@ -21,6 +21,9 @@ export default function Register({navigation}) {
     const [secure, changeSecureState] = useState(true);
     const [equalpass, setEqualPass] = useState(false);
 
+    const [validEmail, setValidEmail] = useState(false);
+    const [validUsername, setValidUsername] = useState(false);
+
     const sendPayload = (username, email, password, confirmedPassword) => {
       const payload = {
         username: username,
@@ -35,7 +38,7 @@ export default function Register({navigation}) {
       }
       else {
         axios 
-        .post('https://dryce-staging.herokuapp.com/register/', payload)
+        .post('http://127.0.0.1:8000/api/auth/register/', payload)
         .then(response => {
           const {token} = response.data;
   
@@ -47,6 +50,52 @@ export default function Register({navigation}) {
         })
       }
     }
+
+
+    const checkEmail = (email) => {
+      if (email == '') {
+        setValidEmail(false);
+      }
+      else {
+        axios
+        .post('http://127.0.0.1:8000/api/auth/validate_email/', {email: email})
+        .then(response => {
+          if (response.status == 200) {
+            setValidEmail(true);
+          }
+          else {
+            setValidEmail(false);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setValidEmail(false);
+        })
+      }
+    }
+
+    const checkUsername = (username) => {
+      if (username == '') {
+        setValidUsername(false);
+      }
+      else {
+        axios
+        .post('http://127.0.0.1:8000/api/auth/validate_username/', {username: username})
+        .then(response => {
+          if (response.status == 200) {
+            setValidUsername(true);
+          }
+          else if (response.status == 400) {
+            setValidUsername(false);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setValidUsername(false);
+        })
+      }
+    }
+
 
     const checkEqualPass = (password, confirmedPassword) => {
       if(password === confirmedPassword){
@@ -65,25 +114,38 @@ export default function Register({navigation}) {
        
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>Sign up for dryce today.</Text>
+       
 
       {/* Login form */}
       <View>
-        <TouchableHighlight style={styles.loginform}>
-            <TextInput style={styles.forminput}
+        <TouchableHighlight style={styles.loginform1}>
+          <View style={{flexDirection:'row'}}>
+            <TextInput style={styles.forminput1}
              placeholder='Email'
-             onChangeText={(email) => setEmail(email)}
+             onChangeText={(email) => {setEmail(email); checkEmail(email)}}
              defaultValue={email} />
+            { validEmail ? 
+            (<Feather name="check" size={22} color="green" style={{paddingTop:hp('2.7%')}} />) :
+            (<Entypo name="cross" size={22} color="red" style={{paddingTop:hp('2.7%')}}  />)
+            }
+          </View>
+             
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
             <View style={{flexDirection:'row'}}>
             <TextInput style={styles.forminput1}
              placeholder='Username'
-             onChangeText={(username) => setUsername(username)}
+             onChangeText={(username) => {setUsername(username); checkUsername(username)}}
              defaultValue={username} />
+
+          { validUsername ? 
+            (<Feather name="check" size={22} color="green" style={{paddingTop:hp('2.7%')}} />) :
+            (<Entypo name="cross" size={22} color="red" style={{paddingTop:hp('2.7%')}}  />)
+            }
             </View>
+            
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
@@ -219,6 +281,7 @@ const styles = StyleSheet.create({
       fontSize:wp('4%'),
       alignSelf:'center',
       marginTop:hp('3%'),
+      marginBottom:hp('3%'),
     },
     headertext4: {
       fontSize:wp('4%'),
