@@ -12,10 +12,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function OTP({route, navigation}) {
 
+    const [otp, changeOTPState] = useState(false);
+    const [token, setToken] = useState('');
+    const email = route.params.email;
+
+    const[number1, setNumber1] = useState('');
+    const[number2, setNumber2] = useState('');
+    const[number3, setNumber3] = useState('');
+    const[number4, setNumber4] = useState('');
+
+    const [status, setStatus] = useState('');
+    const [invalid, setInvalid] = useState(false);
+
     const sendOTP = (number1, number2, number3, number4, token) => {
         const otp = number1 + number2 + number3 + number4;
 
-        fetch('https://dryce-staging.herokuapp.com/api/auth/verify_user/', {
+        fetch('http://127.0.0.1:8000/api/auth/verify_user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,19 +38,17 @@ export default function OTP({route, navigation}) {
                     })
     })
     .then(response =>
-        console.log(response.json))
+        {setStatus(response.status);
+        if(response.status === 200){
+            navigation.navigate('Home');
+        }
+        else if (response.status === 400){
+            alert('Invalid OTP');
+            }
+        })
 }
 
   
-    const [otp, changeOTPState] = useState(false);
-    const [token, setToken] = useState('');
-    const email = route.params.email;
-
-    const[number1, setNumber1] = useState('');
-    const[number2, setNumber2] = useState('');
-    const[number3, setNumber3] = useState('');
-    const[number4, setNumber4] = useState('');
-
 
     useState(() => {
         AsyncStorage.getItem('token').then((token) => {
