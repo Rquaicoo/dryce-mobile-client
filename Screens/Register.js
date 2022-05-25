@@ -38,7 +38,7 @@ export default function Register({navigation}) {
       }
       else {
         axios 
-        .post('http://127.0.0.1:8000/api/auth/register/', payload)
+        .post('https://dryce-staging.herokuapp.com/api/auth/register/', payload)
         .then(response => {
           const {token} = response.data;
   
@@ -58,7 +58,7 @@ export default function Register({navigation}) {
       }
       else {
         axios
-        .post('http://127.0.0.1:8000/api/auth/validate_email/', {email: email})
+        .post('https://dryce-staging.herokuapp.com/api/auth/validate_email/', {email: email})
         .then(response => {
           if (response.status == 200) {
             setValidEmail(true);
