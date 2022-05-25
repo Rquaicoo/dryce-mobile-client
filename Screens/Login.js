@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -11,11 +11,13 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 export default function Login({navigation}) {
   
   const sendPayload = (username, password) => {
+    setLoading(true);
     const payload = {
       username: username,
       password: password,
     }
     if (username == '' || password == '') {
+      setLoading(false);
       alert('Please fill in all fields')
     }
     else {
@@ -29,6 +31,11 @@ export default function Login({navigation}) {
       })
       .catch(error => {
         console.log(error);
+        setCredentialsCorrect(false);
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
       })
   }
 }
@@ -36,6 +43,8 @@ export default function Login({navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
+    const [credentialsCorrect, setCredentialsCorrect] = useState(true);
+    const [loading, setLoading] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -44,10 +53,12 @@ export default function Login({navigation}) {
        
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>Please sign in to continue.</Text>
 
+       {!credentialsCorrect ?
+     (  <View style={{backgroundColor: "#14a8ee", width: "80%", alignSelf: "center", margin: "5%", padding:2, borderRadius: 10}}>
+          <Text style={styles.headertext4}>Your username or password is incorrect</Text>
+       </View>) : null}
       {/* Login form */}
       <View>
         <TouchableHighlight style={styles.loginform}>
@@ -67,16 +78,27 @@ export default function Login({navigation}) {
             }
             </View>
         </TouchableHighlight>
+
+        {loading ?
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+          <ActivityIndicator size="large" color="#14a8ee" />
+        </View>
+        :
+        null
+        }
+
         <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {AsyncStorage.removeItem("token")}}> Forgot Password?</Text>
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
             <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>
-
+        
+        
+        {/* social media buttons 
         <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Or continue with </Text>
 
-        {/* social media buttons */}
+       
         <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
         <TouchableOpacity style={styles.socialmedia}  onPress={ ()=> navigation.navigate("Home")} >
             <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
@@ -89,7 +111,7 @@ export default function Login({navigation}) {
         </TouchableOpacity>
 
         </View>
-
+    */}
 
         <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
@@ -205,6 +227,7 @@ const styles = StyleSheet.create({
       fontSize:wp('4%'),
       alignSelf:'center',
       marginTop:hp('0.1%'),
+      color: "white"
     },
     register:{
       alignSelf:'center',
