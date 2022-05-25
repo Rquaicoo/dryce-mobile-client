@@ -14,12 +14,15 @@ export default function Home({navigation}) {
        <StatusBar style="auto" />
        <SafeAreaView>
        
-       <View style={{marginLeft:wp('4%')   }}>
-            <View style={{flexDirection:'row',}}>
-            <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
-            <TouchableOpacity style={styles.profile}>
-              <Image source={require('../assets/logo.png')} style={styles.logo}/>
-            </TouchableOpacity>
+       <View style={{marginLeft:wp('4%'),}}>
+           <View style={{flexDirection: "row",}}>
+                <View style={{flexDirection:'row',}}>
+                    <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
+                    <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
+                </View>
+                <TouchableOpacity style={styles.profile}>
+                    <Image source={require('../assets/logo.png')} style={styles.logo}/>
+                </TouchableOpacity>
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
@@ -31,7 +34,7 @@ export default function Home({navigation}) {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection:'row', marginTop:hp('5%'),}}>
             <TouchableOpacity style={styles.categories}>
-            <Text style={styles.headbanner}> Subscribe to <Text style={{color:'#0090ff'}}>Laundry+</Text> to get {'\n'} monthly worth of laundry</Text>
+            <Text style={styles.headbanner}> Subscribe to <Text style={{color:'#0090ff'}}>Dryce+</Text> to get {'\n'} monthly worth of laundry</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
            
@@ -243,14 +246,14 @@ const styles = StyleSheet.create({
                 height:hp('5%'),
                 width:wp('10.5%'),
                 borderRadius:100,
-                marginLeft:wp('40%'),
+                marginLeft:wp('30%'),
                 backgroundColor:'#fff',
             },
             android: {
               height:hp('5%'),
               width:wp('10.5%'),
               borderRadius:100,
-              marginLeft:wp('40%'),
+              marginLeft:wp('30%'),
               backgroundColor:'#fff',
               marginTop:hp('5%'),
             },
@@ -272,6 +275,7 @@ const styles = StyleSheet.create({
             android: {
                 fontSize:wp('5%'),
                 marginTop:hp('5.7%'),
+                marginLeft:hp('1.2%'),
             },
 
         })
