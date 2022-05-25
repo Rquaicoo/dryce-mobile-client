@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
+import { Feather, AntDesign, Entypo, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
@@ -46,6 +46,8 @@ export default function Login({navigation}) {
     const [credentialsCorrect, setCredentialsCorrect] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.container}>
        <StatusBar style="auto" />
@@ -87,7 +89,7 @@ export default function Login({navigation}) {
         null
         }
 
-        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {AsyncStorage.removeItem("token")}}> Forgot Password?</Text>
+        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {setModalVisible(true)}}> Forgot Password?</Text>
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
@@ -112,6 +114,49 @@ export default function Login({navigation}) {
 
         </View>
     */}
+
+<Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }} 
+      
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+             <Entypo name="cross" size={22} color="black"  />
+            </Pressable>
+            <View style={{flexDirection: "row"}}>
+          <Text style={{fontWeight: "300", fontSize: 27}}>Forgot password?</Text>
+          
+            </View>
+          <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter your email below and we'll send you an OTP</Text>
+
+          <TouchableHighlight style={{width: wp('85%'),
+            height:hp('8.5%'),
+            backgroundColor: 'white',
+            alignSelf:'center',
+            marginTop:hp('2%'),
+            borderRadius:20,}}>
+            <TextInput style={{width: wp('75%'),height:hp('8.5%'),marginLeft:wp('2%'), borderColor: "black", borderWidth: 1, borderRadius: 20, textAlign: "center"}}
+            placeholder='Email'
+            onChangeText={() => {setUsername()}} />
+        </TouchableHighlight>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => {}}>
+            <Text style={styles.loginbuttontext}>Submit</Text>
+        </TouchableOpacity>
+
+            
+          </View>
+        </View>
+      </Modal>
 
         <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
@@ -251,10 +296,50 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
-  
-  
-  
-  
+
+    centeredView: {
+      justifyContent: "center",
+      alignItems: "center",
+      
+     
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      width: "100%",
+      height: "100%",
+      marginTop: 450,
+    },
+    button: {
+      borderRadius: 20,
+      padding: 1,
+      height: "auto"
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#ffffff",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
   
   
   
