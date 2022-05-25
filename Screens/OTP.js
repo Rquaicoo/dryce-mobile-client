@@ -27,7 +27,7 @@ export default function OTP({route, navigation}) {
     const sendOTP = (number1, number2, number3, number4, token) => {
         const otp = number1 + number2 + number3 + number4;
 
-        fetch('http://127.0.0.1:8000/api/auth/verify_user/', {
+        fetch('https://dryce-staging.herokuapp.com/api/auth/verify_user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

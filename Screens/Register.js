@@ -80,7 +80,7 @@ export default function Register({navigation}) {
       }
       else {
         axios
-        .post('http://127.0.0.1:8000/api/auth/validate_username/', {username: username})
+        .post('https://dryce-staging.herokuapp.com/api/auth/validate_username/', {username: username})
         .then(response => {
           if (response.status == 200) {
             setValidUsername(true);
