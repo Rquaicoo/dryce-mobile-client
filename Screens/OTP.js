@@ -53,7 +53,7 @@ export default function OTP({route, navigation}) {
     <ScrollView style={styles.container}>
        <StatusBar style="auto" />
        <SafeAreaView>
-        <TouchableHighlight style={{alignSelf:'center', marginTop:hp('5%')}} >
+        <TouchableHighlight style={styles.otpimage} >
                 <Image source={require('../assets/img.png')} style={{height:hp('15%'), width:wp('40%'), borderRadius:100 }} />
         </TouchableHighlight>
        
@@ -134,6 +134,20 @@ const styles = StyleSheet.create({
 
     },
 
+    otpimage:{
+        ...Platform.select({
+            ios: {
+                alignSelf:'center', 
+                marginTop:hp('1%')
+            },
+            android: {
+                alignSelf:'center', 
+                marginTop:hp('5%')
+            },
+            
+          })
+       
+    },
     headertext: {
       ...Platform.select({
         ios: {
@@ -174,12 +188,26 @@ const styles = StyleSheet.create({
     },
 
     otpbox:{
-        height:hp('47%'),
-        width:wp('80%'),
-        backgroundColor:'white',
-        marginTop:hp('10%'),
-        alignSelf:'center',
-        borderRadius:20,
+        ...Platform.select({
+            ios: {
+                height:hp('42%'),
+                width:wp('80%'),
+                backgroundColor:'white',
+                marginTop:hp('7%'),
+                alignSelf:'center',
+                borderRadius:20,
+            },
+            android: {
+                height:hp('45%'),
+                width:wp('80%'),
+                backgroundColor:'white',
+                marginTop:hp('7%'),
+                alignSelf:'center',
+                borderRadius:20,
+            },
+            
+          })
+        
     },
 
     otpmaintext:{

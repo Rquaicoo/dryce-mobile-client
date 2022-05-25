@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
       height:hp('8.5%'),
       backgroundColor: 'white',
       alignSelf:'center',
-      marginTop:hp('3%'),
+      marginTop:hp('4%'),
       borderRadius:20,
     },
     forminput:{
@@ -182,13 +182,13 @@ const styles = StyleSheet.create({
           fontSize:wp('8%'),
           alignSelf:'center',
           fontWeight:'bold',
-          marginTop:hp('1%'),
+          marginTop:hp('4%'),
           
         },
         android: {
-          fontSize:wp('10%'),
+          fontSize:wp('9%'),
           alignSelf:'center',
-          marginTop:hp('7%'),
+          marginTop:hp('9%'),
           fontWeight:'bold',
         },
         
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
           color:'#2B2B27',
         },
         android: {
-          fontSize:wp('10%'),
+          fontSize:wp('9%'),
           alignSelf:'center',
           marginTop:hp('0.1%'),
           fontWeight:'bold',
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     headertext3: {
       fontSize:wp('4%'),
       alignSelf:'center',
-      marginTop:hp('2%'),
+      marginTop:hp('3%'),
     },
     headertext4: {
       fontSize:wp('4%'),
