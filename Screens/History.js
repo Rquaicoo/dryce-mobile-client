@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-export default function Orders ({navigation}) {
+export default function History ({navigation}) {
     return (
 
       <View style={{
@@ -9,7 +9,7 @@ export default function Orders ({navigation}) {
           justifyContent: "center",
           alignItems: "center"
         }}>
-        <Text>Orders Screen Here</Text>
+        <Text style={{color: 'black', fontSize:50 }}>History</Text>
       </View>
     );
 

@@ -19,7 +19,7 @@ export default function App() {
 
     <NavigationContainer>
 
-      <MainStack />
+      {/* <MainStack /> */}
 
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Startup}  options={{headerShown: false} }/>
