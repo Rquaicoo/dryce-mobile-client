@@ -81,39 +81,21 @@ export default function Login({navigation}) {
             </View>
         </TouchableHighlight>
 
+      
+        
+        
+
+        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {setModalVisible(true)}}> Forgot Password?</Text>
+
+        {/* login button */}
         {loading ?
         <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
           <ActivityIndicator size="large" color="#14a8ee" />
         </View>
         :
-        null
-        }
-
-        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {setModalVisible(true)}}> Forgot Password?</Text>
-
-        {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
             <Text style={styles.loginbuttontext}>Login</Text>
-        </TouchableOpacity>
-        
-        
-        {/* social media buttons 
-        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Or continue with </Text>
-
-       
-        <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
-        <TouchableOpacity style={styles.socialmedia}  onPress={ ()=> navigation.navigate("Home")} >
-            <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
-        </TouchableOpacity>
-        <TouchableOpacity  style={styles.socialmedia}>
-            <Text style={styles.socialmediaicon}> <AntDesign name="apple1" size={24} color="black" /></Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialmedia}>
-            <Text style={styles.socialmediaicon}> <FontAwesome5 name="facebook" size={24} color="black" /></Text>
-        </TouchableOpacity>
-
-        </View>
-    */}
+        </TouchableOpacity>}
 
 <Modal
         animationType="slide"
