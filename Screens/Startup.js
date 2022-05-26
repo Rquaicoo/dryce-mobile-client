@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Home from './Home';
 import Login from './Login';
+import Register from './Register';
 
 
 export default function Startup({navigation}) {
@@ -12,19 +14,17 @@ export default function Startup({navigation}) {
        <Image source={require('../assets/loginimg.jpg')} style={styles.loginimage}/>
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>We offer laudry services to  across Ghana</Text>
 
       {/* Sign in buttons */}
       <View style={{alignSelf:'center'}}>
       
       <TouchableHighlight style={styles.loginbuttons}>
       <View style={{flexDirection:'row'}}>
-      <TouchableOpacity style={styles.loginbutton} onPress={() => navigation.navigate(Login)}>
+      <TouchableOpacity style={styles.loginbutton} onPress={() => navigation.navigate("Register")}>
       <Text style={styles.register}> Register</Text>
-      </TouchableOpacity>
-      <Text style={styles.login}> Login</Text>
+      </TouchableOpacity >
+      <Text style={styles.login} onPress={() => navigation.navigate("Login")} > Login</Text>
       </View>
       
       </TouchableHighlight>

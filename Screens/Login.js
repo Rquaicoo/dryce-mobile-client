@@ -1,35 +1,52 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
-import Register from './Register';
+import { Feather, AntDesign, Entypo, EvilIcons, Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
-import Tabs from '../navigations/Tabs';
-import HomeScreen from './HomeScreen';
 
-const sendPayload = (username, password) => {
-  if (username == '' || password == '') {
-    alert('Please fill in all fields')
-  }
-  else {
-
-    fetch('http://192.168.10.253/api/auth/login/', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-    },
-      body: JSON.stringify({'username': username, 'password': password})
-    })
-    .then((response) => console.log(response.json))
-  }
-}
 
 export default function Login({navigation}) {
+  
+  const sendPayload = (username, password) => {
+    setLoading(true);
+    const payload = {
+      username: username,
+      password: password,
+    }
+    if (username == '' || password == '') {
+      setLoading(false);
+      alert('Please fill in all fields')
+    }
+    else {
+      axios 
+      .post('https://dryce-staging.herokuapp.com/api/auth/login/', payload)
+      .then(response => {
+        const {token} = response.data;
+        
+        AsyncStorage.setItem('token', token);
+        navigation.navigate('Home');
+      })
+      .catch(error => {
+        console.log(error);
+        setCredentialsCorrect(false);
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+  }
+}
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
+    const [credentialsCorrect, setCredentialsCorrect] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -38,10 +55,12 @@ export default function Login({navigation}) {
        
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>Please sign in to continue.</Text>
 
+       {!credentialsCorrect ?
+     (  <View style={{backgroundColor: "#14a8ee", width: "80%", alignSelf: "center", margin: "5%", padding:2, borderRadius: 10}}>
+          <Text style={styles.headertext4}>Your username or password is incorrect</Text>
+       </View>) : null}
       {/* Login form */}
       <View>
         <TouchableHighlight style={styles.loginform}>
@@ -61,18 +80,29 @@ export default function Login({navigation}) {
             }
             </View>
         </TouchableHighlight>
-        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Forgot Password?</Text>
+
+        {loading ?
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+          <ActivityIndicator size="large" color="#14a8ee" />
+        </View>
+        :
+        null
+        }
+
+        <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}} onPress={() => {setModalVisible(true)}}> Forgot Password?</Text>
 
         {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
             <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>
-
+        
+        
+        {/* social media buttons 
         <Text style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('3%')}}> Or continue with </Text>
 
-        {/* social media buttons */}
+       
         <View style={{flexDirection:'row', justifyContent:'space-around', paddingTop:hp('3%')}}>
-        <TouchableOpacity style={styles.socialmedia} >
+        <TouchableOpacity style={styles.socialmedia}  onPress={ ()=> navigation.navigate("Home")} >
             <Text style={styles.socialmediaicon}> <AntDesign name="google" size={24} color="black" /></Text>
         </TouchableOpacity>
         <TouchableOpacity  style={styles.socialmedia}>
@@ -83,9 +113,52 @@ export default function Login({navigation}) {
         </TouchableOpacity>
 
         </View>
+    */}
 
+<Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }} 
+      
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+             <Entypo name="cross" size={22} color="black"  />
+            </Pressable>
+            <View style={{flexDirection: "row"}}>
+          <Text style={{fontWeight: "300", fontSize: 27}}>Forgot password?</Text>
+          
+            </View>
+          <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter your email below and we'll send you an OTP</Text>
 
-        <Text onPress={ ()=> navigation.navigate("HomeScreen")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
+          <TouchableHighlight style={{width: wp('85%'),
+            height:hp('8.5%'),
+            backgroundColor: 'white',
+            alignSelf:'center',
+            marginTop:hp('2%'),
+            borderRadius:20,}}>
+            <TextInput style={{width: wp('75%'),height:hp('8.5%'),marginLeft:wp('2%'), borderColor: "black", borderWidth: 1, borderRadius: 20, textAlign: "center"}}
+            placeholder='Email'
+            onChangeText={() => {setUsername()}} />
+        </TouchableHighlight>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => {}}>
+            <Text style={styles.loginbuttontext}>Submit</Text>
+        </TouchableOpacity>
+
+            
+          </View>
+        </View>
+      </Modal>
+
+        <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
       </View>
 
@@ -115,6 +188,7 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       marginTop:hp('5%'),
       borderRadius:20,
+      
     },
     forminput:{
         width: wp('75%'),
@@ -198,6 +272,7 @@ const styles = StyleSheet.create({
       fontSize:wp('4%'),
       alignSelf:'center',
       marginTop:hp('0.1%'),
+      color: "white"
     },
     register:{
       alignSelf:'center',
@@ -221,10 +296,50 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
-  
-  
-  
-  
+
+    centeredView: {
+      justifyContent: "center",
+      alignItems: "center",
+      
+     
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      width: "100%",
+      height: "100%",
+      marginTop: 450,
+    },
+    button: {
+      borderRadius: 20,
+      padding: 1,
+      height: "auto"
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#ffffff",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
   
   
   

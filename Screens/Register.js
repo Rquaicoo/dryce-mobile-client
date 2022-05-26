@@ -1,39 +1,115 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
-import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { Feather, Entypo} from '@expo/vector-icons';
+import axios from 'axios';
 import Login from './Login';
-import OTP from './OTP';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
 
-const sendPayload = (username, email, password, confirmedPassword) => {
-  if (username == '' || email == '' || password == '' || confirmedPassword == '') {
-    alert('Please fill in all fields')
-  }
-  else if (password != confirmedPassword) {
-    alert('Passwords do not match')
-  }
-  else {
-    fetch('https://dryce.herokuapp.com/api/auth/register/', {
-      method: "POST",
-      body: JSON.stringify({'username': username, 'email': email, 'password': password})
-    })
-    .then((response) => console.log(response.json))
-  }
-}
+
 
 export default function Register({navigation}) {
-
+  
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
     const [equalpass, setEqualPass] = useState(false);
+
+    const [validEmail, setValidEmail] = useState(false);
+    const [validUsername, setValidUsername] = useState(false);
+
+    const [credentialsCorrect, setCredentialsCorrect] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const sendPayload = (username, email, password, confirmedPassword) => {
+      setLoading(true);
+      const payload = {
+        username: username,
+        email: email,
+        password: password,
+      }
+      if (username == '' || email == '' || password == '' || confirmedPassword == '') {
+        setLoading(false);
+        alert('Please fill in all fields')
+      }
+      else if (password != confirmedPassword) {
+        setLoading(false);
+        alert('Passwords do not match')
+      }
+      else {
+        axios 
+        .post('https://dryce-staging.herokuapp.com/api/auth/register/', payload)
+        .then(response => {
+          const {token} = response.data;
+  
+          axios.defaults.headers.common.Authorization = `Token ${token}`;
+  
+          AsyncStorage.setItem('token', token)
+  
+          navigation.navigate('OTP', {email: email})
+        })
+        .catch(error => {
+          console.log(error);
+          setCredentialsCorrect(false);
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        })
+      }
+    }
+
+
+    const checkEmail = (email) => {
+      if (email == '') {
+        setValidEmail(false);
+      }
+      else {
+        axios
+        .post('https://dryce-staging.herokuapp.com/api/auth/validate_email/', {email: email})
+        .then(response => {
+          if (response.status == 200) {
+            setValidEmail(true);
+          }
+          else {
+            setValidEmail(false);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setValidEmail(false);
+        })
+      }
+    }
+
+    const checkUsername = (username) => {
+      if (username == '') {
+        setValidUsername(false);
+      }
+      else {
+        axios
+        .post('https://dryce-staging.herokuapp.com/api/auth/validate_username/', {username: username})
+        .then(response => {
+          if (response.status == 200) {
+            setValidUsername(true);
+          }
+          else if (response.status == 400) {
+            setValidUsername(false);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setValidUsername(false);
+        })
+      }
+    }
+
 
     const checkEqualPass = (password, confirmedPassword) => {
       if(password === confirmedPassword){
@@ -43,6 +119,15 @@ export default function Register({navigation}) {
         setEqualPass(false);
       }
     }
+
+    useEffect(() => {
+      setTimeout(() => {
+        checkEmail(email);
+        checkUsername(username);
+        checkEqualPass(password, confirmedPassword);
+      }, 500);
+    }, [email, username, password, confirmedPassword]);
+
       
 
   return (
@@ -52,25 +137,43 @@ export default function Register({navigation}) {
        
        <Text  style={styles.headertext}>Welcome to Dryce</Text>
        <Text style={styles.headertext2}> Laundry App</Text>
-       <Text style={styles.headertext3}>Lore Ipsum is simply dummy text.</Text>
-       <Text style={styles.headertext4}>Lore Ipsum is simply dummy text.</Text>
+       <Text style={styles.headertext3}>Sign up for dryce today.</Text>
+
+      {!credentialsCorrect ?
+     (  <View style={{backgroundColor: "#14a8ee", width: "80%", alignSelf: "center", margin: "5%", padding:2, borderRadius: 10}}>
+          <Text style={styles.headertext4}>Your email or username already exists</Text>
+       </View>) : null}
+       
 
       {/* Login form */}
       <View>
-        <TouchableHighlight style={styles.loginform}>
-            <TextInput style={styles.forminput}
+        <TouchableHighlight style={styles.loginform1}>
+          <View style={{flexDirection:'row'}}>
+            <TextInput style={styles.forminput1}
              placeholder='Email'
-             onChangeText={(email) => setEmail(email)}
+             onChangeText={(email) => {setEmail(email); checkEmail(email)}}
              defaultValue={email} />
+            { validEmail ? 
+            (<Feather name="check" size={22} color="green" style={{paddingTop:hp('2.7%')}} />) :
+            (<Entypo name="cross" size={22} color="red" style={{paddingTop:hp('2.7%')}}  />)
+            }
+          </View>
+             
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
             <View style={{flexDirection:'row'}}>
             <TextInput style={styles.forminput1}
              placeholder='Username'
-             onChangeText={(username) => setUsername(username)}
+             onChangeText={(username) => {setUsername(username); checkUsername(username)}}
              defaultValue={username} />
+
+          { validUsername ? 
+            (<Feather name="check" size={22} color="green" style={{paddingTop:hp('2.7%')}} />) :
+            (<Entypo name="cross" size={22} color="red" style={{paddingTop:hp('2.7%')}}  />)
+            }
             </View>
+            
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.loginform1}>
@@ -100,27 +203,25 @@ export default function Register({navigation}) {
             </View>
         </TouchableHighlight>
 
+        {loading ?
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+          <ActivityIndicator size="large" color="#14a8ee" />
+        </View>
+        :
+        null
+        }
+
+
         {/* login button */}
-        <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword)}}>
-            <Text style={styles.loginbuttontext} onPress={() => navigation.navigate(OTP)} >Register</Text>
+        <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword);}}>
+            <Text style={styles.loginbuttontext} >Register</Text>
         </TouchableOpacity>
 
         {/* signup button */}
-        <Text onPress={() => navigation.navigate(Login)} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}}  > Login</Text> </Text>
-
-
-        
+        <Text onPress={() => navigation.navigate("Login")} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}} > Login</Text> </Text>
 
       </View>
-
-      
-
-
-
-
        </SafeAreaView>
-      
-     
     </ScrollView>
   );
 }
@@ -137,7 +238,7 @@ const styles = StyleSheet.create({
       height:hp('8.5%'),
       backgroundColor: 'white',
       alignSelf:'center',
-      marginTop:hp('3%'),
+      marginTop:hp('4%'),
       borderRadius:20,
     },
     forminput:{
@@ -180,13 +281,13 @@ const styles = StyleSheet.create({
           fontSize:wp('8%'),
           alignSelf:'center',
           fontWeight:'bold',
-          marginTop:hp('1%'),
+          marginTop:hp('4%'),
           
         },
         android: {
-          fontSize:wp('10%'),
+          fontSize:wp('9%'),
           alignSelf:'center',
-          marginTop:hp('7%'),
+          marginTop:hp('9%'),
           fontWeight:'bold',
         },
         
@@ -203,7 +304,7 @@ const styles = StyleSheet.create({
           color:'#2B2B27',
         },
         android: {
-          fontSize:wp('10%'),
+          fontSize:wp('9%'),
           alignSelf:'center',
           marginTop:hp('0.1%'),
           fontWeight:'bold',
@@ -216,12 +317,14 @@ const styles = StyleSheet.create({
     headertext3: {
       fontSize:wp('4%'),
       alignSelf:'center',
-      marginTop:hp('2%'),
+      marginTop:hp('3%'),
+      marginBottom:hp('3%'),
     },
     headertext4: {
       fontSize:wp('4%'),
       alignSelf:'center',
       marginTop:hp('0.1%'),
+      color: '#ffffff',
     },
     register:{
       alignSelf:'center',
