@@ -109,30 +109,31 @@ export default function Login({navigation}) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          
+            <View style={{flexDirection: "row"}}>
+          <Text style={{fontWeight: "300", fontSize: 27, marginRight: hp('10%'), marginBottom: -3}}>Forgot password?</Text>
+          
           <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
              <Entypo name="cross" size={22} color="black"  />
             </Pressable>
-            <View style={{flexDirection: "row"}}>
-          <Text style={{fontWeight: "300", fontSize: 27}}>Forgot password?</Text>
-          
             </View>
           <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter your email below and we'll send you an OTP</Text>
 
           <TouchableHighlight style={{width: wp('85%'),
             height:hp('8.5%'),
-            backgroundColor: 'white',
+            backgroundColor: '#F5F5F4',
             alignSelf:'center',
             marginTop:hp('2%'),
             borderRadius:20,}}>
-            <TextInput style={{width: wp('75%'),height:hp('8.5%'),marginLeft:wp('2%'), borderColor: "black", borderWidth: 1, borderRadius: 20, textAlign: "center"}}
+            <TextInput style={{width: wp('75%'),height:hp('8.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
             placeholder='Email'
             onChangeText={() => {setUsername()}} />
         </TouchableHighlight>
-        <TouchableOpacity style={styles.loginbutton} onPress={() => {}}>
-            <Text style={styles.loginbuttontext}>Submit</Text>
+        <TouchableOpacity style={{width: wp('45%'), height:hp('6.5%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('2%'), borderRadius:20,}} onPress={() => {}}>
+            <Text style={{fontSize:wp('5%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
         </TouchableOpacity>
 
             
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
       margin: 20,
-      backgroundColor: "white",
+      backgroundColor: "#F5F5F4",
       borderRadius: 20,
       padding: 35,
       shadowColor: "#000",
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#F5F5F4",
     },
     textStyle: {
       color: "white",

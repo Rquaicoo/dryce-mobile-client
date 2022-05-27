@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -7,6 +7,7 @@ import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNat
 import Login from './Login';
 import Home from './Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RefreshControl } from 'react-native-web';
 
 
 
@@ -14,7 +15,7 @@ export default function OTP({route, navigation}) {
 
     const [otp, changeOTPState] = useState(false);
     const [token, setToken] = useState('');
-    const email = route.params.email;
+    const email = 'russellquaicoo1@gmail.com'
 
     const[number1, setNumber1] = useState('');
     const[number2, setNumber2] = useState('');
@@ -23,6 +24,11 @@ export default function OTP({route, navigation}) {
 
     const [status, setStatus] = useState('');
     const [invalid, setInvalid] = useState(false);
+
+    const input1 = useRef(null);
+    const input2 = useRef(null);
+    const input3 = useRef(null);
+    const input4 = useRef(null);
 
     const sendOTP = (number1, number2, number3, number4, token) => {
         const otp = number1 + number2 + number3 + number4;
@@ -50,11 +56,13 @@ export default function OTP({route, navigation}) {
 
   
 
-    useState(() => {
-        AsyncStorage.getItem('token').then((token) => {
-            setToken(token);
+    useEffect(() => {
+        //focus on input 1
+        AsyncStorage.getItem('token').then(value => {
+            setToken(value);
         })
-    }, [])
+       // input1.current.focus();
+    }, []);
 
 
 
@@ -93,21 +101,37 @@ export default function OTP({route, navigation}) {
 
                 <View style={{flexDirection:'row' , marginLeft:hp('2%'), marginTop:hp('2%')}}>
                 <TouchableHighlight style={styles.otpnum}>
-                <TextInput  style={styles.otp} placeholder="0" maxLength={1} 
-                onChangeText={number1 => setNumber1(number1)} />
+                <TextInput  style={styles.otp} placeholder="0"
+                autoFocus={true}
+                maxLength={1} 
+                onChangeText={number1 => {setNumber1(number1);
+                 if(number1 != '') {
+                     input2.current.focus();
+                 }}} value={number1} ref={input1} caretHidden={true} keyboardType="number-pad" />
                 </TouchableHighlight>
+
                 <TouchableHighlight style={styles.otpnum}>
                 <TextInput style={styles.otp} placeholder="0"  
-                onChangeText={number2 => setNumber2(number2)} />
+                onChangeText={number2 => {setNumber2(number2); 
+                if(number2 != '') {
+                    input3.current.focus();
+                }}} ref={input2} value={number2} maxLength={1} caretHidden={true} keyboardType="number-pad" />
                 </TouchableHighlight>
+
                 <TouchableHighlight style={styles.otpnum}>
                 <TextInput style={styles.otp} placeholder="0" 
-                onChangeText={number3 => setNumber3(number3)}  /> 
+                onChangeText={number3 => {setNumber3(number3); if(number3 != '') {
+                    input4.current.focus();
+                }}} ref={input3} value={number3} maxLength={1} caretHidden={true} keyboardType="number-pad" /> 
                 </TouchableHighlight>
+
                 <TouchableHighlight style={styles.otpnum}>
                 <TextInput style={styles.otp} placeholder="0" 
-                onChangeText={number4 => setNumber4(number4)} /> 
-            </TouchableHighlight>
+                onChangeText={number4 => {setNumber4(number4);
+                if(number4 = '') {
+                    sendOTP(number1, number2, number3, number4, token);
+                } }} value={number4} ref={input4} maxLength={1} caretHidden={true} keyboardType="number-pad" /> 
+                </TouchableHighlight>
                 
                 </View>
 
@@ -116,10 +140,12 @@ export default function OTP({route, navigation}) {
             </TouchableHighlight>  
             </View> )}
             </View>
-        
+                
+            {otp ?
             <TouchableOpacity style={styles.signup} onPress={() => {sendOTP(number1, number2, number3, number4, token)}}>
             <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> :
+            null }
 
 
        </SafeAreaView>

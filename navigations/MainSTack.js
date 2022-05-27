@@ -72,11 +72,11 @@ export default function MainStack() {
         <Stack.Screen  name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} />  
        */}
-
+        <Stack.Screen name="OTP" component={OTP}  options={{headerShown: false} }/>
         <Stack.Screen name="Startup" component={Startup}  options={{headerShown: false} }/>
         <Stack.Screen name="Login" component={Login}  options={{headerShown: false} }/>
         <Stack.Screen name="Register" component={Register}  options={{headerShown: false} }/>
-        <Stack.Screen name="OTP" component={OTP}  options={{headerShown: false} }/>
+        
 
         <Stack.Screen  name="TabNav" component={Tabs} /> 
         <Stack.Screen  name="Cart" component={Cart} options={{ headerShown: false }} />
