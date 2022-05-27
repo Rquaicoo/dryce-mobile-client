@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable, Alert} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, Entypo, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -9,6 +9,18 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 export default function Login({navigation}) {
+
+  const checkEqualPass = (password, confirmedPassword) => {
+    setTimeout(() => {
+    if(password === confirmedPassword){
+      setEqualPass(true);
+    }
+    else{
+      setEqualPass(false);
+    }
+    }, 500);
+  }
+
   
   const sendPayload = (username, password) => {
     setLoading(true);
@@ -40,6 +52,88 @@ export default function Login({navigation}) {
   }
 }
 
+  const getOTP = (email) => { 
+    //send email to backend
+    setModalLoading(true);
+    const payload = {
+      email: email,
+    }
+    if (email == '') {
+      setModalLoading(false);
+      alert('Please fill in all fields')
+    }
+    else {  
+      axios
+      .post('https://dryce-staging.herokuapp.com/api/auth/resend_otp/', payload)
+      .then(response => {
+        if (response.status === 200) {
+          setModalLoading(false);
+          alert('OTP sent to your email');
+          setModalStatus("otp")
+        }
+
+        else if (response.status === 400) {
+          setModalLoading(false);
+          alert('Email not found');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        setModalLoading(false);
+        alert('Something went wrong');
+      })
+      .finally(() => {
+        setModalLoading(false);
+      })
+    }
+  }
+
+  const resetPassword = (email, otp, password, confirmedPassword) => {
+    if (password == confirmedPassword) {
+      setModalLoading(true);
+      const payload = {
+        email: email,
+        otp: otp,
+        password: password,
+      }
+      console.log(payload)
+      if (email == '' || otp == '') {
+        setModalLoading(false);
+        alert('Please fill in all fields')
+      }
+      else {
+        axios
+        .post('https://dryce-staging.herokuapp.com/api/auth/reset_password/', payload)
+        .then(response => {
+          if (response.status === 200) {
+            setModalLoading(false);
+            alert('Password reset successfully');
+          }
+
+          else if (response.status === 400) {
+            setModalLoading(false);
+            alert('OTP not found');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          setModalLoading(false);
+          alert('Something went wrong');
+        })
+
+        .finally(() => {
+          setModalLoading(false);
+          //setModalStatus("email")
+        })
+      }
+    }
+      else {
+        setModalLoading(false);
+        alert('Password not match');
+    }
+  }
+
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [secure, changeSecureState] = useState(true);
@@ -47,6 +141,16 @@ export default function Login({navigation}) {
     const [loading, setLoading] = useState(false);
 
     const [modalVisible, setModalVisible] = useState(false);
+
+    //hooks for modal
+    const [modalEmail, setModalEmail] = useState('');
+    const [modalOTP, setModalOTP] = useState('');
+    const [modalPassword, setModalPassword] = useState('');
+    const [modalConfirmPassword, setModalConfirmPassword] = useState('');
+    const [modalSecure, changeModalSecureState] = useState(true);
+    const [equalpass, setEqualPass] = useState(true);
+    const [modalLoading, setModalLoading] = useState(false);
+    const [modalStatus, setModalStatus] = useState('email');
 
   return (
     <View style={styles.container}>
@@ -97,49 +201,137 @@ export default function Login({navigation}) {
             <Text style={styles.loginbuttontext}>Login</Text>
         </TouchableOpacity>}
 
-<Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }} 
-      
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          
-            <View style={{flexDirection: "row"}}>
-          <Text style={{fontWeight: "300", fontSize: 27, marginRight: hp('10%'), marginBottom: -3}}>Forgot password?</Text>
-          
-          <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-             <Entypo name="cross" size={22} color="black"  />
-            </Pressable>
-            </View>
-          <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter your email below and we'll send you an OTP</Text>
 
-          <TouchableHighlight style={{width: wp('85%'),
-            height:hp('8.5%'),
-            backgroundColor: '#F5F5F4',
-            alignSelf:'center',
-            marginTop:hp('2%'),
-            borderRadius:20,}}>
-            <TextInput style={{width: wp('75%'),height:hp('8.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
-            placeholder='Email'
-            onChangeText={() => {setUsername()}} />
-        </TouchableHighlight>
-        <TouchableOpacity style={{width: wp('45%'), height:hp('6.5%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('2%'), borderRadius:20,}} onPress={() => {}}>
-            <Text style={{fontSize:wp('5%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
-        </TouchableOpacity>
+          {/* reset password modal */}
+          <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                  }} 
+                
+                >
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                  
+                    <View style={{flexDirection: "row"}}>
+                  <Text style={{fontWeight: "300", fontSize: 27, marginRight: hp('10%'), marginBottom: -3}}>Forgot password?</Text>
+                  
+                  <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                    <Entypo name="cross" size={22} color="black"  />
+                    </Pressable>
+                    </View>
 
-            
-          </View>
-        </View>
-      </Modal>
+                    {/* Enter email */}
+                    {modalStatus === 'email' ? (
+                    <View>
+                        <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter your email below and we'll send you an OTP</Text>
+
+                        <TouchableHighlight style={{width: wp('85%'),
+                          height:hp('8.5%'),
+                          backgroundColor: '#F5F5F4',
+                          alignSelf:'center',
+                          marginTop:hp('2%'),
+                          borderRadius:20,}}>
+                          <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
+                          placeholder='Email'
+                          onChangeText={(email) => {setModalEmail(email)}} />
+                      </TouchableHighlight>
+
+                      {modalLoading ?
+                        (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+                          <ActivityIndicator size="large" color="#14a8ee" />
+                        </View>)
+                        :
+                      (<TouchableOpacity style={{width: wp('35%'), height:hp('4.5%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('0.2%'), borderRadius:20,}} onPress={() => {getOTP(modalEmail)}}>
+                          <Text style={{fontSize:wp('4%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
+                      </TouchableOpacity>)}
+                  </View>):null}
+
+                    
+                   { /*otp input */}
+                   {modalStatus == 'otp' ? (
+                   <View>
+                   <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Enter the 4-digit OTP sent to your email</Text>
+                      <TouchableHighlight style={{width: wp('85%'),
+                          height:hp('8.5%'),
+                          backgroundColor: '#F5F5F4',
+                          alignSelf:'center',
+                          marginTop:hp('2%'),
+                          borderRadius:20,}}>
+                            
+                          <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
+                          placeholder='Enter OTP'
+                          onChangeText={(otp) => {setModalOTP(otp)}} />
+                        </TouchableHighlight>
+
+                        {modalLoading ?
+                          (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+                            <ActivityIndicator size="large" color="#14a8ee" />
+                          </View>)
+                          :
+                      (<TouchableOpacity style={{width: wp('35%'), height:hp('4.5%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('0.2%'), borderRadius:20,}} onPress={() => {setModalStatus('password_reset')}}>
+                          <Text style={{fontSize:wp('4%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
+                      </TouchableOpacity>)}
+                  </View>):null}
+                    
+                  
+                  {/* reset password */}
+                  {modalStatus == 'password_reset' ? ( 
+                  <View>
+                  <Text style={{fontWeight: "300", fontSize: 15, paddingTop: hp('2%')}}>Reset your password</Text>
+                  <View style={{flexDirection: "row"}}>
+                          <TouchableHighlight style={{width: wp('85%'),
+                            height:hp('8.5%'),
+                            backgroundColor: '#F5F5F4',
+                            alignSelf:'center',
+                            marginTop:hp('2%'),
+                            borderRadius:20,}}>
+                              
+                            <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
+                            placeholder='Confirm new password'
+                            secureTextEntry={modalSecure}
+                            onChangeText={(password) => {setModalPassword(password); checkEqualPass(modalPassword, modalConfirmPassword) }} />
+                          </TouchableHighlight>
+                                { !modalSecure ? 
+                                (<Feather name="eye" size={22} color="#403D39" style={{marginLeft: -80, alignSelf: "center"}} onPress={() => changeModalSecureState(!modalSecure)} />) :
+                              (<Feather name="eye-off" size={22} color="#403D39" style={{marginLeft: -80, alignSelf: "center"}} onPress={() => changeModalSecureState(!modalSecure)} />)
+                              }
+                            </View>
+
+                        <View style={{flexDirection: "row"}}>
+                          <TouchableHighlight style={{width: wp('85%'),
+                            height:hp('8.5%'),
+                            backgroundColor: '#F5F5F4',
+                            alignSelf:'center',
+                            marginTop:hp('2%'),
+                            borderRadius:20,}}>
+                              
+                            <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
+                            placeholder='Confirm new password'
+                            secureTextEntry={modalSecure}
+                            onChangeText={(confirmedPassword) => {setModalConfirmPassword(confirmedPassword); checkEqualPass(modalPassword, modalConfirmPassword)}} />
+                          </TouchableHighlight>
+                                { equalpass ? 
+                                (<Feather name="check" size={22} color="green" style={{marginLeft: -80, alignSelf: "center"}} />) :
+                              (<Entypo name="cross" size={22} color="red" style={{marginLeft: -80, alignSelf: "center"}}  />)
+                              }
+                            </View>
+                      <TouchableOpacity style={{width: wp('35%'), height:hp('4.5%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('0.2%'), borderRadius:20,}} onPress={() => {resetPassword(modalEmail, modalOTP, modalPassword, modalConfirmPassword)}}>
+                          <Text style={{fontSize:wp('4%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
+                      </TouchableOpacity>
+                  </View>
+                  ):null}
+
+
+                </View>
+              </View>
+            </Modal>
 
         <Text onPress={ ()=> navigation.navigate("Register")}  style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}>Not a Member already? <Text   style={{fontWeight:'bold'}}>Register</Text> </Text>
 
