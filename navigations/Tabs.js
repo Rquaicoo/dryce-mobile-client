@@ -1,5 +1,5 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainSTack';
+import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
