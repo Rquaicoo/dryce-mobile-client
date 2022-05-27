@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ActivityIndicator, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { borderLeftColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
@@ -22,6 +22,8 @@ export default function OTP({route, navigation}) {
     const[number3, setNumber3] = useState('');
     const[number4, setNumber4] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const [status, setStatus] = useState('');
     const [invalid, setInvalid] = useState(false);
 
@@ -31,6 +33,7 @@ export default function OTP({route, navigation}) {
     const input4 = useRef(null);
 
     const sendOTP = (number1, number2, number3, number4, token) => {
+        setLoading(true);
         const otp = number1 + number2 + number3 + number4;
 
         fetch('https://dryce-staging.herokuapp.com/api/auth/verify_user/', {
@@ -46,12 +49,22 @@ export default function OTP({route, navigation}) {
     .then(response =>
         {setStatus(response.status);
         if(response.status === 200){
+            setLoading(false);
             navigation.navigate('Home');
         }
         else if (response.status === 400){
+            setLoading(false);
             alert('Invalid OTP');
             }
         })
+    .catch(error => {
+        if (error.status === 400){
+            setLoading(false);
+            alert('Please try again');
+        }
+        console.log(error);
+        setLoading(false);
+    })
 }
 
   
@@ -128,7 +141,7 @@ export default function OTP({route, navigation}) {
                 <TouchableHighlight style={styles.otpnum}>
                 <TextInput style={styles.otp} placeholder="0" 
                 onChangeText={number4 => {setNumber4(number4);
-                if(number4 = '') {
+                if(number4 != '') {
                     sendOTP(number1, number2, number3, number4, token);
                 } }} value={number4} ref={input4} maxLength={1} caretHidden={true} keyboardType="number-pad" /> 
                 </TouchableHighlight>
@@ -141,9 +154,15 @@ export default function OTP({route, navigation}) {
             </View> )}
             </View>
                 
+            {/*display continue button on otp screen and loading indicator when posting to endpoint */}
             {otp ?
             <TouchableOpacity style={styles.signup} onPress={() => {sendOTP(number1, number2, number3, number4, token)}}>
-            <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>
+                 {loading ?
+                    <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('0.8%')}}>
+                    <ActivityIndicator size="large" color="#ffffff" />
+                    </View>
+                    :
+                <Text style={{color:'white', textAlign:'center', paddingTop:hp('2.3%'), fontSize:wp('4%'), fontWeight:'bold'}}> Continue </Text>}
             </TouchableOpacity> :
             null }
 
