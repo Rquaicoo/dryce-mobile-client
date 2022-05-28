@@ -4,7 +4,9 @@ import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, To
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, Entypo, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
-import  AsyncStorage  from '@react-native-async-storage/async-storage'
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
+
+import Tabs from '../navigations/Tabs';
 
 
 
@@ -27,7 +29,7 @@ export default function Login({navigation}) {
         const {token} = response.data;
         
         AsyncStorage.setItem('token', token);
-        navigation.navigate('Home');
+        navigation.navigate('Tabs');
       })
       .catch(error => {
         console.log(error);

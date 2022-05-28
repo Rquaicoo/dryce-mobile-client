@@ -3,21 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from '../Screens/Startup';
 import Login from '../Screens/Login';
 import Register from '../Screens/Register';
-import HomeScreen from '../Screens/HomeScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 
 import Orders from '../Screens/Orders';
 import History from '../Screens/History';
-import OTP from './Screens/OTP';
+import OTP from '../Screens/OTP';
+import Checkout from '../Screens/Checkout';
+import Details from '../Screens/Details';
+import Cart from '../Screens/Cart';
 
 import Tabs from './Tabs';
 import Home from '../Screens/Home';
 
-import Checkout from '../Screens/Checkout';
-
-import History from '../Screens/History';
-import Details from '../Screens/Details';
-import Cart from '../Screens/Cart';
 
 
 
@@ -31,7 +28,7 @@ const screenOptionstyle = {
 const HomeStack = () => {
     return(
         <Stack.Navigator screenOptions={screenOptionstyle}>
-            <Stack.Screen  name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen  name="HomeScreen" component={Home} />
         </Stack.Navigator>
     );
 }
@@ -66,29 +63,13 @@ export default function MainStack() {
     <Stack.Navigator screenOptions={{
         headerShown: false
         }} >
-            {/* Old Code */}
-        {/* <Stack.Screen  name="Startup" component={Startup} options={{ headerShown: false }}/>
-        <Stack.Screen  name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} />  
-        <Stack.Screen  name="TabNav" component={Tabs} /> 
-        <Stack.Screen  name="Register" component={Register} options={{ headerShown: false }} /> 
-        <Stack.Screen  name="Cart" component={Cart} options={{ headerShown: false }} />
-        <Stack.Screen  name="Startup" component={Startup} options={{ headerShown: false }}/>
-        <Stack.Screen  name="Login" component={Login} options={{ headerShown: false }} />
-        
-        <Stack.Screen  name="OTP" component={OTP} options={{ headerShown: false }} /> 
-        
-        <Stack.Screen name="Details" component={Details} options={{ headerShown: false }}/>
-        <Stack.Screen name="History" component={History} options={{ headerShown: false }}/>
-        <Stack.Screen  name="Home" component={Home} options={{ headerShown: false }} />
-        
-        <Stack.Screen  name="TabNav" component={Tabs} />
-        <Stack.Screen  name="Checkout" component={Checkout} options={{ headerShown: false }} />*/}
-
+            
         <Stack.Screen name="Home" component={Startup}  options={{headerShown: false} }/>
         <Stack.Screen name="Login" component={Login}  options={{headerShown: false} }/>
         <Stack.Screen name="Register" component={Register}  options={{headerShown: false} }/>
         <Stack.Screen name="OTP" component={OTP}  options={{headerShown: false} }/>
+        <Stack.Screen name="Tabs" component={Tabs}  options={{headerShown: false} }/>
+
     </Stack.Navigator>
   );
 }
