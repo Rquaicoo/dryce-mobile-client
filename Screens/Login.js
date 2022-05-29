@@ -39,7 +39,7 @@ export default function Login({navigation}) {
         const {token} = response.data;
         
         AsyncStorage.setItem('token', token);
-        navigation.navigate('Home');
+        navigation.navigate('TabNav');
       })
       .catch(error => {
         console.log(error);

@@ -15,7 +15,7 @@ export default function OTP({route, navigation}) {
 
     const [otp, changeOTPState] = useState(false);
     const [token, setToken] = useState('');
-    const email = 'russellquaicoo1@gmail.com'
+    const email = route.params.email
 
     const[number1, setNumber1] = useState('');
     const[number2, setNumber2] = useState('');
