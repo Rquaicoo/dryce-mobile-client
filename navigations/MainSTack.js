@@ -27,33 +27,41 @@ const screenOptionstyle = {
 
 const HomeStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle}>
-            <Stack.Screen  name="HomeScreen" component={Home} />
-        </Stack.Navigator>
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle}>
+                <Stack.Screen  name="HomeScreen" component={Home} />
+            </Stack.Navigator>
+        </View>
     );
 }
 
 const ProfileStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle} >
-            <Stack.Screen  name="ProfileScren" component={ProfileScreen} />
-        </Stack.Navigator>
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle} >
+                <Stack.Screen  name="ProfileScren" component={ProfileScreen} />
+            </Stack.Navigator>
+        </View>
     );
 }
 
 const OrdersStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle} >
-            <Stack.Screen  name="Orders" component={Orders} />
-        </Stack.Navigator>
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle} >
+                <Stack.Screen  name="Orders" component={Orders} />
+            </Stack.Navigator>
+        </View>
     );
 }
 
 const HistoryStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle} >
-            <Stack.Screen  name="Historys" component={History} />
-        </Stack.Navigator>
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle} >
+                <Stack.Screen  name="Historys" component={History} />
+            </Stack.Navigator>
+        </View>
     );
 }
 
