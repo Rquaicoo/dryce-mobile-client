@@ -121,12 +121,15 @@ export default function Register({navigation}) {
     }
 
     useEffect(() => {
+      
       setTimeout(() => {
         checkEmail(email);
         checkUsername(username);
         checkEqualPass(password, confirmedPassword);
       }, 500);
     }, [email, username, password, confirmedPassword]);
+
+
 
       
 
