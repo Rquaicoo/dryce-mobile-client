@@ -67,7 +67,7 @@ export default function Home({navigation}) {
             <LinearGradient colors={['#43D4FF', '#38ABFD', '#0090ff']} style={styles.gradient}>
             <TouchableOpacity style={styles.maincategoriess}>
             <Entypo name="plus" size={50} color="white"  style={{textAlign:'center', marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%'),color:'white'   }}> Laundry+</Text>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%'),color:'white'}}> Laundry+</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             </LinearGradient>

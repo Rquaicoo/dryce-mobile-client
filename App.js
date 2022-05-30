@@ -6,7 +6,7 @@ import Mainstack, {ProfileStack, HistoryStack, HomeStack, OrdersStack} from './n
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import MainScreen from './navigations/MainSTack';
+import MainScreen from './navigations/MainStack';
 
 
 const Stack = createNativeStackNavigator();
