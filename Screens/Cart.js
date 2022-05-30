@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         display: 'flex', 
         flexDirection: "row", 
-        marginTop: "20%", 
+        marginTop: "10%", 
         marginLeft: "10%"
     },
     headerText: {
