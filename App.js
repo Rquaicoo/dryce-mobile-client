@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Mainstack from './navigations/MainStack';
+import Mainstack from './navigations/Mainstack';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from './Screens/Startup';

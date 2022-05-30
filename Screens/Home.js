@@ -45,13 +45,13 @@ export default function Home({navigation}) {
          {/* Main */}
          
             <View style={{flexDirection:'row', marginTop:hp('5%'), alignSelf:'center', }}>
-            <TouchableOpacity style={styles.maincategories}>
-            <Ionicons name="shirt" size={40} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('5.5%')}}/>
+            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Cart")}}>
+            <Ionicons name="shirt" size={40} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('4%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Wash & Iron</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
-            <TouchableOpacity style={styles.maincategories}>
-            <FontAwesome name="shopping-bag" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('5.5%')}}/>
+            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Details")}}>
+            <FontAwesome name="shopping-bag" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('4%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Dry Wash</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
@@ -59,7 +59,7 @@ export default function Home({navigation}) {
 
             <View style={{flexDirection:'row', marginTop:hp('2%'), marginBottom:hp('5%') ,alignSelf:'center', marginRight:wp('5%') }} >
             <TouchableOpacity style={styles.maincategories} onPress={() => navigation.navigate("Checkout")}    >
-            <MaterialCommunityIcons name="shoe-print" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('5.5%')}}/>
+            <MaterialCommunityIcons name="shoe-print" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('4%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Ironing</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
@@ -67,7 +67,7 @@ export default function Home({navigation}) {
             <LinearGradient colors={['#43D4FF', '#38ABFD', '#0090ff']} style={styles.gradient}>
             <TouchableOpacity style={styles.maincategoriess}>
             <Entypo name="plus" size={50} color="white"  style={{textAlign:'center', marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%'),color:'white'   }}> Laundry+</Text>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('1%'),color:'white'   }}> Laundry+</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             </LinearGradient>
