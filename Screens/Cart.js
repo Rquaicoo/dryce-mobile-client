@@ -55,11 +55,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -79,11 +82,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -104,11 +110,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -128,11 +137,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -152,11 +164,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -176,11 +191,14 @@ export default function Cart({navigation}) {
                     </View>
                 </View>
 
-                <View style={{display: "flex", flexDirection: "row",flex:2, backgroundColor: "#14a8ee",  borderRadius: 10, 
-                 height:hp('3'),  justifyContent: "space-between", alignSelf: "center", marginLeft: -50, paddingRight:wp('1%'), paddingLeft:wp('1%')}}>
-                    <AntDesign name="minus" size={15} color="black" style={{alignSelf: "center", color: "white"}} />
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", color: "white"}}>0</Text>
-                    <AntDesign name="plus" size={15} color="black" style={{alignSelf: "center", color: "white"}}/>
+                <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                        <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                        <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
+                    </TouchableOpacity>
                 </View>
         </View>
         </Swipeable>
@@ -193,9 +211,9 @@ export default function Cart({navigation}) {
         
             <View style={{display: "flex", flexDirection: "row",  marginTop: "2%", marginBottom: "7%", color: "#14a8eeb", marginLeft:wp('5%'),}}>
                 <TouchableHighlight style={{width:wp('90%')}}>
-                <TextInput style={{width:wp('70'), height: 50, borderColor: "#14a8ee",borderWidth: 0.4, borderRadius: 10,paddingLeft:wp('2%')}}
+                <TextInput style={{width:wp('70'), height: 50, borderColor: "grey",borderWidth: 0.2, borderRadius: 10,paddingLeft:wp('2%')}}
                 placeholder="Enter promo code here"
-                placeholderTextColor="#14a8ee" />
+                placeholderTextColor="grey" />
                 </TouchableHighlight>
                 <Text style={{fontWeight: "bold", fontSize: 13, color: "#14a8ee", marginLeft: -50, alignSelf: "center"}}>APPLY</Text>
             </View>
