@@ -31,10 +31,15 @@ const screenOptionstyle = {
 
 const HomeStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle}>
-            <Stack.Screen  name="Home" component={Home} />
-            <Stack.Screen/>
-        </Stack.Navigator>
+
+
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle}>
+                <Stack.Screen  name="HomeScreen" component={Home} />
+            </Stack.Navigator>
+        </View>
+
+
     );
 }
 
@@ -50,27 +55,26 @@ const ProfileStack = () => {
 
 const OrdersStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle} >
-            <Stack.Screen  name="Checkout" component={Checkout}/>
-            <Stack.Screen  name="Cart" component={Cart} />
-            <Stack.Screen name="Details" component={Details} />
-            <Stack.Screen  name="ProfileScren" component={ProfileScreen} />
-            <Stack.Screen  name="History" component={History} />
-            <Stack.Screen  name="Home" component={Home} />
-        </Stack.Navigator>
+
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle} >
+                <Stack.Screen  name="Orders" component={Orders} />
+            </Stack.Navigator>
+        </View>
+
     );
 }
 
 const HistoryStack = () => {
     return(
-        <Stack.Navigator screenOptions={screenOptionstyle} >
-            <Stack.Screen  name="History" component={History} />
-            <Stack.Screen  name="Home" component={Home} />
-            <Stack.Screen  name="ProfileScren" component={ProfileScreen} />
-            <Stack.Screen  name="Checkout" component={Checkout}/>
-            <Stack.Screen  name="Cart" component={Cart} />
-            <Stack.Screen name="Details" component={Details} />
-        </Stack.Navigator>
+
+
+        <View style={{flex: 1}} collapsable={false} >
+            <Stack.Navigator screenOptions={screenOptionstyle} >
+                <Stack.Screen  name="Historys" component={History} />
+            </Stack.Navigator>
+        </View>
+
     );
 }
 
