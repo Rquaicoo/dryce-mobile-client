@@ -13,6 +13,22 @@ import OTP from './Screens/OTP';
 
 
 const Stack = createNativeStackNavigator();
+// import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
+// import { createStackNavigator } from 'react-navigation-stack'
+// import { useScreens as enableScreens } from 'react-native-screens'
+
+// enableScreens()
+
+// import Origin from './Origin'
+// import Destination from './Destination'
+
+// const navigator = createSharedElementStackNavigator(
+//   createStackNavigator, 
+//   {
+//     Origin, Destination
+//   }
+// )
+
 
 
 export default function App() {

@@ -14,6 +14,7 @@ import Checkout from '../Screens/Checkout';
 import History from '../Screens/History';
 import Details from '../Screens/Details';
 import Cart from '../Screens/Cart';
+import Profile from '../Screens/Profile';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,8 @@ const ProfileStack = () => {
     );
 }
 
+
+
 export default function Mainstack() {
   return (
 
@@ -60,6 +63,7 @@ export default function Mainstack() {
         
         <Stack.Screen  name="TabNav" component={Tabs} />
         <Stack.Screen  name="Checkout" component={Checkout} options={{ headerShown: false }} />
+        <Stack.Screen  name="Profile" component={Profile} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
