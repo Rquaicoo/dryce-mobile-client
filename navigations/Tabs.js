@@ -1,6 +1,9 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import Home from '../Screens/Home';
+import ProfileScreen from '../Screens/ProfileScreen';
+import Details from '../Screens/Details';
+import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,7 +37,7 @@ export default function Tabs() {
                     ),
                   }} />
                   
-                  <Tab.Screen name="OrderTab" component={OrdersStack} 
+                  <Tab.Screen name="Details" component={Details} 
                   options={{
                       tabBarLabel: 'Order',
                       tabBarIcon: ({ color }) => (
@@ -43,7 +46,7 @@ export default function Tabs() {
                     }}
                     />
 
-                <Tab.Screen name="ProfileTab" component={ProfileStack} 
+                <Tab.Screen name="Profile" component={ProfileScreen} 
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (
@@ -52,7 +55,7 @@ export default function Tabs() {
                   }}/>
 
                 
-                <Tab.Screen name="HistoryTab" component={HistoryStack} 
+                <Tab.Screen name="History" component={History} 
                 options={{
                     tabBarLabel: 'History',
                     tabBarIcon: ({ color }) => (
