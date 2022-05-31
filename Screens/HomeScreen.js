@@ -9,7 +9,7 @@ export default function HomeScreen ({navigation}) {
           justifyContent: "center",
           alignItems: "center"
         }}>
-        <Text>Home Screen Here</Text>
+        <Text style={{color: 'black', fontSize:50 }}>Home Screen Here</Text>
       </View>
     );
 

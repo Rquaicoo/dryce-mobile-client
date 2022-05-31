@@ -1,12 +1,25 @@
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, borderRadius,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default function Startup({navigation}) {
+
+  useEffect(() => {
+    AsyncStorage.getItem('token').then((token) => {
+      if(token) {
+        navigation.navigate('Tabs');
+      }
+      else {
+        navigation.navigate('Login');
+      }
+    });
+  }, []);
   return (
     <View style={styles.container}>
        <StatusBar style="auto" />
