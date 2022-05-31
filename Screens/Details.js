@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,ActivityIndicator ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
@@ -9,6 +9,149 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 export default function Details({navigation}) {
+
+    useEffect(() => {
+        AsyncStorage.getItem('token').then((token) => {
+          if(token) {
+            setToken(token);
+          }
+          else {
+            navigation.navigate('Login');
+          }
+        });
+      }, []);
+
+    const [token, setToken] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const [shirtNumber, setShirtNumber] = useState(0);
+    const [cardiganNumber, setCardiganNumber] = useState(0);
+    const [dressNumber, setDressNumber] = useState(0);
+    const [trouserNumber, setTrouserNumber] = useState(0);
+    const [blouseNumber, setBlouseNumber] = useState(0);
+    const [jeansNumber, setJeansNumber] = useState(0);
+
+    const [shirtPrice, setShirtPrice] = useState(0);
+    const [cardiganPrice, setCardiganPrice] = useState(0);
+    const [dressPrice, setDressPrice] = useState(0);
+    const [trouserPrice, setTrouserPrice] = useState(0);
+    const [blousePrice, setBlousePrice] = useState(0);
+    const [jeansPrice, setJeansPrice] = useState(0);
+
+    const increaseCount = (item) => {
+        if(item === 'shirt'){
+            setShirtNumber(shirtNumber + 1);
+            var quantity = shirtNumber + 1;
+            setShirtPrice(quantity * 30);
+        }
+        else if(item === 'cardigan'){
+            setCardiganNumber(cardiganNumber + 1);
+            var quantity = cardiganNumber + 1;
+            setCardiganPrice(quantity * 30);
+        }
+        else if(item === 'dress'){
+            setDressNumber(dressNumber + 1);
+            var quantity = dressNumber + 1;
+            setDressPrice(quantity * 30);
+        }
+        else if(item === 'trouser'){
+            setTrouserNumber(trouserNumber + 1);
+            var quantity = trouserNumber + 1;
+            setTrouserPrice(quantity * 30);
+        }
+        else if(item === 'blouse'){
+            setBlouseNumber(blouseNumber + 1);
+            var quantity = blouseNumber + 1;
+            setBlousePrice(quantity * 30);
+        }
+        else if(item === 'jeans'){
+            setJeansNumber(jeansNumber + 1);
+            var quantity = jeansNumber + 1;
+            setJeansPrice(quantity * 30);
+        }
+    }
+
+    const decreaseCount = (item) => {
+        if(item === 'shirt'){
+            if(shirtNumber > 0){
+                setShirtNumber(shirtNumber - 1);
+                var quantity = shirtNumber - 1;
+                setShirtPrice(quantity * 30);
+            }
+        }
+        else if(item === 'cardigan'){
+            if(cardiganNumber > 0){
+                setCardiganNumber(cardiganNumber - 1);
+                var quantity = cardiganNumber - 1;
+                setCardiganPrice(quantity * 30);
+            }
+        }
+        else if(item === 'dress'){
+            if(dressNumber > 0){
+                setDressNumber(dressNumber - 1);
+                var quantity = dressNumber - 1;
+                setDressPrice(quantity * 30);
+            }
+        }
+        else if(item === 'trouser'){
+            if(trouserNumber > 0){
+                setTrouserNumber(trouserNumber - 1);
+                var quantity = trouserNumber - 1;
+                setTrouserPrice(quantity * 30);
+            }
+        }
+        else if(item === 'blouse'){
+            if(blouseNumber > 0){
+                setBlouseNumber(blouseNumber - 1);
+                var quantity = blouseNumber - 1;
+                setBlousePrice(quantity * 30);
+            }
+        }
+        else if(item === 'jeans'){
+            if(jeansNumber > 0){
+                setJeansNumber(jeansNumber - 1);
+                var quantity = jeansNumber - 1;
+                setJeansPrice(quantity * 30);
+            }
+        }
+    }
+
+    const createCart = () => {
+        setLoading(true);
+        fetch('http://dryce-staging.herokuapp.com/api/v1/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify({
+                shirt: shirtNumber,
+                cardigan: cardiganNumber,
+                dress: dressNumber,
+                trouser: trouserNumber,
+                blouse: blouseNumber,
+                jeans: jeansNumber
+            })
+        })
+        .then(response => {
+            if (response.status == 200) {
+                setLoading(false);
+                navigation.navigate('Cart');
+            }
+            else {
+                setLoading(false);
+                alert('Something went wrong');
+            }
+        })
+        .catch(error => {
+            setLoading(false);
+            alert('Something went wrong');
+        });
+    }
+
+
+
+
 
   return (
     <View>
@@ -27,16 +170,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Shirts</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {shirtPrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("shirt")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{shirtNumber}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("shirt")}} >
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
@@ -50,16 +193,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Cardigan</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {cardiganPrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("cardigan")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{cardiganNumber}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("cardigan")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
@@ -73,16 +216,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Dress</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {dressPrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("dress")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{dressPrice}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("dress")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
@@ -96,16 +239,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Trousers</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {trouserPrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("trouser")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{trouserNumber}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("trouser")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
@@ -119,16 +262,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Blouses</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {blousePrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("blouse")}}>
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{blouseNumber}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("blouse")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
@@ -142,16 +285,16 @@ export default function Details({navigation}) {
                     />
                     <View style={{alignSelf: "center"}}>
                         <Text style={{fontWeight: "bold", fontSize: 16}}>Jeans</Text>
-                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc 30</Text>
+                        <Text style={{fontWeight: "500", fontSize: 12, color: "blue"}}>Ghc {jeansPrice}</Text>
                     </View>
                 </View>
 
                 <View style={{display: "flex", flexDirection: "row", marginLeft: "16%", flex:3}}>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} >
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("jeans")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>0</Text>
-                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}}>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{jeansNumber}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("jeans")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
                 </View>
