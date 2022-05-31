@@ -1,5 +1,5 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainSTack';
 import Home from '../Screens/Home';
 import ProfileScreen from '../Screens/ProfileScreen';
 import Details from '../Screens/Details';
@@ -7,6 +7,7 @@ import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+
 
 const Tab = createMaterialBottomTabNavigator();
 

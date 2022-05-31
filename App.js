@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Mainstack, {ProfileStack, HistoryStack, HomeStack, OrdersStack} from './navigations/MainStack';
+
+import Mainstack from './navigations/MainSTack';
+
 
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

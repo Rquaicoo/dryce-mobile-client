@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,ActivityIndicator ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import axios from 'axios';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
@@ -156,13 +157,15 @@ export default function Details({navigation}) {
   return (
     <View>
       
-      <View style={styles.headerContainer}>
-      <Ionicons name="chevron-back-sharp" size={40} color="black" />
-      <Text style={styles.headerText}>Add details</Text>
-      </View>
+      <View style={styles.header}>
+                <View style={{flexDirection:'row', marginTop:hp('6%'), marginLeft:wp('5%') }}>
+                        <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.goBack()} />
+                        <Text style={{fontWeight:'bold', paddingTop:hp('0.5%'),textAlign:'center',color:'white', flex:1,paddingRight:wp('10%')}}>Details</Text>
+                </View>
+            </View>
 
-    <ScrollView style={{marginLeft:33, marginTop: 60, height: "60%"}}>
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8}}>
+    <ScrollView style={{marginLeft:wp('5%'), height:hp("75%"),}}>
+        <View style={{height: 100, width:wp("90%"),marginTop:hp('5%') ,borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -185,7 +188,7 @@ export default function Details({navigation}) {
                 </View>
         </View>
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
+        <View style={{height: 100,width:wp("90%"), borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -208,7 +211,7 @@ export default function Details({navigation}) {
                 </View>
         </View>
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
+        <View style={{height: 100,width:wp("90%"), borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -231,7 +234,7 @@ export default function Details({navigation}) {
                 </View>
         </View>
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
+        <View style={{height: 100,width:wp("90%"), borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -254,7 +257,7 @@ export default function Details({navigation}) {
                 </View>
         </View>
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
+        <View style={{height: 100,width:wp("90%"), borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "35%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -277,7 +280,7 @@ export default function Details({navigation}) {
                 </View>
         </View>
 
-        <View style={{height: 100, width: "90%", borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
+        <View style={{height: 100,width:wp("90%"), borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", marginTop: 25, flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
                         style={{width: "40%", height: "100%",resizeMode: "contain", alignSelf: "center"}}
@@ -311,6 +314,10 @@ export default function Details({navigation}) {
 }
 
 const styles = StyleSheet.create({
+    header: {
+        height: hp('10%'),
+        backgroundColor: '#14a8ee',
+    },
     headerContainer: {
         display: 'flex', 
         flexDirection: "row", 
@@ -323,12 +330,12 @@ const styles = StyleSheet.create({
         fontSize: 29
     },
     bottomButton: {
-       
+       marginTop:hp("2%"),
         marginLeft: "10%", 
         width: "80%", 
         height: 70,
-        backgroundColor: "#0c74eb", 
-        borderRadius: 10, 
+        backgroundColor: "#14a8ee", 
+        borderRadius: 20, 
         alignItems: "center",
         justifyContent: "center",
     }

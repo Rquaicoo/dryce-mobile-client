@@ -91,6 +91,7 @@ export default function MainStack() {
         <Stack.Screen  name="Checkout" component={Checkout} options={{headerShown: false}}/>
         <Stack.Screen  name="Cart" component={Cart} options={{headerShown: false}} />
         <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
+
     </Stack.Navigator>
   );
 }
