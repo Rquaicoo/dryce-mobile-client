@@ -4,6 +4,11 @@ import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadi
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SharedElement } from 'react-navigation-shared-element'
+
+export default function Home({navigation}) {
+const imageSource   = require('../assets/logo.png');
+
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
@@ -41,10 +46,13 @@ export default function Home({navigation}) {
                     <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
                     <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
                 </View>
-                <TouchableOpacity style={styles.profile}>
-                    {/*<Image source={require('../assets/logo.png')} style={styles.logo}/>*/}
-                    <MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />
+
+                <SharedElement id="someUniqueId">
+                <TouchableOpacity style={styles.profile} onPress={() => {navigation.navigate("Profile")}}>
+                    <Image source={imageSource} style={styles.logo}/>
+                      {/*<MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />*/}
                 </TouchableOpacity>
+                </SharedElement>
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}

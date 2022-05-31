@@ -10,6 +10,8 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 export default function Details({navigation}) {
+    
+      
 
     useEffect(() => {
         AsyncStorage.getItem('token').then((token) => {
