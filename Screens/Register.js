@@ -121,12 +121,15 @@ export default function Register({navigation}) {
     }
 
     useEffect(() => {
+      
       setTimeout(() => {
         checkEmail(email);
         checkUsername(username);
         checkEqualPass(password, confirmedPassword);
       }, 500);
     }, [email, username, password, confirmedPassword]);
+
+
 
       
 
@@ -203,19 +206,16 @@ export default function Register({navigation}) {
             </View>
         </TouchableHighlight>
 
+
+        {/* login button */}
         {loading ?
         <View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
           <ActivityIndicator size="large" color="#14a8ee" />
         </View>
         :
-        null
-        }
-
-
-        {/* login button */}
         <TouchableOpacity style={styles.loginbutton} onPress={() => {sendPayload(username, email, password, confirmedPassword);}}>
             <Text style={styles.loginbuttontext} >Register</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
 
         {/* signup button */}
         <Text onPress={() => navigation.navigate("Login")} style={{color:'#B2AEA9', alignSelf:'center', paddingTop:hp('5%')}}> Already a member? <Text style={{fontWeight:'bold'}} > Login</Text> </Text>

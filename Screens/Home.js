@@ -1,13 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Feather, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SharedElement } from 'react-navigation-shared-element'
 
 export default function Home({navigation}) {
 const imageSource   = require('../assets/logo.png');
+
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
+
+export default function Home({navigation}) {
+
+    const [token, setToken] = useState('');
+    const logout = () => {
+        fetch('http://dryce-staging.herokuapp.com/api/auth/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+        .then(AsyncStorage.removeItem('token'))
+        .then(navigation.navigate('Login'))
+        .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        AsyncStorage.getItem('token').then(value => {
+            setToken(value);
+        });
+    }, []);
+
 
   return (
 
@@ -21,9 +46,11 @@ const imageSource   = require('../assets/logo.png');
                     <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
                     <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
                 </View>
+
                 <SharedElement id="someUniqueId">
                 <TouchableOpacity style={styles.profile} onPress={() => {navigation.navigate("Profile")}}>
                     <Image source={imageSource} style={styles.logo}/>
+                      {/*<MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />*/}
                 </TouchableOpacity>
                 </SharedElement>
             </View>
@@ -68,9 +95,9 @@ const imageSource   = require('../assets/logo.png');
             </TouchableOpacity>
             
             <LinearGradient colors={['#43D4FF', '#38ABFD', '#0090ff']} style={styles.gradient}>
-            <TouchableOpacity style={styles.maincategoriess}>
+            <TouchableOpacity style={styles.maincategoriess} onPress={() => {navigation.navigate("Cart")}}>
             <Entypo name="plus" size={50} color="white"  style={{textAlign:'center', marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('1%'),color:'white'   }}> Laundry+</Text>
+            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('1%'),color:'white'}}> Dryce+</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
             </LinearGradient>
@@ -100,7 +127,7 @@ const imageSource   = require('../assets/logo.png');
             </TouchableOpacity>
              
             {/* Text Content */}
-            <Text style={styles.shopname}>Russel's Dry Wash</Text>
+            <Text style={styles.shopname}>Russell's Dry Wash</Text>
 
             <View style={{flexDirection:'row'}}>
             <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
@@ -251,6 +278,7 @@ const styles = StyleSheet.create({
                 borderRadius:100,
                 marginLeft:wp('30%'),
                 backgroundColor:'#fff',
+                justifyContent:'center',
             },
             android: {
               height:hp('5%'),
@@ -259,6 +287,7 @@ const styles = StyleSheet.create({
               marginLeft:wp('30%'),
               backgroundColor:'#fff',
               marginTop:hp('5%'),
+              justifyContent:'center',
             },
             
           })

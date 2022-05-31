@@ -9,7 +9,7 @@ export default function Orders ({navigation}) {
           justifyContent: "center",
           alignItems: "center"
         }}>
-        <Text>Home Screen Here</Text>
+        <Text>Orders Screen Here</Text>
       </View>
     );
 
