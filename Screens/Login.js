@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable, Alert} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -11,6 +11,14 @@ import Tabs from '../navigations/Tabs';
 
 
 export default function Login({navigation}) {
+
+  useEffect(() => {
+    AsyncStorage.getItem('token').then((token) => {
+      if(token) {
+        navigation.navigate('Home');
+      }
+    });
+  }, []);
 
   const checkEqualPass = (password, confirmedPassword) => {
     setTimeout(() => {

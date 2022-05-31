@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
@@ -10,18 +10,151 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 
-const RightActions = () => {
-
-    return (
-        <TouchableOpacity style={{justifyContent: "center", alignSelf: "center"}}>
-            <View style={{backgroundColor: '#ff0000', width: 50, height: 50, borderRadius: 40, justifyContent: 'center', alignItems: 'center', marginRight: 25}}>
-                <Feather name="trash" size={30} color="white" />
-            </View>
-        </TouchableOpacity>
-    );
-}
-
 export default function Cart({navigation}) {
+
+    const RightActions = (item) => {
+        decreaseCount(item);
+
+        return (
+            <TouchableOpacity style={{justifyContent: "center", alignSelf: "center"}}>
+                <View style={{backgroundColor: '#ff0000', width: 50, height: 50, borderRadius: 40, justifyContent: 'center', alignItems: 'center', marginRight: 25}}>
+                    <Feather name="trash" size={30} color="white" />
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    useEffect(() => {
+        AsyncStorage.getItem('token').then((token) => {
+          setToken(token);
+        });
+      }, []);
+
+    const [token, setToken] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const [shirtNumber, setShirtNumber] = useState(0);
+    const [cardiganNumber, setCardiganNumber] = useState(0);
+    const [dressNumber, setDressNumber] = useState(0);
+    const [trouserNumber, setTrouserNumber] = useState(0);
+    const [blouseNumber, setBlouseNumber] = useState(0);
+    const [jeansNumber, setJeansNumber] = useState(0);
+
+    const [shirtPrice, setShirtPrice] = useState(0);
+    const [cardiganPrice, setCardiganPrice] = useState(0);
+    const [dressPrice, setDressPrice] = useState(0);
+    const [trouserPrice, setTrouserPrice] = useState(0);
+    const [blousePrice, setBlousePrice] = useState(0);
+    const [jeansPrice, setJeansPrice] = useState(0);
+      
+    const increaseCount = (item) => {
+        if(item === 'shirt'){
+            setShirtNumber(shirtNumber + 1);
+            var quantity = shirtNumber + 1;
+            setShirtPrice(quantity * 30);
+        }
+        else if(item === 'cardigan'){
+            setCardiganNumber(cardiganNumber + 1);
+            var quantity = cardiganNumber + 1;
+            setCardiganPrice(quantity * 30);
+        }
+        else if(item === 'dress'){
+            setDressNumber(dressNumber + 1);
+            var quantity = dressNumber + 1;
+            setDressPrice(quantity * 30);
+        }
+        else if(item === 'trouser'){
+            setTrouserNumber(trouserNumber + 1);
+            var quantity = trouserNumber + 1;
+            setTrouserPrice(quantity * 30);
+        }
+        else if(item === 'blouse'){
+            setBlouseNumber(blouseNumber + 1);
+            var quantity = blouseNumber + 1;
+            setBlousePrice(quantity * 30);
+        }
+        else if(item === 'jeans'){
+            setJeansNumber(jeansNumber + 1);
+            var quantity = jeansNumber + 1;
+            setJeansPrice(quantity * 30);
+        }
+    }
+
+    const decreaseCount = (item) => {
+        if(item === 'shirt'){
+            if(shirtNumber > 0){
+                setShirtNumber(shirtNumber - 1);
+                var quantity = shirtNumber - 1;
+                setShirtPrice(quantity * 30);
+            }
+        }
+        else if(item === 'cardigan'){
+            if(cardiganNumber > 0){
+                setCardiganNumber(cardiganNumber - 1);
+                var quantity = cardiganNumber - 1;
+                setCardiganPrice(quantity * 30);
+            }
+        }
+        else if(item === 'dress'){
+            if(dressNumber > 0){
+                setDressNumber(dressNumber - 1);
+                var quantity = dressNumber - 1;
+                setDressPrice(quantity * 30);
+            }
+        }
+        else if(item === 'trouser'){
+            if(trouserNumber > 0){
+                setTrouserNumber(trouserNumber - 1);
+                var quantity = trouserNumber - 1;
+                setTrouserPrice(quantity * 30);
+            }
+        }
+        else if(item === 'blouse'){
+            if(blouseNumber > 0){
+                setBlouseNumber(blouseNumber - 1);
+                var quantity = blouseNumber - 1;
+                setBlousePrice(quantity * 30);
+            }
+        }
+        else if(item === 'jeans'){
+            if(jeansNumber > 0){
+                setJeansNumber(jeansNumber - 1);
+                var quantity = jeansNumber - 1;
+                setJeansPrice(quantity * 30);
+            }
+        }
+    }
+
+useEffect(() => {
+    AsyncStorage.getItem('token').then((token) => {
+        setToken(token);
+        fetch('http://dryce-staging.herokuapp.com/api/cart', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+                }
+                })
+                .then(Response => {
+                    setShirtNumber(Response.data.shirt);
+                    setShirtPrice(Response.data.shirt * 30);
+                    setCardiganNumber(Response.data.cardigan);
+                    setCardiganPrice(Response.data.cardigan * 30);
+                    setDressNumber(Response.data.dress);
+                    setDressPrice(Response.data.dress * 30);
+                    setTrouserNumber(Response.data.trouser);
+                    setTrouserPrice(Response.data.trouser * 30);
+                    setBlouseNumber(Response.data.blouse);
+                    setBlousePrice(Response.data.blouse * 30);
+                    setJeansNumber(Response.data.jeans);
+                    setJeansPrice(Response.data.jeans * 30);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+    });
+}, []);
+
 
     
 
@@ -214,7 +347,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         display: 'flex', 
         flexDirection: "row", 
-        marginTop: "20%", 
+        marginTop: "10%", 
         marginLeft: "10%"
     },
     headerText: {
