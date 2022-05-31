@@ -1,5 +1,5 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainSTack';
+import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import Home from '../Screens/Home';
 import ProfileScreen from '../Screens/ProfileScreen';
 import Details from '../Screens/Details';

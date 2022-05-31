@@ -5,11 +5,12 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SharedElement } from 'react-navigation-shared-element'
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
 const imageSource   = require('../assets/logo.png');
 
-import  AsyncStorage  from '@react-native-async-storage/async-storage';
+
 
 export default function Home({navigation}) {
 
