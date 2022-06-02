@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from '../Screens/Startup';
 import Login from '../Screens/Login';
 import Register from '../Screens/Register';
-import ProfileScreen from '../Screens/ProfileScreen';
+
 
 import Orders from '../Screens/Orders';
 import History from '../Screens/History';
@@ -47,7 +47,7 @@ const ProfileStack = () => {
     return(
         <View style={{flex: 1}} collapsable={false} >
             <Stack.Navigator screenOptions={screenOptionstyle} >
-                <Stack.Screen  name="ProfileScren" component={ProfileScreen} />
+                <Stack.Screen  name="ProfileScreen" component={Profile} />
             </Stack.Navigator>
         </View>
     );
@@ -92,7 +92,7 @@ export default function MainStack() {
 
         <Stack.Screen  name="History" component={History} options={{headerShown: false}} />
         <Stack.Screen  name="Home" component={Home} options={{headerShown: false}} />
-        <Stack.Screen  name="ProfileScren" component={ProfileScreen} options={{headerShown: false}} />
+        
         <Stack.Screen  name="Checkout" component={Checkout} options={{headerShown: false}}/>
         <Stack.Screen  name="Cart" component={Cart} options={{headerShown: false}} />
         <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
