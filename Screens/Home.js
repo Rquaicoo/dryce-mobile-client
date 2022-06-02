@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SharedElement } from 'react-navigation-shared-element'
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
-// export default function Home({navigation}) {
-
-
-
-
 export default function Home({navigation}) {
+const imageSource   = require('../assets/logo.png');
 
-    const imageSource   = require('../assets/logo.png');
-    
     const [token, setToken] = useState('');
+    const [vendors, setVendors] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [username, setUsername] = useState('');
     const logout = () => {
-        fetch('http://dryce-staging.herokuapp.com/api/auth/logout', {
+        fetch('https://dryce-staging.herokuapp.com/api/auth/logout', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,8 +30,44 @@ export default function Home({navigation}) {
     useEffect(() => {
         AsyncStorage.getItem('token').then(value => {
             setToken(value);
+            fetchVendors(value);
+            getProfile(value);
         });
     }, []);
+
+    const fetchVendors = (token) => {
+        fetch('https://dryce-staging.herokuapp.com/vendor/business_registration/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            setVendors(data);
+            setLoading(false);
+        })
+        .catch(err => console.log(err))
+    }
+
+    const getProfile = (token) => {
+                fetch('https://dryce-staging.herokuapp.com/api/profile/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                },
+                })
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    setUsername(responseJson.user.username)
+                })
+                .catch(error => {
+                    console.log(error)
+                }) 
+    }
+
 
 
   return (
@@ -47,13 +80,12 @@ export default function Home({navigation}) {
            <View style={{flexDirection: "row",}}>
                 <View style={{flexDirection:'row',}}>
                     <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
-                    <Text style={styles.header} > Welcome <Text style={styles.headercolor}> Collins</Text> </Text>
+                    <Text style={styles.header} > Welcome <Text style={styles.headercolor}> {username}</Text> </Text>
                 </View>
 
                 <SharedElement id="someUniqueId">
-                <TouchableOpacity style={styles.profile} onPress={() => {navigation.navigate("Profile")}}>
-                    <Image source={imageSource} style={styles.logo}/>
-                      {/*<MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />*/}
+                <TouchableOpacity style={styles.profile} onPress={() => {logout()}}>
+                      <MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />
                 </TouchableOpacity>
                 </SharedElement>
             </View>
@@ -76,14 +108,14 @@ export default function Home({navigation}) {
 
 
          {/* Main */}
-         
+
             <View style={{flexDirection:'row', marginTop:hp('5%'), alignSelf:'center', }}>
-            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Cart")}}>
+            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Details")}}>
             <Ionicons name="shirt" size={40} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('4%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Wash & Iron</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>
-            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Details")}}>
+            <TouchableOpacity style={styles.maincategories} onPress={() => {console.log(vendors[0])}}>
             <FontAwesome name="shopping-bag" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('4%')}}/>
             <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Dry Wash</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
@@ -111,107 +143,55 @@ export default function Home({navigation}) {
 
             {/* Popular laundry */}
         <Text style={styles.shops}> Popular Laundry </Text>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-        <View style={{flexDirection:'row'}}>
-        <TouchableHighlight style={styles.shopsinfo}>
-            <View>
-            {/* Image Content */}
-            <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
-            
-            <TouchableHighlight style={styles.ratings}>
+        {loading ?
+            (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+            <ActivityIndicator size="large" color="#14a8ee" />
+            </View>) :
+            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: "15%"}} >
+            {vendors && (
             <View style={{flexDirection:'row'}}>
-            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
-            <Text style={styles.ratingno}> 4.0</Text>
-            </View>
+                {vendors.map((vendor, index) => (
+                <View key={index} >
+            <TouchableHighlight style={styles.shopsinfo} >
+                <View>
+                {/* Image Content */}
+                <TouchableOpacity style={styles.shopsimage} onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
+                <ImageBackground source={{
+                    uri: 'https://dryce-staging.herokuapp.com' + vendor.picture
+                }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+                
+                <TouchableHighlight style={styles.ratings}>
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+                <Text style={styles.ratingno}>{vendor.rating}.0</Text>
+                </View>
+                </TouchableHighlight>
+
+                </ImageBackground>
+                </TouchableOpacity>
+                
+                {/* Text Content */}
+                <View onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
+                <Text style={styles.shopname}>{vendor.name}</Text>
+
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname1}>{vendor.address}</Text>
+                </View>
+
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+                </View>
+                </View>
+
+                </View>
+
             </TouchableHighlight>
+            </View>))}
 
-            </ImageBackground>
-            </TouchableOpacity>
-             
-            {/* Text Content */}
-            <Text style={styles.shopname}>Russell's Dry Wash</Text>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
-            </View>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
-            </View>
-           
-
-            </View>
-
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.shopsinfo}>
-        <View>
-           {/* Image Content */}
-           <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
-            
-            <TouchableHighlight style={styles.ratings}>
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
-            <Text style={styles.ratingno}> 4.0</Text>
-            </View>
-            </TouchableHighlight>
-
-            </ImageBackground>
-            </TouchableOpacity>
-             
-            {/* Text Content */}
-            <Text style={styles.shopname}>Marie's Dry Wash</Text>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
-            </View>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
-            </View>
-
-            </View>
-
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.shopsinfo}>
-        <View>
-            {/* Image Content */}
-            <TouchableOpacity style={styles.shopsimage}>
-            <ImageBackground source={require('../assets/loginimg.jpg')} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
-            
-            <TouchableHighlight style={styles.ratings}>
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
-            <Text style={styles.ratingno}> 4.0</Text>
-            </View>
-            </TouchableHighlight>
-
-            </ImageBackground>
-            </TouchableOpacity>
-             
-            {/* Text Content */}
-            <Text style={styles.shopname}>Marie's Dry Wash</Text>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname1}>Univ of Ghana, Pent:Block C </Text>
-            </View>
-
-            <View style={{flexDirection:'row'}}>
-            <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
-            <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
-            </View>
-
-            </View>
-        </TouchableHighlight>
-        </View>
-        </ScrollView>
+            </View>)}
+        </ScrollView>)}
 
 
 
@@ -595,7 +575,5 @@ ratingno:{
     })
 },
   
+  });
   
-  
-
-});

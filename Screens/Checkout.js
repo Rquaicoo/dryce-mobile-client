@@ -1,14 +1,130 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ActivityIndicator, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default function Checkout({navigation}) {
     const [select, changeSelectState] = useState(false);
     const [select1, changeSelect1State] = useState(false);
-    const [select2, changeSelect2State] = useState(false);
+    const [select2, changeSelect2State] = useState(true);
+
+    const [loading, setLoading] = useState(false);
+
+    const [token, setToken] = useState('');
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [address, setAddress] = useState("")
+    const [cart, setCart] = useState([]);
+
+
+    useEffect(() => {
+        alert("Only 'Payment on Delivery' is available at the moment")
+        getProfile();
+        getCart();
+    }, [])
+
+    const getProfile = () => {
+        AsyncStorage.getItem('token').then((token) => {
+            if(token) {
+                setToken(token)
+                setLoading(true);
+                fetch('https://dryce-staging.herokuapp.com/api/profile/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                },
+                })
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    setName(responseJson.regular_user.name)
+                    setPhone(responseJson.regular_user.phone)
+                    setAddress(responseJson.regular_user.address)
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.log(error)
+                    setLoading(false);
+                })
+            }
+            else {
+                navigation.navigate('Login');
+            }
+        });
+    }
+
+ const getCart = () => {
+        AsyncStorage.getItem('token').then((token) => {
+            if (token) {
+                setLoading(true);
+                fetch('http://dryce-staging.herokuapp.com/api/cart/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                        }
+                        })
+                        .then(response => 
+                            {if (response.status === 200) {
+                                return response.json();
+                            }
+                            else {
+                                alert('Cart does not exist');
+                                setLoading(false);
+                                navigation.navigate('Details');
+                                return null;
+                            }
+                        }
+                        )
+                        .then(data => {
+                            setCart(data);
+                            setLoading(false);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            alert('Error');
+                        })
+                        .finally(() => {
+                            setLoading(false);
+                        })
+                    }
+        });
+    }
+
+const createOrder = () => {
+    setLoading(true);
+    fetch('http://dryce-staging.herokuapp.com/api/order/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify({
+                cart: cart.id,
+                payment_method : "Payment on Delivery",
+                delivery: "Pickup"
+                })
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    alert('Order created successfully. You will receive a confirmation email shortly.');
+                    navigation.navigate('Home');
+                }
+                else {
+                    alert('Error');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                alert('Error');
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+        }
 
     return (
         <View style={styles.container}>
@@ -24,16 +140,16 @@ export default function Checkout({navigation}) {
 {/* Addressing Details */}
                 <View style={{flexDirection:'row'}}>
                 <Text style={{ fontWeight:'bold', marginTop:hp('5%'), marginLeft:wp('5%'),   }}> Addressing Details</Text>
-                <Text style={{ marginLeft:wp('40%'),marginTop:hp('5%'),   }}> Change</Text>
+                <Text style={{ marginLeft:wp('40%'),marginTop:hp('5%'),   }} onPress={() => {navigation.navigate("Profile")}}> Edit</Text>
                 </View>
 
             <TouchableOpacity style={styles.try}>
                 <View style={{marginTop:hp('2%')}}>
-                    <Text style={styles.addressinfo}> Mr. Quaidoo Ebenezer</Text>
+                    <Text style={styles.addressinfo}>{name}</Text>
                     <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.2, width:wp('80%'),marginTop:hp('2%'),marginBottom:hp('1%'), alignSelf:'center' }}/>
-                    <Text style={styles.addressinfo}> Madina Estate, Infront of the Court.</Text>
+                    <Text style={styles.addressinfo}>{address}</Text>
                     <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.3, width:wp('80%'), marginTop:hp('2%'),marginBottom:hp('1%'), alignSelf:'center' }}/>
-                    <Text style={styles.addressinfo}> 0203000000</Text>
+                    <Text style={styles.addressinfo}>{phone}</Text>
                 </View>
             </TouchableOpacity>
 {/* Payment Method */}
@@ -77,13 +193,16 @@ export default function Checkout({navigation}) {
             <View>
             <View style={{flexDirection:'row'}}>
             <Text style={{ marginTop:hp('5.3%'), marginLeft:wp('5%'), fontSize:wp('4%')   }}>Total Amount</Text>
-            <Text style={{ marginTop:hp('5%'), marginLeft:wp('45%'), fontWeight:'bold', fontSize:wp('5%')   }}> ¢50.00</Text>
+            <Text style={{ marginTop:hp('5%'), marginLeft:wp('45%'), fontWeight:'bold', fontSize:wp('4%')   }}>GHS {cart.cost}.00</Text>
             </View>
-
-            <TouchableOpacity style={styles.loginbutton} onPress={() => sendPayload(username, password)}>
-            <Text style={styles.loginbuttontext}>Proceed to Payment</Text>
-            </TouchableOpacity>
-
+            
+            {loading ?
+                (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+                  <ActivityIndicator size="large" color="#14a8ee" />
+                </View>) :
+            (<TouchableOpacity style={styles.loginbutton} onPress={() => {createOrder()}}>
+            <Text style={styles.loginbuttontext}>Checkout</Text>
+            </TouchableOpacity>)}
             </View>
 
 

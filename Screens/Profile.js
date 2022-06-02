@@ -1,17 +1,114 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground,TextInput, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ActivityIndicator,TextInput, transparent,borderRadius,Flatlist,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { SharedElement } from 'react-navigation-shared-element';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 
 export default function Profile({navigation}) {
     const imageSource   = require('../assets/logo.png');
-    const [general, changegeneralState] = useState(false);
+
+    const [generalState, setGeneralState] = useState("view")
+    const changeGeneralState = (state) => {
+        if (state == "edit") {
+            setGeneralState("edit")
+        }
+        else if (state == "view") {
+            setGeneralState("view")
+        }
+    }
+
+    const [loading, setLoading] = useState(false);
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
+    const [phone, setPhone] = useState("")
+    const [address, setAddress] = useState("")
+    const [token, setToken] = useState("")
+
+    useEffect(() => {
+       getProfile()
+     } , []);
+
+
+    const refresh = () => {
+       getProfile()
+    }
+
+    const getProfile = () => {
+        AsyncStorage.getItem('token').then((token) => {
+            if(token) {
+                setToken(token)
+                fetch('https://dryce-staging.herokuapp.com/api/profile/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${token}`
+                },
+                })
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    setEmail(responseJson.user.email)
+                    setUsername(responseJson.user.username)
+
+                    setName(responseJson.regular_user.name)
+                    setPhone(responseJson.regular_user.phone)
+                    setAddress(responseJson.regular_user.address)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            }
+            else {
+                navigation.navigate('Login');
+            }
+        });
+    }
+
+const updateProfile = () => {
+    setLoading(true)
+    fetch('https://dryce-staging.herokuapp.com/api/profile/', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify({
+                name: name,
+                address: address,
+                phone: phone,
+                })
+            })
+            .then((response) => {
+                if(response.status == 200) {
+                    setLoading(false)
+                    alert("Profile updated successfully")
+                    refresh()
+                    changeGeneralState("view")
+                }
+                else if (response.status == 400) {
+                    setLoading(false)
+                    alert("You are unauthorized to perform this action")
+                }
+                else {
+                    setLoading(false)
+                    alert("Something went wrong")
+                }
+            })
+            .catch(error => {
+                setLoading(false)
+                alert("Something went wrong")
+                console.log(error)
+            })
+        }
+
+
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
 
    
    
@@ -20,7 +117,7 @@ export default function Profile({navigation}) {
        
        <View>
 
-                 <View style={{flexDirection:'row', marginTop:hp('2%'), marginLeft:wp('4%')}}>
+                 <View style={{flexDirection:'row', marginTop:hp('5%'), marginLeft:wp('4%')}}>
                         <Feather name="arrow-left" size={25} color="black"  onPress={() => navigation.goBack()} />
                         <Text style={{fontWeight:'bold', paddingTop:hp('0.5%'),textAlign:'center',color:'black', flex:1,paddingRight:wp('10%')}}>Details</Text>
                 </View>
@@ -37,31 +134,33 @@ export default function Profile({navigation}) {
 
 
                  <View>
-                     <Text style={styles.profiletext}> Collins Kofi </Text>
-                     <Text style={styles.profiletext1}>@lins.x</Text>
+                     {name == undefined ?
+                    <Text style={styles.profiletext}> Enter a name</Text>:
+                     <Text style={styles.profiletext}> {name} </Text>} 
+                     <Text style={styles.profiletext1}>@{username}</Text>
                  </View>
         {/* Profile buttons */}
-                    <View style={{flexDirection:'row', marginTop:hp('1%'),alignSelf:'center', marginRight:wp('5%')}}>
-                        <TouchableHighlight style={styles.button1} onPress={() => changegeneralState(!general)}>
-                            <Text style={styles.buttontext}>General</Text>
+                    <View style={{flexDirection:'row', marginTop:hp('2%'),alignSelf:'center', marginRight:wp('5%')}}>
+                        <TouchableHighlight style={generalState=="view" ? styles.button : styles.button1} onPress={() => changeGeneralState("view")}>
+                            <Text style={ styles.buttontext}>General</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style={styles.button} onPress={() => changegeneralState(!general)}>
+                        <TouchableHighlight style={generalState=="edit" ? styles.button : styles.button1} onPress={() => {changeGeneralState("edit")}}>
                             <Text style={styles.buttontext}>Edit Profile</Text>
                         </TouchableHighlight>
                         </View>
 
         {/* General */}
-        {!general ?
+        {generalState == "view" ?
         (
-                    <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-                      <View style={{marginTop:hp('1%')}}>
+                    <View vertical={true} showsVerticalScrollIndicator={false}>
+                      <View style={{marginTop:hp('2%')}}>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Name</Text>
                         <TouchableHighlight style={styles.general}>
-                            <Text style={styles.buttontext1}>Collins Kofi Dryce</Text>
+                            <Text style={styles.buttontext1}>{name}</Text>
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Username</Text>
                         <TouchableHighlight style={styles.general}>
-                            <Text style={styles.buttontext1}>@lins.x</Text>
+                            <Text style={styles.buttontext1}>@{username}</Text>
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Password</Text>
                         <TouchableHighlight style={styles.general}>
@@ -69,49 +168,70 @@ export default function Profile({navigation}) {
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Email</Text>
                         <TouchableHighlight style={styles.general}>
-                            <Text style={styles.buttontext1}>collinscoffie22@gmail.com</Text>
+                            <Text style={styles.buttontext1}>{email}</Text>
                         </TouchableHighlight>
-                        
+                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Phone number</Text>
+                        <TouchableHighlight style={styles.general}>
+                            <Text style={styles.buttontext1}>{phone}</Text>
+                        </TouchableHighlight>
                         </View>
-
-                        </ScrollView>
+                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Address</Text>
+                        <TouchableHighlight style={styles.general}>
+                            <Text style={styles.buttontext1}>{address}</Text>
+                        </TouchableHighlight>
+                            <View style={{marginBottom:hp('15%')}}>
+                            </View>
+                        </View>
         )
 
 
                         :(
-                        <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-                      <View style={{marginTop:hp('1%')}}>
+                        <View vertical={true} showsVerticalScrollIndicator={false}>
+                      <View style={{marginTop:hp('2%')}}>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Name</Text>
                         <TouchableHighlight style={styles.general}>
-                            <TextInput placeholder='Collins Kofi Dryce'   placeholderTextColor="black" style={{paddingLeft:wp('4%'), width:wp('80%'), }}/>
+                            <TextInput placeholder="e.g Collins Kofi Dryce"   placeholderTextColor="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }} onChangeText={(name) => {setName(name)}} />
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Username</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='@lins.x'   placeholderTextColor="black" style={{marginLeft:wp('4%'), width:wp('80%'), }}/>
+                        <TextInput color="black" style={{marginLeft:wp('2%'), width:wp('80%'), }} selectTextOnFocus={false} editable={false} defaultValue={'@'+username} />
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Password</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='.................'   placeholderTextColor="black" style={{marginLeft:wp('4%'), width:wp('80%'), }}/> 
+                        <TextInput placeholder='.................'   placeholderTextColor="black" style={{marginLeft:wp('2%'), width:wp('80%'), }} selectTextOnFocus={false} editable={false} /> 
                         </TouchableHighlight>
-                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'),color:'grey'}}> Email</Text>
+                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'),color:'grey',}}> Email</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='collinscoffie22@gmail.com'   placeholderTextColor="black" style={{paddingLeft:wp('4%'), width:wp('80%'), }}/>
+                        <TextInput defaultValue={email} color="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }} selectTextOnFocus={false} editable={false}  />
                         </TouchableHighlight>
+                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'),color:'grey',}}> Address</Text>
+                        <TouchableHighlight style={styles.general}>
+                        <TextInput placeholder='eg. Ashalaja Heights, Ground floor' defaultValue={address}   placeholderTextColor="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }} onChangeText={(address) => {setAddress(address)}} />
+                        </TouchableHighlight>
+                        <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'),color:'grey',}}> Phone number</Text>
+                        <TouchableHighlight style={styles.general}>
+                        <TextInput placeholder='024xxxxxxxxx'  defaultValue={phone} placeholderTextColor="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }} onChangeText={(phone) => {setPhone(phone)}}/>
+                        </TouchableHighlight>
+                        
+                        {loading ?
+                        (<View style={{alignItems: 'center', justifyContent: 'center', marginTop:hp('2%'), marginBottom:hp('15%')}}>
+                            <ActivityIndicator size="large" color="#14a8ee" />
+                          </View>) :
+                        (<TouchableOpacity style={{width: wp('32%'), height:hp('6%'), backgroundColor: '#14a8ee', alignSelf: 'center', justifyContent: "center", marginTop:hp('2%'), marginBottom:hp('15%'), borderRadius:20,}} onPress={() => updateProfile()}>
+                          <Text style={{fontSize:wp('4%'), alignSelf:'center', color:'white', fontWeight:'bold',}}>Submit</Text>
+                      </TouchableOpacity>)}
                         
                         </View>
 
-                        </ScrollView>
+                        </View>
                         )}
     
-
-
-
        </View>
 
        </SafeAreaView>
    
 
-    </View>
+    </ScrollView>
   );
 }
 
@@ -149,9 +269,9 @@ const styles = StyleSheet.create({
                 height:120,
                 width:120,
               borderRadius:100,
-              marginLeft:wp('30%'),
               backgroundColor:'#fff',
-              marginTop:hp('5%'),
+              alignItems:'center',
+               justifyContent:'center'
             },
             
           })
@@ -194,7 +314,7 @@ const styles = StyleSheet.create({
                 marginLeft:wp('5%'),
                 marginTop:hp('2%'),
                 justifyContent:'center',
-               
+                alignItems:'center',
             },
 
         })
@@ -221,7 +341,7 @@ const styles = StyleSheet.create({
                 marginLeft:wp('5%'),
                 marginTop:hp('2%'),
                 justifyContent:'center',
-               
+                alignItems:'center',
             },
 
         })
