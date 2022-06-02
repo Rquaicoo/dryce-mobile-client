@@ -76,17 +76,17 @@ const imageSource   = require('../assets/logo.png');
        <StatusBar style="auto" />
        <SafeAreaView>
        
-       <View style={{marginLeft:wp('4%'),}}>
+       <View style={{marginLeft:wp('4%')}}>
            <View style={{flexDirection: "row",}}>
                 <View style={{flexDirection:'row',}}>
-                    <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
+                    {/* <Ionicons name="menu-outline" size={24} color="black" style={styles.header} /> */}
                     <Text style={styles.header} > Welcome <Text style={styles.headercolor}> {username}</Text> </Text>
                 </View>
 
                 <SharedElement id="someUniqueId">
-                <TouchableOpacity style={styles.profile} onPress={() => {logout()}}>
-                      <MaterialIcons name="logout" size={24} color="black" style={{alignSelf: "center"}} />
-                </TouchableOpacity>
+                <Text style={styles.profile} onPress={() => {logout()}}>
+                     Logout
+                </Text>
                 </SharedElement>
             </View>
     {/* Headers */}
@@ -256,12 +256,10 @@ const styles = StyleSheet.create({
     profile:{
         ...Platform.select({
             ios: {
-                height:hp('5%'),
-                width:wp('10.5%'),
-                borderRadius:100,
-                marginLeft:wp('30%'),
-                backgroundColor:'#fff',
-                justifyContent:'center',
+                
+                marginLeft:wp('35%'),
+                marginTop:hp('1.5%'),
+                fontWeight:'bold',
             },
             android: {
               height:hp('5%'),

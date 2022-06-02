@@ -7,8 +7,6 @@ import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-
-
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Tabs() { 

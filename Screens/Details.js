@@ -167,7 +167,7 @@ export default function Details({route, navigation}) {
                 </View>
             </View>
 
-    <ScrollView style={{marginLeft:wp('5%'), height:hp("75%"),}}>
+    <ScrollView style={{marginLeft:wp('5%'), height:hp("68%"),}}>
         <View style={{height: 100, width:wp("90%"),marginTop:hp('5%') ,borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image

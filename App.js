@@ -8,7 +8,8 @@ import Mainstack from './navigations/MainStack';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import MainScreen from './navigations/MainStack';
+// import MainScreen from './navigations/MainStack';
+import MainStack from './navigations/MainStack';
 
 
 const Stack = createNativeStackNavigator();
@@ -33,7 +34,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <MainScreen />
+      <MainStack />
     </NavigationContainer>
   );
 }
