@@ -6,11 +6,7 @@ import Cart from '../Screens/Cart';
 import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
-
-import Profile from '../Screens/Profile';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-
-
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Tabs() { 
