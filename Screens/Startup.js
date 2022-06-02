@@ -15,9 +15,6 @@ export default function Startup({navigation}) {
       if(token) {
         navigation.navigate('Tabs');
       }
-      else {
-        navigation.navigate('Login');
-      }
     });
   }, []);
   return (
