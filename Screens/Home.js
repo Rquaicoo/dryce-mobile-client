@@ -7,13 +7,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SharedElement } from 'react-navigation-shared-element'
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
+// export default function Home({navigation}) {
+
+
+
+
 export default function Home({navigation}) {
-const imageSource   = require('../assets/logo.png');
 
-
-
-export default function Home({navigation}) {
-
+    const imageSource   = require('../assets/logo.png');
+    
     const [token, setToken] = useState('');
     const logout = () => {
         fetch('http://dryce-staging.herokuapp.com/api/auth/logout', {
@@ -41,7 +43,7 @@ export default function Home({navigation}) {
        <StatusBar style="auto" />
        <SafeAreaView>
        
-       <View style={{marginLeft:wp('4%'),}}>
+       <View style={{marginLeft:wp('4%')}}>
            <View style={{flexDirection: "row",}}>
                 <View style={{flexDirection:'row',}}>
                     <Ionicons name="menu-outline" size={24} color="black" style={styles.header} />
@@ -595,6 +597,5 @@ ratingno:{
   
   
   
-  
-  });
-  
+
+});

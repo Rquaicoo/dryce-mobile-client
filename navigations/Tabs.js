@@ -7,6 +7,7 @@ import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import Profile from '../Screens/Profile';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -47,7 +48,7 @@ export default function Tabs() {
                     }}
                     />
 
-                <Tab.Screen name="Profile" component={ProfileScreen} 
+                <Tab.Screen name="Profile" component={Profile} 
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (

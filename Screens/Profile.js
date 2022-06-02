@@ -41,7 +41,7 @@ export default function Profile({navigation}) {
                      <Text style={styles.profiletext1}>@lins.x</Text>
                  </View>
         {/* Profile buttons */}
-                    <View style={{flexDirection:'row', marginTop:hp('2%'),alignSelf:'center', marginRight:wp('5%')}}>
+                    <View style={{flexDirection:'row', marginTop:hp('1%'),alignSelf:'center', marginRight:wp('5%')}}>
                         <TouchableHighlight style={styles.button1} onPress={() => changegeneralState(!general)}>
                             <Text style={styles.buttontext}>General</Text>
                         </TouchableHighlight>
@@ -54,7 +54,7 @@ export default function Profile({navigation}) {
         {!general ?
         (
                     <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-                      <View style={{marginTop:hp('2%')}}>
+                      <View style={{marginTop:hp('1%')}}>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Name</Text>
                         <TouchableHighlight style={styles.general}>
                             <Text style={styles.buttontext1}>Collins Kofi Dryce</Text>
@@ -80,22 +80,22 @@ export default function Profile({navigation}) {
 
                         :(
                         <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-                      <View style={{marginTop:hp('2%')}}>
+                      <View style={{marginTop:hp('1%')}}>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Name</Text>
                         <TouchableHighlight style={styles.general}>
-                            <TextInput placeholder='Collins Kofi Dryce'   placeholderTextColor="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }}/>
+                            <TextInput placeholder='Collins Kofi Dryce'   placeholderTextColor="black" style={{paddingLeft:wp('4%'), width:wp('80%'), }}/>
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Username</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='@lins.x'   placeholderTextColor="black" style={{marginLeft:wp('2%'), width:wp('80%'), }}/>
+                        <TextInput placeholder='@lins.x'   placeholderTextColor="black" style={{marginLeft:wp('4%'), width:wp('80%'), }}/>
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'), color:'grey'}}> Password</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='.................'   placeholderTextColor="black" style={{marginLeft:wp('2%'), width:wp('80%'), }}/> 
+                        <TextInput placeholder='.................'   placeholderTextColor="black" style={{marginLeft:wp('4%'), width:wp('80%'), }}/> 
                         </TouchableHighlight>
                         <Text style={{marginLeft:wp('4%'),marginTop:hp('2%'),color:'grey'}}> Email</Text>
                         <TouchableHighlight style={styles.general}>
-                        <TextInput placeholder='collinscoffie22@gmail.com'   placeholderTextColor="black" style={{paddingLeft:wp('2%'), width:wp('80%'), }}/>
+                        <TextInput placeholder='collinscoffie22@gmail.com'   placeholderTextColor="black" style={{paddingLeft:wp('4%'), width:wp('80%'), }}/>
                         </TouchableHighlight>
                         
                         </View>
