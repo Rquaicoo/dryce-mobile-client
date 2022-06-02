@@ -1,12 +1,12 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainSTack';
+import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import Home from '../Screens/Home';
-import ProfileScreen from '../Screens/ProfileScreen';
-import Details from '../Screens/Details';
+import Profile from '../Screens/Profile';
+import Cart from '../Screens/Cart';
 import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -38,16 +38,16 @@ export default function Tabs() {
                     ),
                   }} />
                   
-                  <Tab.Screen name="Details" component={Details} 
+                  <Tab.Screen name="Cart" component={Cart} 
                   options={{
-                      tabBarLabel: 'Order',
+                      tabBarLabel: 'Cart',
                       tabBarIcon: ({ color }) => (
-                          <MaterialIcons name="add" size={30} color={color} />
+                          <AntDesign name="shoppingcart" size={24} color={color} />
                       ),
                     }}
                     />
 
-                <Tab.Screen name="Profile" component={ProfileScreen} 
+                <Tab.Screen name="Profile" component={Profile} 
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color }) => (
