@@ -128,7 +128,7 @@ export default function Cart({navigation}) {
 
     const updateCart = () => {
         setLoading(true);
-        fetch('http://localhost:8000/api/cart/', {
+        fetch('https://dryce-staging.herokuapp.com/api/cart/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
