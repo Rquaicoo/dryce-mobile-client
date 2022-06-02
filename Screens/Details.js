@@ -9,9 +9,9 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 
 
-export default function Details({navigation}) {
+export default function Details({route, navigation}) {
     
-      
+      const vendor = route.params.vendor.vendor;
 
     useEffect(() => {
         AsyncStorage.getItem('token').then((token) => {
@@ -121,7 +121,7 @@ export default function Details({navigation}) {
 
     const createCart = () => {
         setLoading(true);
-        fetch('http://dryce-staging.herokuapp.com/api/v1/cart', {
+        fetch('https://dryce-staging.herokuapp.com/api/cart/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,8 +132,9 @@ export default function Details({navigation}) {
                 cardigan: cardiganNumber,
                 dress: dressNumber,
                 trouser: trouserNumber,
-                blouse: blouseNumber,
-                jeans: jeansNumber
+                blouses: blouseNumber,
+                jeans: jeansNumber,
+                vendor: vendor,
             })
         })
         .then(response => {
@@ -229,7 +230,7 @@ export default function Details({navigation}) {
                     <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50}} onPress={() => {decreaseCount("dress")}} >
                         <AntDesign name="minus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
-                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{dressPrice}</Text>
+                    <Text style={{fontWeight: "bold", fontSize: 15, alignSelf: "center", marginLeft: "10%"}}>{dressNumber}</Text>
                     <TouchableOpacity style={{backgroundColor: "#f2f2f0", alignSelf: 'center', borderRadius: 50, marginLeft: "10%"}} onPress={() => {increaseCount("dress")}}>
                         <AntDesign name="plus" size={15} color="black" style={{padding: 5}} />
                     </TouchableOpacity>
@@ -307,9 +308,13 @@ export default function Details({navigation}) {
     </ScrollView>
 
       <View>
-          <TouchableOpacity style={styles.bottomButton}>
+      {loading ?
+        (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+        <ActivityIndicator size="large" color="#14a8ee" />
+        </View>):
+         ( <TouchableOpacity style={styles.bottomButton} onPress={() => {createCart()}}>
             <Text style={{fontWeight: "bold", fontSize: 20, color: "black", color: "white" }}>Start Laundry</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>)}
       </View>
     </View>
   );
