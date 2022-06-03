@@ -6,7 +6,7 @@ import Cart from '../Screens/Cart';
 import History from '../Screens/History';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons';
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Tabs() { 
@@ -54,11 +54,11 @@ export default function Tabs() {
                   }}/>
 
                 
-                <Tab.Screen name="History" component={History} 
+                <Tab.Screen name="Receipts" component={History} 
                 options={{
-                    tabBarLabel: 'History',
+                    tabBarLabel: 'Receipts',
                     tabBarIcon: ({ color }) => (
-                      <MaterialCommunityIcons name="history" color={color} size={26} />
+                      <FontAwesome5 name="receipt" size={24} color={color} />
                     ),
                   }}
                   />
