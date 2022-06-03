@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , Image, ScrollView, ActivityIndicator,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, FontAwesome5,FontAwesome,MaterialIcons, EvilIcons,MaterialCommunityIcons ,Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
@@ -10,7 +10,62 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 
 export default function History({navigation}) {
+  const [reciepts, setReceipts] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [vendors, setVendors] = useState(null);
 
+  useEffect(() => {
+    AsyncStorage.getItem('token').then(token => {
+      if (token) {
+        setLoading(true);
+        getReciepts(token);
+        getVendors(token);
+      }
+    }
+    );
+
+  }, []);
+
+  
+
+  const getReciepts = (token) => {
+    fetch('https://dryce-staging.herokuapp.com/api/reciepts', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log(responseJson);
+      setReceipts(responseJson);
+    })
+    .catch(error => {
+      console.log(error);
+    }
+    );
+  }
+
+  const getVendors = (token) => {
+    fetch('https://dryce-staging.herokuapp.com/vendor/business_registration', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log(responseJson);
+      setVendors(responseJson);
+    }
+    )
+    .catch(error => {
+      console.log(error);
+    }
+    );
+  }
   return (
     <ScrollView>
       <View style={styles.header}>
@@ -21,49 +76,57 @@ export default function History({navigation}) {
     </View>
       <Text style={{marginTop:hp('4%'), fontWeight:'bold', marginLeft:wp('4%'), fontSize:15}}> Summary </Text>
 
-      <View style={styles.summarybox}>
-        <View style={{flexDirection:'row', marginTop:hp('1%')}}>
-        <MaterialIcons name="local-laundry-service" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}}/>
-        <Text style={styles.summarytext}> Selected Service {'\n'}  
-        <Text style={styles.maintext}> Wash and Iron</Text> </Text>
-        {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
-        </View>
+    
+      {reciepts && (
+        <View>
+          {reciepts.map((reciept, index) => (
+            <View key={index}>
+              <View style={styles.summarybox}>
+                      <View style={{flexDirection:'row', marginTop:hp('1%')}}>
+                      <MaterialIcons name="local-laundry-service" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}}/>
+                      <Text style={styles.summarytext}> Selected Service {'\n'}  
+                      <Text style={styles.maintext}> {reciept.service}</Text> </Text>
+                      {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
+                      </View>
 
-        <View style={{flexDirection:'row', marginTop:hp('1%') }}>
-        <MaterialCommunityIcons name="shopping" size={24} color="#14a8ee"  style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
-        <Text style={styles.summarytext}> Laundry Service {'\n'}  
-        <Text style={styles.maintext}> Russell's Dry Wash</Text> </Text>
-        {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
-        </View>
+                      <View style={{flexDirection:'row', marginTop:hp('1%') }}>
+                      <MaterialCommunityIcons name="shopping" size={24} color="#14a8ee"  style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
+                      <Text style={styles.summarytext}> Laundry Service {'\n'}  
+                      <Text style={styles.maintext}>{}</Text> </Text>
+                      {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
+                      </View>
 
-        <View style={{flexDirection:'row', marginTop:hp('1%') }}>
-        <MaterialCommunityIcons name="tshirt-crew" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
-        <Text style={styles.summarytext}> Total Clothes {'\n'}  
-        <Text style={styles.maintext3}> Shirts</Text> {'\n'}  
-        <Text style={styles.maintext3}> Trousers</Text> {'\n'}  
-        <Text style={styles.maintext3}> Cardigan</Text> {'\n'}  
-        <Text style={styles.maintext3}> Dresses</Text> {'\n'}  
-        <Text style={styles.maintext3}> Blouses</Text> {'\n'}
-        <Text style={styles.maintext3}> Jeans</Text> {'\n'}  </Text>
-        <Text style={{ fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%') }}>¢ 100 {'\n'}
-        ¢ 100 {'\n'}
-        ¢ 100 {'\n'}
-        ¢ 100 {'\n'}
-        ¢ 100 {'\n'}
-        ¢ 100 {'\n'} </Text>
-        {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
-        </View>
+                    <View style={{flexDirection:'row', marginTop:hp('1%') }}>
+                      <MaterialCommunityIcons name="tshirt-crew" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
+                      <Text style={styles.summarytext}> Total Clothes {'\n'}  
+                      <Text style={styles.maintext}> Shirts</Text> {'\n'}  
+                      <Text style={styles.maintext}> Trousers</Text> {'\n'}  
+                      <Text style={styles.maintext}> Cardigan</Text> {'\n'}  
+                      <Text style={styles.maintext}> Dresses</Text> {'\n'}  
+                      <Text style={styles.maintext}> Blouses</Text> {'\n'}
+                      <Text style={styles.maintext}> Jeans</Text> {'\n'}  </Text>
+                      <Text style={{ fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%')}}>¢ {reciept.shirts * 30} {'\n'}
+                      ¢ {reciept.trousers * 30} {'\n'}
+                      ¢ {reciept.cardigans * 30} {'\n'}
+                      ¢ {reciept.dress * 30} {'\n'}
+                      ¢ {reciept.blouses * 30} {'\n'}
+                      ¢ {reciept.jeans * 30} {'\n'} </Text>
+                    {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
+                      </View>
 
-      </View>
+              </View>
 
-        <View style={styles.summarybox2}>
-        <View style={{flexDirection:'row', marginTop:hp('1%')}}>
-        <Ionicons name="md-pricetags" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
-        <Text style={styles.summarytext1}> Total Price {'\n'} </Text> 
-        <Text style={styles.maintext2}> ¢ 600</Text> 
-        {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
-        </View>
-        </View>
+            <View style={styles.summarybox2}>
+              <View style={{flexDirection:'row', marginTop:hp('1%')}}>
+              <Ionicons name="md-pricetags" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
+              <Text style={styles.summarytext1}> Total Price {'\n'} </Text> 
+              <Text style={styles.maintext2}> ¢ {reciept.cost}</Text> 
+              {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
+              </View>
+         </View>
+        </View>))}
+        </View>)}
+
 
 
 

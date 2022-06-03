@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , BackHandler, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialIcons, AntDesign, FontAwesome5,Feather, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function Vendors({route, navigation}) {
-    const service = route.params.service;
+    const [service, setService] = useState('');
 
     const [token, setToken] = useState('');
     const [vendors, setVendors] = useState(null);
@@ -32,6 +32,7 @@ export default function Vendors({route, navigation}) {
             setToken(value);
             fetchVendors(value);
             getProfile(value);
+            setService(route.params.service);
         });
     }, []);
 
@@ -71,6 +72,17 @@ export default function Vendors({route, navigation}) {
     }
 
 
+    useEffect(() => {   
+        const backAction = () => {
+            navigation.navigate('Tabs');
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+        return () => backHandler.remove();
+    }, []);
 
   return (
 

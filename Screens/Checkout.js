@@ -111,7 +111,7 @@ const createOrder = () => {
             .then(response => {
                 if (response.status === 200) {
                     alert('Order created successfully. You will receive a confirmation email shortly.');
-                    navigation.navigate('Home');
+                    navigation.navigate('Hiistory');
                 }
                 else {
                     alert('Error');
