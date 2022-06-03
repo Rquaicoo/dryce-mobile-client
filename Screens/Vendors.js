@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , BackHandler, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -72,6 +72,17 @@ export default function Vendors({route, navigation}) {
     }
 
 
+    useEffect(() => {   
+        const backAction = () => {
+            navigation.navigate('Tabs');
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+        return () => backHandler.remove();
+    }, []);
 
   return (
 

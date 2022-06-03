@@ -37,6 +37,7 @@ const HomeStack = () => {
         <View style={{flex: 1}} collapsable={false} >
             <Stack.Navigator screenOptions={screenOptionstyle}>
                 <Stack.Screen  name="HomeScreen" component={Home} />
+                <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
             </Stack.Navigator>
         </View>
 

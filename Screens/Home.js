@@ -111,7 +111,7 @@ const imageSource   = require('../assets/logo.png');
         {/* Categories */}
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection:'row', marginTop:hp('5%'),}}>
-            <TouchableOpacity style={styles.categories}>
+            <TouchableOpacity style={styles.categories} onPress={() => {logout()}}>
             <Text style={styles.headbanner}> Subscribe to <Text style={{color:'#0090ff'}}>Dryce+</Text> to get {'\n'} monthly worth of laundry</Text>
             {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
             </TouchableOpacity>

@@ -20,15 +20,21 @@ export default function Login({navigation}) {
     });
   }, []);
 
-  const checkEqualPass = (password, confirmedPassword) => {
+  useEffect(() => {
     setTimeout(() => {
+      checkEqualPass(modalPassword, modalConfirmPassword);
+    }, 10);
+  }, [modalPassword, modalConfirmPassword]);
+
+
+  const checkEqualPass = (password, confirmedPassword) => {
     if(password === confirmedPassword){
       setEqualPass(true);
     }
     else{
       setEqualPass(false);
     }
-    }, 500);
+    
   }
 
   
@@ -117,7 +123,7 @@ export default function Login({navigation}) {
         .then(response => {
           if (response.status === 200) {
             setModalLoading(false);
-            alert('Password reset successfully');
+            alert('Password has been reset successfully');
           }
 
           else if (response.status === 400) {
@@ -248,7 +254,7 @@ export default function Login({navigation}) {
                           alignSelf:'center',
                           marginTop:hp('2%'),
                           borderRadius:20,}}>
-                          <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
+                          <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white", alignItems: "center"}}
                           placeholder='Email'
                           onChangeText={(email) => {setModalEmail(email)}} />
                       </TouchableHighlight>
@@ -325,7 +331,7 @@ export default function Login({navigation}) {
                             <TextInput style={{width: wp('75%'),height:hp('6.5%'),marginLeft:wp('2%'), borderColor: "white", borderWidth: 1, borderRadius: 20, textAlign: "center", backgroundColor: "white"}}
                             placeholder='Confirm new password'
                             secureTextEntry={modalSecure}
-                            onChangeText={(confirmedPassword) => {setModalConfirmPassword(confirmedPassword); checkEqualPass(modalPassword, modalConfirmPassword)}} />
+                            onChangeText={(confirmedPassword) => {setModalConfirmPassword(confirmedPassword)}} />
                           </TouchableHighlight>
                                 { equalpass ? 
                                 (<Feather name="check" size={22} color="green" style={{marginLeft: -80, alignSelf: "center"}} />) :
