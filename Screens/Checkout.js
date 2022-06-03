@@ -145,10 +145,15 @@ const createOrder = () => {
 
             <TouchableOpacity style={styles.try}>
                 <View style={{marginTop:hp('2%')}}>
+                    <Text style={{fontSize:wp('2.5%'), marginLeft:wp('4%'), marginTop:hp('0.5%'),}}>Name:</Text>
                     <Text style={styles.addressinfo}>{name}</Text>
-                    <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.2, width:wp('80%'),marginTop:hp('2%'),marginBottom:hp('1%'), alignSelf:'center' }}/>
+                    
+                    <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.2, width:wp('80%'),marginTop:hp('0.5%'),marginBottom:hp('0.2%'), alignSelf:'center' }}/>
+                    <Text style={{fontSize:wp('2.5%'), marginLeft:wp('4%'), marginTop:hp('0.5%'),}}>Address:</Text>
                     <Text style={styles.addressinfo}>{address}</Text>
-                    <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.3, width:wp('80%'), marginTop:hp('2%'),marginBottom:hp('1%'), alignSelf:'center' }}/>
+                    
+                    <View style={{borderBottomColor: '#9E9EA9',borderBottomWidth: 0.3, width:wp('80%'), marginTop:hp('0.5%'),marginBottom:hp('1%'), alignSelf:'center' }}/>
+                    <Text style={{fontSize:wp('2.5%'), marginLeft:wp('4%'), marginTop:hp('0.5%'),}}>Phone:</Text>
                     <Text style={styles.addressinfo}>{phone}</Text>
                 </View>
             </TouchableOpacity>
@@ -263,7 +268,7 @@ addressinfo1: {
     marginTop:hp('0.5%'),
 },
 try: {
-    height:hp('20%'),
+    height:hp('22.5%'),
     width:wp('90%'), 
     backgroundColor:'white',
     marginLeft:wp('5%'),
