@@ -117,9 +117,9 @@ const updateProfile = () => {
        
        <View>
 
-                 <View style={{flexDirection:'row', marginTop:hp('5%'), marginLeft:wp('4%')}}>
+                 <View style={styles.profstyle}>
                         <Feather name="arrow-left" size={25} color="black"  onPress={() => navigation.goBack()} />
-                        <Text style={{fontWeight:'bold', paddingTop:hp('0.5%'),textAlign:'center',color:'black', flex:1,paddingRight:wp('10%')}}>Details</Text>
+                        <Text style={styles.proftext}>Details</Text>
                 </View>
 
                 <View style={{alignItems:'center', paddingTop:hp('2%')}}>
@@ -252,7 +252,45 @@ const styles = StyleSheet.create({
 
         })
     },
+    profstyle: {
+        ...Platform.select({
+            ios: {
+                flexDirection:'row', 
+                marginLeft:wp('4%'),
+            },
+            android: {
+                flexDirection:'row', 
+                marginLeft:wp('4%'),
+                marginTop:hp('4%')
+            },
 
+        })
+       
+    },
+
+    proftext: {
+        ...Platform.select({
+            ios: {
+                fontWeight:'bold', 
+                paddingTop:hp('0.5%'),
+                textAlign:'center',
+                color:'black', 
+                flex:1,
+                paddingRight:wp('10%')
+            },
+            android: {
+                fontWeight:'bold', 
+                paddingTop:hp('0.5%'),
+                textAlign:'center',
+                 color:'black', 
+                 flex:1,
+                 paddingRight:wp('10%'),
+                 fontSize:20,
+            },
+
+        })
+       
+        },
    
 
     profile:{
@@ -366,7 +404,7 @@ const styles = StyleSheet.create({
                 height:hp('7%'),
                 width:wp('90%'),
                 borderRadius:15,
-                backgroundColor:'#e9edf0',
+                backgroundColor:'white',
                 marginLeft:wp('5%'),
                 marginTop:hp('1%'),
                 justifyContent:'center',
@@ -376,11 +414,11 @@ const styles = StyleSheet.create({
                 height:hp('7%'),
                 width:wp('90%'),
                 borderRadius:15,
-                backgroundColor:'#bbdff0',
+                backgroundColor:'white',
                 marginLeft:wp('5%'),
                 marginTop:hp('1%'),
                 justifyContent:'center',
-                alignItems:'center',
+                
             },
 
         })

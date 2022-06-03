@@ -105,7 +105,7 @@ export default function History({navigation}) {
                       <Text style={styles.maintext}> Dresses</Text> {'\n'}  
                       <Text style={styles.maintext}> Blouses</Text> {'\n'}
                       <Text style={styles.maintext}> Jeans</Text> {'\n'}  </Text>
-                      <Text style={{fontWeight:'bold', fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%') }}>¢ {reciept.shirts * 30} {'\n'}
+                      <Text style={{ fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%')}}>¢ {reciept.shirts * 30} {'\n'}
                       ¢ {reciept.trousers * 30} {'\n'}
                       ¢ {reciept.cardigans * 30} {'\n'}
                       ¢ {reciept.dress * 30} {'\n'}
@@ -126,6 +126,7 @@ export default function History({navigation}) {
          </View>
         </View>))}
         </View>)}
+
 
 
 
@@ -170,7 +171,7 @@ summarybox: {
     ...Platform.select({
       ios: {
         width:wp('90%'), 
-        height:hp('15%'),
+        height:hp('10%'),
         borderRadius:20,
         alignSelf:'center',
         backgroundColor:'white',
@@ -179,7 +180,7 @@ summarybox: {
       },
       android: {
         width:wp('90%'), 
-        height:hp('15%'),
+        height:hp('10%'),
         borderRadius:20,
         alignSelf:'center',
         marginTop:hp('2%'),
@@ -210,6 +211,10 @@ summarybox: {
 
     maintext: {
       fontWeight:'bold', 
+      fontSize:15,
+    },
+    maintext3: {
+      fontWeight:'500', 
       fontSize:15,
     },
 

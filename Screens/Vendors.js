@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , BackHandler, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
+import { MaterialIcons, AntDesign, FontAwesome5,Feather, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SharedElement } from 'react-navigation-shared-element'
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function Vendors({route, navigation}) {
@@ -92,17 +91,9 @@ export default function Vendors({route, navigation}) {
        <SafeAreaView>
        
        <View style={{marginLeft:wp('4%')}}>
-           <View style={{flexDirection: "row",}}>
-                <View style={{flexDirection:'row',}}>
-                    {/* <Ionicons name="menu-outline" size={24} color="black" style={styles.header} /> */}
-                    <Text style={styles.header} > Welcome <Text style={styles.headercolor}> {username}</Text> </Text>
-                </View>
-
-                <SharedElement id="someUniqueId">
-                <Text style={styles.profile} onPress={() => {logout()}}>
-                     Logout
-                </Text>
-                </SharedElement>
+           <View style={styles.backb}>
+           <Feather name="arrow-left" size={23} color="black"  onPress={() => navigation.goBack()} />
+                
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
@@ -115,7 +106,7 @@ export default function Vendors({route, navigation}) {
             (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
             <ActivityIndicator size="large" color="#14a8ee" />
             </View>) :
-            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: -20}} >
+            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}  >
             {vendors && (
             <View style={{flexDirection:'row'}}>
                 {vendors.map((vendor, index) => (
@@ -123,10 +114,10 @@ export default function Vendors({route, navigation}) {
             <TouchableOpacity style={styles.shopsinfo} onPress={() => {navigation.navigate("Details", {"vendor": vendor, "service": service})}} >
                 <View>
                 {/* Image Content */}
-                <TouchableOpacity style={styles.shopsimage}>
+                <TouchableOpacity style={styles.shopsimage} onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
                 <ImageBackground source={{
                     uri: 'https://dryce-staging.herokuapp.com' + vendor.picture
-                }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+                }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}}  >
                 
                 <TouchableHighlight style={styles.ratings}>
                 <View style={{flexDirection:'row'}}>
@@ -169,7 +160,7 @@ export default function Vendors({route, navigation}) {
             (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
             <ActivityIndicator size="large" color="#14a8ee" />
             </View>) :
-            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: "6%"}} >
+            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}  >
             {vendors2 && (
             <View style={{flexDirection:'row'}}>
                 {vendors2.map((vendor, index) => (
@@ -177,7 +168,7 @@ export default function Vendors({route, navigation}) {
             <TouchableOpacity style={styles.shopsinfo} onPress={() => {navigation.navigate("Details", {"vendor": vendor})}} >
                 <View>
                 {/* Image Content */}
-                <TouchableOpacity style={styles.shopsimage}>
+                <TouchableOpacity style={styles.shopsimage} onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
                 <ImageBackground source={{
                     uri: 'https://dryce-staging.herokuapp.com' + vendor.picture
                 }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
@@ -240,6 +231,18 @@ const styles = StyleSheet.create({
         })
     },
 
+    backb: {
+        ...Platform.select({
+            ios: {
+                marginTop:hp('1%'),
+            },
+            android: {
+                marginTop:hp('4%'),
+            },
+
+        })
+    },
+
      headbanner:{
         ...Platform.select({
         ios: {
@@ -285,8 +288,8 @@ const styles = StyleSheet.create({
                 fontWeight:'bold',
             },
             android: {
-                marginLeft:wp('35%'),
-                marginTop:hp('5%'),
+                marginLeft:wp('45%'),
+                marginTop:hp('6.2%'),
                 fontWeight:'bold',
             },
             
@@ -338,94 +341,6 @@ const styles = StyleSheet.create({
 
         })
     },
-    categories:{
-        ...Platform.select({
-            ios: {
-                height:hp('10%'),
-                width:wp('80%'),
-                borderRadius:20,
-                backgroundColor:'white',
-                marginBottom:wp('5%'),
-                marginLeft:wp('5%'),
-                // shadowColor: "#b1c8d3",
-                //     shadowOffset: {
-                //         width: 0,
-                //         height: 4,
-                //     },
-                //     shadowOpacity: 0.2,
-                //     shadowRadius: 14,
-                //     elevation: 6,
-            },
-            android: {
-                height:hp('10%'),
-                width:wp('80%'),
-                borderRadius:20,
-                backgroundColor:'white',
-                marginLeft:wp('5%'),
-                marginBottom:wp('5%'),
-                // shadowColor: "#b1c8d3",
-                // shadowOffset: {
-                //     width: 3,
-                //     height: 4,
-                // },
-                // shadowOpacity: 0.7,
-                // shadowRadius: 19,
-                // elevation: 6,
-            },
-    
-        })
-       
-    },
-
-    maincategories:{
-        ...Platform.select({
-            ios: {
-                height:hp('17%'),
-                width:wp('35%'),
-                borderRadius:20,
-                backgroundColor:'white',
-                marginRight:wp('5%'),
-                marginBottom:wp('5%'),
-               
-            },
-            android: {
-                height:hp('17%'),
-                width:wp('33%'),
-                borderRadius:15,
-                backgroundColor:'white',
-                marginRight:wp('5%'),
-                marginBottom:wp('5%'),
-               
-            },
-    
-        })
-       
-    },
-
-    maincategoriess:{
-        ...Platform.select({
-            ios: {
-                height:hp('17%'),
-                width:wp('35%'),
-                borderRadius:20,
-                backgroundColor:transparent,
-                marginRight:wp('5%'),
-                marginBottom:wp('5%'),
-               
-            },
-            android: {
-                height:hp('17%'),
-                width:wp('33%'),
-                borderRadius:15,
-                backgroundColor:transparent,
-                marginRight:wp('5%'),
-                marginBottom:wp('5%'),
-               
-            },
-    
-        })
-       
-    },
 
   imagecat:{
     height:hp('8%'),
@@ -438,12 +353,12 @@ const styles = StyleSheet.create({
         ios: {
             fontSize:wp('4%'),
             fontWeight:'bold',
-            marginTop:hp('5%'),
+            marginTop:hp('2%'),
         },
         android: {
             fontSize:wp('5%'),
             fontWeight:'bold',
-            marginTop:hp('5%'),
+            marginTop:hp('2%'),
         },
 
     })
@@ -451,38 +366,24 @@ const styles = StyleSheet.create({
 shopsinfo:{
     ...Platform.select({
         ios: {
-            height:hp('35%'),
+            height:hp('30%'),
             width:wp('60%'),
             borderRadius:15,
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
             marginBottom:hp('5%'),
-            // shadowColor: "#b1c8d3",
-            // shadowOffset: {
-            //     width: 0,
-            //     height: 4,
-            // },
-            // shadowOpacity: 0.4,
-            // shadowRadius: 14,
-            // elevation: 6,
+            
         },
         android: {
-            height:hp('40%'),
+            height:hp('30%'),
             width:wp('58%'),
             borderRadius:15,
             backgroundColor:'white',
             marginRight:wp('4%'),
             marginTop:hp('2%'),
             marginBottom:hp('5%'),
-            // shadowColor: "#b1c8d3",
-            // shadowOffset: {
-            //     width: 3,
-            //     height: 4,
-            // },
-            // shadowOpacity: 0.7,
-            // shadowRadius: 19,
-            // elevation: 6,
+           
         },
 
     })
@@ -491,13 +392,13 @@ shopsinfo:{
 shopsimage:{
     ...Platform.select({
         ios: {
-            height:hp('22%'),
+            height:hp('18%'),
             width:wp('60%'),
             borderRadius:15,
             backgroundColor:'#cccccc',          
         },
         android: {
-            height:hp('27%'),
+            height:hp('18%'),
              width:wp('58%'),
             borderRadius:15,
             backgroundColor:'#cccccc',
