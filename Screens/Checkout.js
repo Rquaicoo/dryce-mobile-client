@@ -60,7 +60,7 @@ export default function Checkout({navigation}) {
         AsyncStorage.getItem('token').then((token) => {
             if (token) {
                 setLoading(true);
-                fetch('http://dryce-staging.herokuapp.com/api/cart/', {
+                fetch('https://dryce-staging.herokuapp.com/api/cart/', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

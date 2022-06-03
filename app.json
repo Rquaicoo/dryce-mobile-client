@@ -2,7 +2,7 @@
   "expo": {
     "name": "dryce",
     "slug": "dryce",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.rquaicoo.dryce"
+      "package": "com.rquaicoo.dryce",
+      "permissions": ["WRITE_SETTINGS", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -207,7 +207,7 @@ useEffect(() => {
                 })
                 .catch(error => {
                     console.log(error);
-                    alert('An error occured. Select a service and create a cart you dont have one already.'); 
+                    alert('An error occured. Select a service and create a cart. You do not have one already.'); 
                 })
                 .finally(() => {
                     setLoading(false);
