@@ -96,7 +96,7 @@ export default function Checkout({navigation}) {
 
 const createOrder = () => {
     setLoading(true);
-    fetch('http://dryce-staging.herokuapp.com/api/order/', {
+    fetch('https://dryce-staging.herokuapp.com/api/order/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,10 +111,10 @@ const createOrder = () => {
             .then(response => {
                 if (response.status === 200) {
                     alert('Order created successfully. You will receive a confirmation email shortly.');
-                    navigation.navigate('Hiistory');
+                    navigation.navigate('History');
                 }
-                else {
-                    alert('Error');
+                else if (response.status === 406) {
+                    alert('There an error occured. Please try again.');
                 }
             })
             .catch(error => {

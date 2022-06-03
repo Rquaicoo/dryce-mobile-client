@@ -4,7 +4,6 @@ import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, To
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, Entypo} from '@expo/vector-icons';
 import axios from 'axios';
-import Login from './Login';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
