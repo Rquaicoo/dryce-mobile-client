@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ScrollView, ActivityIndicator,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , Image, ScrollView, ActivityIndicator,TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, BackHandler} from 'react-native';
 import { Feather, AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -26,7 +26,17 @@ export default function Cart({navigation}) {
         );
     }
 
-
+    useEffect(() => {   
+        const backAction = () => {
+            navigation.navigate('Tabs');
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+        return () => backHandler.remove();
+    }, []);
 
     const [token, setToken] = useState('');
     const [loading, setLoading] = useState(false);
@@ -175,8 +185,8 @@ useEffect(() => {
                         return response.json();
                     }
                     else {
-                        alert('Cart does not exist');
-                        navigation.navigate('Details');
+                        alert('Cart does not exist, select a service and a vendor to create a cart.');
+                        navigation.navigate('HomeTab');
                         return null;
                     }
                 }
@@ -197,7 +207,7 @@ useEffect(() => {
                 })
                 .catch(error => {
                     console.log(error);
-                    alert('Error');
+                    alert('An error occured. Select a service and create a cart you dont have one already.'); 
                 })
                 .finally(() => {
                     setLoading(false);
@@ -212,7 +222,7 @@ useEffect(() => {
     <View>
       <View style={styles.header}>
                 <View style={{flexDirection:'row', marginTop:hp('6%'), marginLeft:wp('5%') }}>
-                        <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.goBack()} />
+                        <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.navigate("Tabs")} />
                         <Text style={{ fontWeight:'bold', textAlign:'center',color:'white', flex:1,paddingRight:wp('10%')}}>Cart</Text>
                 </View>
     </View>

@@ -1,6 +1,6 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
+import MainStack, { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import Home from '../Screens/Home';
 import Profile from '../Screens/Profile';
 import Cart from '../Screens/Cart';
