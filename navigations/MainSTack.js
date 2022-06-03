@@ -4,17 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from '../Screens/Startup';
 import Login from '../Screens/Login';
 import Register from '../Screens/Register';
-
-
 import Orders from '../Screens/Orders';
 import History from '../Screens/History';
 import OTP from '../Screens/OTP';
-
 import Tabs from './Tabs';
 import Home from '../Screens/Home';
-
 import Checkout from '../Screens/Checkout';
-
 import Details from '../Screens/Details';
 import Cart from '../Screens/Cart';
 import Profile from '../Screens/Profile';
