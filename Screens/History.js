@@ -39,13 +39,13 @@ export default function History({navigation}) {
         <View style={{flexDirection:'row', marginTop:hp('1%') }}>
         <MaterialCommunityIcons name="tshirt-crew" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
         <Text style={styles.summarytext}> Total Clothes {'\n'}  
-        <Text style={styles.maintext}> Shirts</Text> {'\n'}  
-        <Text style={styles.maintext}> Trousers</Text> {'\n'}  
-        <Text style={styles.maintext}> Cardigan</Text> {'\n'}  
-        <Text style={styles.maintext}> Dresses</Text> {'\n'}  
-        <Text style={styles.maintext}> Blouses</Text> {'\n'}
-        <Text style={styles.maintext}> Jeans</Text> {'\n'}  </Text>
-        <Text style={{fontWeight:'bold', fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%') }}>¢ 100 {'\n'}
+        <Text style={styles.maintext3}> Shirts</Text> {'\n'}  
+        <Text style={styles.maintext3}> Trousers</Text> {'\n'}  
+        <Text style={styles.maintext3}> Cardigan</Text> {'\n'}  
+        <Text style={styles.maintext3}> Dresses</Text> {'\n'}  
+        <Text style={styles.maintext3}> Blouses</Text> {'\n'}
+        <Text style={styles.maintext3}> Jeans</Text> {'\n'}  </Text>
+        <Text style={{ fontSize:15,  marginTop:hp('4%'), marginLeft:wp('30%') }}>¢ 100 {'\n'}
         ¢ 100 {'\n'}
         ¢ 100 {'\n'}
         ¢ 100 {'\n'}
@@ -108,7 +108,7 @@ summarybox: {
     ...Platform.select({
       ios: {
         width:wp('90%'), 
-        height:hp('15%'),
+        height:hp('10%'),
         borderRadius:20,
         alignSelf:'center',
         backgroundColor:'white',
@@ -117,7 +117,7 @@ summarybox: {
       },
       android: {
         width:wp('90%'), 
-        height:hp('15%'),
+        height:hp('10%'),
         borderRadius:20,
         alignSelf:'center',
         marginTop:hp('2%'),
@@ -148,6 +148,10 @@ summarybox: {
 
     maintext: {
       fontWeight:'bold', 
+      fontSize:15,
+    },
+    maintext3: {
+      fontWeight:'500', 
       fontSize:15,
     },
 

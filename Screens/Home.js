@@ -96,11 +96,12 @@ const imageSource   = require('../assets/logo.png');
                     <Text style={styles.header} > Welcome <Text style={styles.headercolor}> {username}</Text> </Text>
                 </View>
 
-                <SharedElement id="someUniqueId">
+               <View style={{flex:1}}>   
                 <Text style={styles.profile} onPress={() => {logout()}}>
                      Logout
-                </Text>
-                </SharedElement>
+                </Text> 
+               </View>
+               
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
@@ -218,8 +219,9 @@ const styles = StyleSheet.create({
                 fontWeight:'bold',
             },
             android: {
-                marginLeft:wp('35%'),
-                marginTop:hp('5%'),
+                
+                marginLeft:wp('45%'),
+                marginTop:hp('6.2%'),
                 fontWeight:'bold',
             },
             

@@ -163,13 +163,13 @@ export default function Details({route, navigation}) {
     <View>
       
       <View style={styles.header}>
-                <View style={{flexDirection:'row', marginTop:hp('6%'), marginLeft:wp('5%') }}>
+                <View style={{flexDirection:'row',marginTop:hp('5%') ,marginLeft:wp('5%') }}>
                         <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.goBack()} />
                         <Text style={{fontWeight:'bold', paddingTop:hp('0.5%'),textAlign:'center',color:'white', flex:1,paddingRight:wp('10%')}}>Details</Text>
                 </View>
             </View>
 
-    <ScrollView style={{marginLeft:wp('5%'), height:hp("68%"),}}>
+    <ScrollView style={{marginLeft:wp('5%'), height:hp("70%"),}}>
         <View style={{height: 100, width:wp("90%"),marginTop:hp('5%') ,borderRadius: 20, flexDirection: "row", backgroundColor: "#ffffff", flex:8}}>
             <View style={{display: "flex", flexDirection: "row", marginLeft: "5%", flex:5}}>
                 <Image
@@ -324,8 +324,18 @@ export default function Details({route, navigation}) {
 
 const styles = StyleSheet.create({
     header: {
-        height: hp('10%'),
-        backgroundColor: '#14a8ee',
+        ...Platform.select({
+            ios: {
+                height: hp('10%'),
+                
+                backgroundColor: '#14a8ee',
+            },
+            android: {
+               
+                 height: hp('10%'),
+                backgroundColor: '#14a8ee',
+            },
+        }),
     },
     headerContainer: {
         display: 'flex', 
