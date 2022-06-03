@@ -37,7 +37,7 @@ const HomeStack = () => {
         <View style={{flex: 1}} collapsable={false} >
             <Stack.Navigator screenOptions={screenOptionstyle}>
                 <Stack.Screen  name="HomeScreen" component={Home} />
-                <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
+               
             </Stack.Navigator>
         </View>
 
@@ -73,7 +73,7 @@ const HistoryStack = () => {
 
         <View style={{flex: 1}} collapsable={false} >
             <Stack.Navigator screenOptions={screenOptionstyle} >
-                <Stack.Screen  name="Historys" component={History} />
+                <Stack.Screen  name="History" component={History} />
             </Stack.Navigator>
         </View>
 
@@ -99,9 +99,9 @@ export default function MainStack() {
         
         <Stack.Screen  name="Checkout" component={Checkout} options={{headerShown: false}}/>
         <Stack.Screen  name="Cart" component={Cart} options={{headerShown: false}} />
-        <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
+        
         <Stack.Screen  name="Profile" component={Profile} options={{ headerShown: false }} />
-
+        <Stack.Screen name="Details" component={Details} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 }

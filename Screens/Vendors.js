@@ -8,7 +8,7 @@ import { SharedElement } from 'react-navigation-shared-element'
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function Vendors({route, navigation}) {
-    const service = route.params.service;
+    const [service, setService] = useState('');
 
     const [token, setToken] = useState('');
     const [vendors, setVendors] = useState(null);
@@ -33,6 +33,7 @@ export default function Vendors({route, navigation}) {
             setToken(value);
             fetchVendors(value);
             getProfile(value);
+            setService(route.params.service);
         });
     }, []);
 

@@ -26,6 +26,8 @@ export default function History({navigation}) {
 
   }, []);
 
+  
+
   const getReciepts = (token) => {
     fetch('https://dryce-staging.herokuapp.com/api/reciepts', {
       method: 'GET',
@@ -90,7 +92,7 @@ export default function History({navigation}) {
                       <View style={{flexDirection:'row', marginTop:hp('1%') }}>
                       <MaterialCommunityIcons name="shopping" size={24} color="#14a8ee"  style={{marginLeft:wp('5%'), marginTop:hp('3%')}} />
                       <Text style={styles.summarytext}> Laundry Service {'\n'}  
-                      <Text style={styles.maintext}>{vendors[reciept.vendor - 1].name}</Text> </Text>
+                      <Text style={styles.maintext}>{}</Text> </Text>
                       {/* <FontAwesome name="check-circle" size={24} color="#14a8ee" style={{marginLeft:wp('5%'), marginTop:hp('3%')}} /> */}
                       </View>
 

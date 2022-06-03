@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ScrollView, borderRadius,TextInput,ActivityIndicator ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Text, View , Image, ScrollView,BackHandler,ActivityIndicator ,SafeAreaView, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import { Feather, AntDesign, FontAwesome5, EvilIcons, Ionicons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import axios from 'axios';
@@ -11,8 +11,13 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 export default function Details({route, navigation}) {
     
-      const vendor = route.params.vendor.vendor;
-      const service = route.params.vendor.service;
+      const [vendor, setVendor] = useState('');
+      const [service, setService] = useState('');
+
+      useEffect(() => {
+          setVendor(route.params.vendor);
+            setService(route.params.service);
+      }, []);
 
     useEffect(() => {
         AsyncStorage.getItem('token').then((token) => {
@@ -135,7 +140,7 @@ export default function Details({route, navigation}) {
                 trouser: trouserNumber,
                 blouses: blouseNumber,
                 jeans: jeansNumber,
-                vendor: vendor,
+                vendor: vendor.vendor,
                 service: service,
             })
         })
@@ -144,7 +149,7 @@ export default function Details({route, navigation}) {
                 setLoading(false);
                 navigation.navigate('Cart');
             }
-            else {
+            else if (response.status == 406) {
                 setLoading(false);
                 alert('Please checkout your current cart');
             }
@@ -152,9 +157,23 @@ export default function Details({route, navigation}) {
         .catch(error => {
             setLoading(false);
             alert('Something went wrong');
+        })
+        .finally(() => {
+            setLoading(false);
         });
     }
 
+    useEffect(() => {   
+        const backAction = () => {
+            navigation.navigate('Tabs');
+            return true;
+        };
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+        return () => backHandler.remove();
+    }, []);
 
 
 
@@ -164,7 +183,7 @@ export default function Details({route, navigation}) {
       
       <View style={styles.header}>
                 <View style={{flexDirection:'row', marginTop:hp('6%'), marginLeft:wp('5%') }}>
-                        <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.goBack()} />
+                        <Feather name="arrow-left" size={25} color="white"  onPress={() => navigation.navigate("Tabs")} />
                         <Text style={{fontWeight:'bold', paddingTop:hp('0.5%'),textAlign:'center',color:'white', flex:1,paddingRight:wp('10%')}}>Details</Text>
                 </View>
             </View>
