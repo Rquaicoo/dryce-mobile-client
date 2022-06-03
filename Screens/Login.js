@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable, Alert} from 'react-native';
+import { StyleSheet, Text, View , TextInput,TouchableHighlight ,SafeAreaView, TouchableOpacity, ActivityIndicator, Modal, Pressable, Alert, } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Feather, AntDesign, Entypo, EvilIcons, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';

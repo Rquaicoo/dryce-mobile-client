@@ -12,6 +12,7 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 export default function Details({route, navigation}) {
     
       const vendor = route.params.vendor.vendor;
+      const service = route.params.vendor.service;
 
     useEffect(() => {
         AsyncStorage.getItem('token').then((token) => {
@@ -135,6 +136,7 @@ export default function Details({route, navigation}) {
                 blouses: blouseNumber,
                 jeans: jeansNumber,
                 vendor: vendor,
+                service: service,
             })
         })
         .then(response => {
@@ -144,7 +146,7 @@ export default function Details({route, navigation}) {
             }
             else {
                 setLoading(false);
-                alert('Something went wrong');
+                alert('Please checkout your current cart');
             }
         })
         .catch(error => {

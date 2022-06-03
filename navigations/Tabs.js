@@ -1,13 +1,19 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeStack, OrdersStack, ProfileStack, HistoryStack } from './MainStack';
 import Home from '../Screens/Home';
 import Profile from '../Screens/Profile';
 import Cart from '../Screens/Cart';
 import History from '../Screens/History';
+import Details from '../Screens/Details';
+import Vendors from '../Screens/Vendors';
+import Checkout from '../Screens/Checkout'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons';
+
 const Tab = createMaterialBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function Tabs() { 
 
@@ -60,8 +66,10 @@ export default function Tabs() {
                     tabBarIcon: ({ color }) => (
                       <FontAwesome5 name="receipt" size={24} color={color} />
                     ),
-                  }}
+                  }} 
                   />
+
+           
             </Tab.Navigator>
     );
 }

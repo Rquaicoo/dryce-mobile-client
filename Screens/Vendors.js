@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,ActivityIndicator,BackHandler ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, Text, View , Image, ImageBackground, transparent,borderRadius,ActivityIndicator,TouchableHighlight ,SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { MaterialIcons, AntDesign, FontAwesome5,FontAwesome, EvilIcons,MaterialCommunityIcons, Ionicons , Entypo} from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SharedElement } from 'react-navigation-shared-element'
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
 
-export default function Home({navigation}) {
-const imageSource   = require('../assets/logo.png');
+export default function Vendors({route, navigation}) {
+    const service = route.params.service;
 
     const [token, setToken] = useState('');
     const [vendors, setVendors] = useState(null);
+    const [vendors2, setVendors2] = useState(null);
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
     const logout = () => {
@@ -45,7 +46,9 @@ const imageSource   = require('../assets/logo.png');
         })
         .then(res => res.json())
         .then(data => {
-            setVendors(data);
+            const dataLength = data.length;
+            setVendors(data.slice(0,(data.length/2) + 1));
+            setVendors2(data.slice((data.length/2), dataLength));
             setLoading(false);
         })
         .catch(err => console.log(err))
@@ -67,19 +70,6 @@ const imageSource   = require('../assets/logo.png');
                     console.log(error)
                 }) 
     }
-
-    //quit app when back button is pressed
-    useEffect(() => {   
-        const backAction = () => {
-            BackHandler.exitApp();
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener(
-            "hardwareBackPress",
-            backAction
-        );
-        return () => backHandler.remove();
-    }, []);
 
 
 
@@ -104,52 +94,117 @@ const imageSource   = require('../assets/logo.png');
             </View>
     {/* Headers */}
             {/* <Text style={styles.header} > Hello <Text style={styles.headercolor}> Collins</Text> </Text> */}
-            <Text style={styles.header1}> What service{'\n'} do you need today?</Text>
+            <Text style={styles.header1}> Select a{'\n'} vendor to continue</Text>
 
-     
 
-        {/* Categories */}
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={{flexDirection:'row', marginTop:hp('5%'),}}>
-            <TouchableOpacity style={styles.categories}>
-            <Text style={styles.headbanner}> Subscribe to <Text style={{color:'#0090ff'}}>Dryce+</Text> to get {'\n'} monthly worth of laundry</Text>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
+            {/* Popular laundry */}
+        <Text style={styles.shops}> Popular Laundry </Text>
+        {loading ?
+            (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+            <ActivityIndicator size="large" color="#14a8ee" />
+            </View>) :
+            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: -20}} >
+            {vendors && (
+            <View style={{flexDirection:'row'}}>
+                {vendors.map((vendor, index) => (
+                <View key={index} >
+            <TouchableOpacity style={styles.shopsinfo} onPress={() => {navigation.navigate("Details", {"vendor": vendor, "service": service})}} >
+                <View>
+                {/* Image Content */}
+                <TouchableOpacity style={styles.shopsimage}>
+                <ImageBackground source={{
+                    uri: 'https://dryce-staging.herokuapp.com' + vendor.picture
+                }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+                
+                <TouchableHighlight style={styles.ratings}>
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+                <Text style={styles.ratingno}>{vendor.rating}.0</Text>
+                </View>
+                </TouchableHighlight>
+
+                </ImageBackground>
+                </TouchableOpacity>
+                
+                {/* Text Content */}
+                
+                <View onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
+                <Text style={styles.shopname}>{vendor.name}</Text>
+
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname1}>{vendor.address}</Text>
+                </View>
+
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+                </View>
+                </View>
+
+                </View>
+
             </TouchableOpacity>
-           
-            </View>
-        </ScrollView>
+            </View>))}
+
+            </View>)}
+        </ScrollView>)}
 
 
-         {/* Main */}
+        {/* Popular laundry */}
+        <Text style={styles.shops}> More Laundry Vendors</Text>
+        {loading ?
+            (<View style={{alignItems: 'center', justifyContent: 'center', marginTop: hp('5%')}}>
+            <ActivityIndicator size="large" color="#14a8ee" />
+            </View>) :
+            (<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginBottom: "6%"}} >
+            {vendors2 && (
+            <View style={{flexDirection:'row'}}>
+                {vendors2.map((vendor, index) => (
+                <View key={index} >
+            <TouchableOpacity style={styles.shopsinfo} onPress={() => {navigation.navigate("Details", {"vendor": vendor})}} >
+                <View>
+                {/* Image Content */}
+                <TouchableOpacity style={styles.shopsimage}>
+                <ImageBackground source={{
+                    uri: 'https://dryce-staging.herokuapp.com' + vendor.picture
+                }} style={styles.shopsimage} imageStyle={{ borderRadius: 15}} >
+                
+                <TouchableHighlight style={styles.ratings}>
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="star" size={16} color="yellow"  style={{marginLeft:wp('1.5%'),marginTop:wp('0.5%'),  }}/>
+                <Text style={styles.ratingno}>{vendor.rating}.0</Text>
+                </View>
+                </TouchableHighlight>
 
-            <View style={{flexDirection:'row', marginTop:hp('5%'), alignSelf:'center', }}>
-            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Vendors", {"service": "Wash & Iron"})}} >
-            <Ionicons name="shirt" size={40} color="#14a8ee"  style={{textAlign:'center', marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Wash & Iron</Text>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Vendors", {"service": "Dry Wash"})}}>
-            <FontAwesome name="shopping-bag" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('4%')}} />
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Dry Wash</Text>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
-            </TouchableOpacity>
-            </View>
+                </ImageBackground>
+                </TouchableOpacity>
+                
+                {/* Text Content */}
+                
+                <View onPress={() => {navigation.navigate("Details", {"vendor": vendor})}}>
+                <Text style={styles.shopname}>{vendor.name}</Text>
 
-            <View style={{flexDirection:'row', marginTop:hp('2%'), marginBottom:hp('5%') ,alignSelf:'center', marginRight:wp('5%') }} >
-            <TouchableOpacity style={styles.maincategories} onPress={() => {navigation.navigate("Vendors", {"service": "Ironing"})}}>
-            <MaterialCommunityIcons name="shoe-print" size={40} color="#14a8ee"  style={{textAlign:'center',marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('2%')   }}> Ironing</Text>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="location-pin" size={17} color="#707070"  style={{marginTop:hp('1.1%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname1}>{vendor.address}</Text>
+                </View>
+
+                <View style={{flexDirection:'row'}}>
+                <Entypo name="back-in-time" size={15} color="#707070"  style={{marginTop:hp('1.2%'),marginLeft:wp('4%'),}}/>
+                <Text style={styles.shopname2}>8:00AM - 8:00PM</Text>
+                </View>
+                </View>
+
+                </View>
+
             </TouchableOpacity>
-            
-            <LinearGradient colors={['#43D4FF', '#38ABFD', '#0090ff']} style={styles.gradient}>
-            <TouchableOpacity style={styles.maincategoriess}>
-            <Entypo name="plus" size={50} color="white"  style={{textAlign:'center', marginTop:hp('4%')}}/>
-            <Text style={{fontWeight:'bold', fontSize:wp('4%'),textAlign:'center',paddingTop:hp('1%'),color:'white'}}> Dryce+</Text>
-            {/* <Image source={require('../assets/img.jpg')} style={styles.imagecat} /> */}
-            </TouchableOpacity>
-            </LinearGradient>
-            </View>
+            </View>))}
+
+            </View>)}
+        </ScrollView>)}
+
+
 
        </View>
 

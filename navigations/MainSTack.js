@@ -18,6 +18,7 @@ import Checkout from '../Screens/Checkout';
 import Details from '../Screens/Details';
 import Cart from '../Screens/Cart';
 import Profile from '../Screens/Profile';
+import Vendors from '../Screens/Vendors';
 
 
 
@@ -92,6 +93,8 @@ export default function MainStack() {
 
         <Stack.Screen  name="History" component={History} options={{headerShown: false}} />
         <Stack.Screen  name="Home" component={Home} options={{headerShown: false}} />
+        <Stack.Screen  name="Vendors" component={Vendors} options={{headerShown: false}} />
+        
         
         <Stack.Screen  name="Checkout" component={Checkout} options={{headerShown: false}}/>
         <Stack.Screen  name="Cart" component={Cart} options={{headerShown: false}} />
