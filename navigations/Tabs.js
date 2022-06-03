@@ -10,8 +10,7 @@ import Vendors from '../Screens/Vendors';
 import Checkout from '../Screens/Checkout'; 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
-
+import { AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -61,11 +60,11 @@ export default function Tabs() {
                   }}/>
 
                 
-                <Tab.Screen name="History" component={History} 
+                <Tab.Screen name="Receipts" component={History} 
                 options={{
-                    tabBarLabel: 'History',
+                    tabBarLabel: 'Receipts',
                     tabBarIcon: ({ color }) => (
-                      <MaterialCommunityIcons name="history" color={color} size={26} />
+                      <FontAwesome5 name="receipt" size={24} color={color} />
                     ),
                   }} 
                   />
