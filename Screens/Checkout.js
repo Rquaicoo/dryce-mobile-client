@@ -96,7 +96,7 @@ export default function Checkout({navigation}) {
 
 const createOrder = () => {
     setLoading(true);
-    fetch('http://127.0.0.1:8000/api/order/', {
+    fetch('https://dryce-staging.herokuapp.com/api/order/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
