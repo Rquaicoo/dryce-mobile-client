@@ -81,6 +81,7 @@ const imageSource   = require('../assets/logo.png');
         return () => backHandler.remove();
     }, []);
 
+    
 
 
   return (
@@ -90,8 +91,8 @@ const imageSource   = require('../assets/logo.png');
        <SafeAreaView>
        
        <View style={{marginLeft:wp('4%')}}>
-           <View style={{flexDirection: "row",}}>
-                <View style={{flexDirection:'row',}}>
+           <View style={{flexDirection: "row", flex: 6}}>
+                <View style={{flexDirection:'row', flex: 5}}>
                     {/* <Ionicons name="menu-outline" size={24} color="black" style={styles.header} /> */}
                     <Text style={styles.header} > Welcome <Text style={styles.headercolor}> {username}</Text> </Text>
                 </View>
@@ -213,14 +214,12 @@ const styles = StyleSheet.create({
     profile:{
         ...Platform.select({
             ios: {
-                
-                marginLeft:wp('35%'),
                 marginTop:hp('1.5%'),
                 fontWeight:'bold',
             },
             android: {
                 
-                marginLeft:wp('45%'),
+                
                 marginTop:hp('6.2%'),
                 fontWeight:'bold',
             },
