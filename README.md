@@ -3,7 +3,8 @@
 
 Dryce is a mobile application with allows users to make laundry requests. Users can also make changes to their requests if and only if they have not been processed.
 
-
+## App on playstore
+[View the app on Google Playstore](https://play.google.com/store/apps/details?id=com.rquaicoo.dryce)
 
 ## Features
 
